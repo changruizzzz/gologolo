@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    This XML file provides all the text to be used when the application
+    is to be displayed in English.
+-->
+<properties>
+    <property_list>
+
+        <!-- ENGLISH LANGUAGE SETTINGS FOR DESKTOP JAVA FRAMEWORK CONTROLS -->
+
+        <!-- WELCOME DIALOG TEXT -->
+        <property name="WELCOME_DIALOG_TITLE"               value="Welcome to goLogoLo"></property>
+        <property name="WELCOME_DIALOG_RECENT_WORK_LABEL"   value="Recent Work"></property>
+        <property name="WELCOME_DIALOG_NEW_BUTTON_TEXT"  value="Create a logo"></property>
+
+        <!-- GENERIC APP ERROR MESSAGES -->
+        <property name="APP_ERROR_TITLE"            value="Application Error"></property>
+        <property name="APP_ERROR_CONTENT"          value="An Error Occured in the Application"></property>
+
+        <!-- PROPERTIES ERROR MESSAGES -->
+        <property name="PROPERTIES_ERROR_TITLE"     value="Properties File Error"></property>
+        <property name="PROPERTIES_ERROR_CONTENT"   value="There was an Error Loading a Properties File"></property>
+
+        <!-- FILE TOOLBAR TOOLTIPS -->
+        <property name="NEW_BUTTON_TOOLTIP"         value="New logo"></property>
+        <property name="LOAD_BUTTON_TOOLTIP"        value="Load logo"></property>
+        <property name="CLOSE_BUTTON_TOOLTIP"       value="Close logo"></property>
+        <property name="SAVE_BUTTON_TOOLTIP"        value="Save logo"></property>
+        <property name="EXPORT_BUTTON_TOOLTIP"      value="Export logo"></property>
+        <property name="EXIT_BUTTON_TOOLTIP"        value="Exit"></property>
+        
+        <!-- ZOOM TOOLBAR TOOLTIPS -->
+        <property name="ZOOM_IN_BUTTON_TOOLTIP"         value="Zoom In"></property>
+        <property name="ZOOM_OUT_BUTTON_TOOLTIP"        value="Zoom Out"></property>
+        <property name="RESIZE_BUTTON_TOOLTIP"          value="Resize Logo"></property>
+        <property name="RESET_VIEW_BUTTON_TOOLTIP"      value="Reset View"></property>
+        <property name="SNAP_BOX_TOOLTIP"            value="Snap"></property>
+        <property name="SNAP_BUTTON_TEXT"            value="Snap"></property>
+
+
+        <!-- CLIPBOARD TOOLBAR TOOLTIPS -->
+        <property name="CUT_BUTTON_TOOLTIP"         value="Cut"></property>
+        <property name="COPY_BUTTON_TOOLTIP"        value="Copy"></property>
+        <property name="PASTE_BUTTON_TOOLTIP"       value="Paste"></property>
+
+        <!-- UNDO TOOLBAR TOOLTIPS -->
+        <property name="UNDO_BUTTON_TOOLTIP"        value="Undo"></property>
+        <property name="REDO_BUTTON_TOOLTIP"        value="Redo"></property>
+
+        <!-- HELP TOOLBAR TOOLTIPS -->
+        <property name="HELP_BUTTON_TOOLTIP"        value="Help"></property>
+        <property name="LANGUAGE_BUTTON_TOOLTIP"    value="Change Langauge"></property>
+        <property name="ABOUT_BUTTON_TOOLTIP"       value="About"></property>
+
+        <!-- NEW FEEDBACK DIALOGS -->	
+        <property name="NEW_SUCCESS_TITLE"      value="New Complete"></property>
+        <property name="NEW_SUCCESS_CONTENT"	value="Work Created but not yet Saved"></property>
+        <property name="NEW_ERROR_TITLE"        value="Warning: Error"></property>
+        <property name="NEW_ERROR_CONTENT"      value="An error occured creating New work."></property>
+
+        <!-- LOAD FEEDBACK DIALOGS -->
+        <property name="LOAD_WORK_TITLE"        value="Load Work"></property>
+        <property name="LOAD_SUCCESS_TITLE"     value="Load Complete"></property>
+        <property name="LOAD_SUCCESS_CONTENT"   value="The File has Loaded Successfully and can now be edited."></property>
+        <property name="LOAD_ERROR_TITLE"       value="Loading Error"></property>        
+        <property name="LOAD_ERROR_CONTENT"     value="Loading has Failed. Likely there is a File Formating problem or the file is missing."></property>
+
+        <!-- SAVE FEEDBACK DIALOGS -->
+        <property name="SAVE_WORK_TITLE"        value="Save Work"></property>
+        <property name="SAVE_SUCCESS_TITLE"     value="Save Complete"></property>
+        <property name="SAVE_SUCCESS_CONTENT"   value="The file is saved."></property>
+        <property name="SAVE_ERROR_TITLE"       value="Save Error"></property>
+        <property name="SAVE_ERROR_CONTENT"     value="Saving has Failed. Likely due to a file access problem."></property>
+        <property name="SAVE_VERIFY_TITLE"	value="Save unsaved work?"></property>
+        <property name="SAVE_VERIFY_CONTENT"	value="Would you like to save your unsaved work first?"></property>
+        
+        <!-- ERROR DIALOG -->
+        <property name="FIELD_EMPTY_ERROR"         value="Can not have the Catagory or the Description empty!Please try again or cancel."></property>
+        <property name="DATE_ERROR"         value="Can not have the End Date before the Start Date!Please try again or cancel."></property>
+
+
+        <!-- ABOUT DIALOG -->
+        <property name="ABOUT_TITLE"            value="About TDLM"></property>
+        <property name="ABOUT_CONTENT"          value="TDLM, the To Do List Maker - Debugging Enterprises - © 2017"></property>
+
+
+        <!-- ENGLISH LANGUAGE SETTINGS SPECIFICALLY FOR TDLM CONTROLS -->
+        
+        <!-- LANGUAGE-DEPENDENT TEXT FOR WORKSPACE CONTROLS -->
+        <property name="GOLOGOLO_LABEL_TEXT"                            value="@goLogoLo"></property>
+        <property name="GLGL_ITEMS_LABEL_TEXT"                          value="Items"></property>
+        <property name="GLGL_ADD_TEXT_BUTTON_TOOLTIP"                   value="Add New Text"></property>
+        <property name="GLGL_ADD_IMAGE_BUTTON_TOOLTIP"                  value="Add New Image"></property>
+        <property name="GLGL_ADD_RECTANGLE_BUTTON_TOOLTIP"              value="Add New Rectangle"></property>
+        <property name="GLGL_ADD_CIRCLE_BUTTON_TOOLTIP"                 value="Add New Circle"></property>
+        <property name="GLGL_ADD_TRIANGLE_BUTTON_TOOLTIP"               value="Add New Triangle"></property>
+        <property name="GLGL_REMOVE_BUTTON_TOOLTIP"                     value="Delete Selected Elements"></property>
+        <property name="GLGL_EDIT_ITEM_BUTTON_TOOLTIP"                  value="Edit Selected Element"></property>
+        <property name="GLGL_MOVE_ITEM_UP_BUTTON_TOOLTIP"               value="Move Selected Element Up"></property>
+        <property name="GLGL_MOVE_ITEM_DOWN_BUTTON_TOOLTIP"             value="Move Selected Element Down"></property>
+        <property name="GLGL_BOLD_BUTTON_TOOLTIP"                       value="Bold"></property>
+        <property name="GLGL_ITALIC_BUTTON_TOOLTIP"                     value="Italic"></property>
+        <property name="GLGL_INCREASE_FONT_SIZE_BUTTON_TOOLTIP"         value="Increase Font Size"></property>
+        <property name="GLGL_DECREASE_FONT_SIZE_BUTTON_TOOLTIP"         value="Decrease Font Size"></property>
+        <property name="GLGL_UNDERLINE_BUTTON_TOOLTIP"                  value="Underline"></property>
+
+
+        <property name="GLGL_ORDER_COLUMN_TEXT"                         value="Order"></property>
+        <property name="GLGL_NAME_COLUMN_TEXT"                          value="Name"></property>
+        <property name="GLGL_TYPE_COLUMN_TEXT"                          value="Type"></property>
+        <property name="GLGL_BORDER_THICKNESS_LABEL_TEXT"               value="Boder Thickness:"></property>
+        <property name="GLGL_BORDER_RADIUS_LABEL_TEXT"                  value="Boder Radius:"></property>
+        <property name="GLGL_BORDER_COLOR_PICKER_LABEL_TEXT"            value="Boder Color:"></property>
+        <property name="GLGL_COLOR_GRADIENT_LABEL_TEXT"                 value="Color Gradient"></property>        
+        <property name="GLGL_FOCUS_ANGLE_LABEL_TEXT"                    value="Focus Angle:"></property>
+        <property name="GLGL_FOCUS_DISTANCE_LABEL_TEXT"                       value="Focus Distance:"></property>
+        <property name="GLGL_CENTER_X_LABEL_TEXT"                       value="Center X:"></property>
+        <property name="GLGL_CENTER_Y_LABEL_TEXT"                       value="Center Y:"></property>
+        <property name="GLGL_GRADIENT_RADIUS_LABEL_TEXT"                value="Radius:"></property>
+        <property name="GLGL_CYCLE_METHOD_LABEL_TEXT"                   value="Cycle Method:"></property>
+        <property name="GLGL_STOP_0_COLOR_PICKER_LABEL_TEXT"            value="Stop 0 Color:"></property>
+        <property name="GLGL_STOP_1_COLOR_PICKER_LABEL_TEXT"            value="Stop 1 Color:"></property>
+        
+
+        
+        <!-- LANGUAGE-DEPENDENT TEXT FOR ITEM DIALOG CONTROLS -->
+        <property name="TDLM_ITEM_DIALOG_HEADER_TEXT"               value="Add/Edit Items"></property>
+        <property name="TDLM_ITEM_DIALOG_ADD_HEADER_TEXT"           value="Add Item"></property>
+        <property name="TDLM_ITEM_DIALOG_EDIT_HEADER_TEXT"          value="Edit Item"></property>
+        <property name="TDLM_ITEM_DIALOG_CATEGORY_PROMPT_TEXT"      value="Category:"></property>
+        <property name="TDLM_ITEM_DIALOG_DESCRIPTION_PROMPT_TEXT"   value="Description:"></property>
+        <property name="TDLM_ITEM_DIALOG_START_DATE_PROMPT_TEXT"    value="Start Date:"></property>
+        <property name="TDLM_ITEM_DIALOG_END_DATE_PROMPT_TEXT"      value="End Date:"></property>
+        <property name="TDLM_ITEM_DIALOG_ASSIGNED_TO_PROMPT_TEXT"   value="Assigned To:"></property>
+        <property name="TDLM_ITEM_DIALOG_COMPLETED_PROMPT_TEXT"     value="Completed:"></property>
+        <property name="TDLM_ITEM_DIALOG_OK_BUTTON_TEXT"            value="OK"></property>
+        <property name="TDLM_ITEM_DIALOG_CANCEL_BUTTON_TEXT"        value="Cancel"></property>       
+       
+        <!-- TO SWITCH BACK TO ANOTHER LANGUAGE -->
+        <property name="LANGUAGE_DIALOG_TITLE"          value="App Language Selection"></property>
+        <property name="LANGUAGE_DIALOG_HEADER_TEXT"    value="Choose a Language"></property>
+        <property name="LANGUAGE_DIALOG_CONTENT_TEXT"   value="Select a Language for the User Interface."></property>
+
+        <property name="WORK_FILE_EXT"          value="tdlm"></property>
+	<property name="WORK_FILE_EXT_DESC"     value="To Do List Maker Files"></property>
+
+    </property_list>
+    
+    <!-- TDLM COMBO BOX CHOICES -->
+    <property_options_list>
+        <property_options name="LANGUAGE_OPTIONS">
+            <option>English</option>
+            <option>Korean</option>
+            <option>Spanish</option>
+        </property_options>
+    </property_options_list>
+</properties>

@@ -1,0 +1,276 @@
+/*
+    This style sheet manages the layout and style for all controls inside the
+    TDLM JavaFX application. Note that the stylesheet has been setup such that
+    all colors in use are declared first as swatch colors inside the root 
+    and so one can change the color theme used by the app simply by changing
+    these colors.
+
+    Note that Material Design icons are being employed for all icon buttons
+    in this application, both for the Desktop Java Framework's top toolbar
+    as well as for icon buttons in the M3's edit toolbar. Note that this
+    app uses icons from https://material.io/icons/ and icon image sizes in
+    use are as follows:
+        djf top toolbar buttons: 36x36
+        
+
+    @author Richard McKenna
+    @version 1.0
+*/
+.root{
+    /* 
+        FIRST WE'LL DEFINE OUR SWATCHES, i.e. THE COMPLEMENTARY
+        COLORS THAT WE'LL USE TOGETHER IN MULTIPLE PLACES THAT
+        TOGETHER WILL MAKE UP A GIVEN THEME
+    */
+    -swatch-neutral:        #dbdbdb;
+    -swatch-primary:        #ededed;
+    -swatch-complement:     #eaeaea;
+    -swatch-bright-accent:  #5fbf82;
+    
+    -fx-font-family: "Helvetica";
+
+}
+/** 
+    FIRST WE HAVE THE CONTROLS THAT THE DESKTOP JAVA FRAMEWORK
+    MAY BE MAKING USE OF:
+        .djf_top_toolbar: toolbar running the length of the top
+        .djf_top_toolbar_pane: a pane in the top toolbar with buttons
+        .djf_icon_button: buttons in the top toolbar panes
+**/
+.djf_top_toolbar {
+    -fx-background-color:   -swatch-neutral;
+    -fx-border-color:       -swatch-neutral;
+    -fx-border-width:       2;
+    -fx-border-radius:      0;
+}
+.djf_toolbar_pane {
+    -fx-background-color:   -swatch-complement;
+    -fx-background-radius:  8;    
+    -fx-border-color:       -swatch-neutral;
+    -fx-border-width:       2;
+    -fx-border-radius:      8;
+}
+.djf_toolbar_text {
+    -fx-font-size: 12;
+}
+.djf_icon_button {
+    -fx-background-color:   transparent;
+    -fx-background-radius:  5;    
+    -fx-pref-height:        32;
+    -fx-pref-width:         32;
+    -fx-min-height:         30;
+    -fx-min-width:          30;
+/*    -fx-padding:            30;*/
+}
+.djf_icon_button:hover {
+/*    -fx-background-color: -swatch-neutral;*/
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 ); 
+}
+.djf_title_label {
+    -fx-text-fill: white;
+    -fx-background-color: -swatch-bright-accent;
+    -fx-font-size: 18;
+    -fx-min-width: 820;
+    -fx-padding: 20;
+}
+.djf_welcome_banner {
+    -fx-background-color: -swatch-complement;    
+    -fx-border-color:transparent;
+    -fx-border-width:10;
+}
+.djf_welcome_header {
+    -fx-font-size: 30pt;
+    -fx-padding: 15;
+    -fx-background-color: transparent;
+    -fx-border-color: -swatch-complement;
+}
+.djf_welcome_recent_pane {
+    -fx-pref-width: 280;
+    
+    -fx-background-color:-swatch-complement;
+}
+.djf_welcome_recent_button {
+    -fx-pref-width: 280;
+    -fx-font-size: 14pt;
+    -fx-underline: true;
+    -fx-text-fill: black;
+    -fx-background-color:transparent;
+    -fx-padding: 20;
+}
+.djf_welcome_recent_button:hover {
+    -fx-text-fill: white;
+    -fx-background-color: -swatch-bright-accent;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+}
+.djf_welcome_recent_button:pressed {
+    -fx-text-fill: yellow;
+}
+.djf_welcome_new_pane {
+    -fx-min-width:540;
+    -fx-background-color: -swatch-primary;
+}
+.djf_welcome_new_button {
+    -fx-min-width:540;
+    -fx-font-size:20pt;
+    -fx-text-fill: white;
+    -fx-background-color: -swatch-bright-accent;
+}
+.djf_welcome_new_button:hover{
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+
+
+}
+
+/**
+    NEXT THE APP-SPECIFIC CONTROLS
+**/
+.glgl_text_button, .glgl_icon_button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 8,7,6;
+    -fx-background-insets: 0,1,2;
+    -fx-text-fill: black;
+}
+.glgl_text_button:pressed, .glgl_icon_button:pressed {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );    
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+}
+.glgl_text_button:hover, .glgl_icon_button:hover {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );    
+}
+.glgl_text_button{
+    -fx-max-width:130px;
+    -fx-min-height:50px;
+    -fx-max-height:50px;
+}
+.glgl_icon_button {
+    -fx-min-width: 36px;
+    -fx-max-width: 36px;
+    -fx-min-height:36px;
+    -fx-max-height:36px;
+}
+.glgl_pane {
+    -fx-background-color: -swatch-complement;
+/*    -fx-border: 1 1 1 1;*/
+}
+
+
+
+.glgl_body {
+    -fx-background-color: white;
+    -fx-border:2 2 2 2;
+    -fx-min-width: 800;
+
+}
+.glgl_big_header, .glgl_small_header, .glgl_prompt, .glgl_text_field {
+    -fx-font-weight: bold;
+    -fx-padding: 5 5 5 5;
+}
+.glgl_big_header {
+    -fx-font-size: 24pt;
+}
+.glgl_small_header {
+    -fx-font-size: 14pt;
+}
+.glgl_prompt {
+    -fx-font-size: 10pt;
+    -fx-min-width: 130px;
+    -fx-max-width: 200px;
+}
+.glgl_text_field {
+    -fx-font-size: 12pt;
+    -fx-min-width: 250px;
+    -fx-max-width: 250px;
+}
+
+/* FOR THE TABLE */
+.glgl_item_pane {
+    -fx-padding: 8;
+    -fx-spacing: 8;
+
+    -fx-min-width: 330;
+}
+.glgl_table {
+    -fx-background-radius: 0 0 8 8;
+    -fx-border-radius: 0 0 8 8;
+    -fx-font-size: 10pt;
+    -fx-pref-width: 330;
+    
+    -fx-pref-height: 800;
+
+}
+.column-header {
+/*    -fx-background-color: black;*/
+    -fx-font-size: 12pt;
+    -fx-font-weight: bold;
+}
+.table-row-cell:empty {
+    -fx-background-color: #777777;
+    -fx-border-color: #777777;
+} 
+
+/* FOR FUNCTION PANE */
+.glgl_function_pane {
+    -fx-spacing: 8;
+    -fx-padding: 8;
+    -fx-max-width: 250;
+    -fx-min-width: 250;
+
+}
+
+.glgl_box {
+    -fx-background-color: -swatch-neutral;
+    -fx-padding: 8;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+}
+
+.glgl_combo {
+    -fx-min-width: 75;
+    -fx-pref-width: 200;
+}
+
+.glgl_color_picker {
+    -fx-pref-width: 200;
+}
+
+/* FOR DIALOGS */
+.glgl_dialog_grid {
+    -fx-background-color: -swatch-accent;
+    -fx-background-radius: 5.0;
+    -fx-background-insets: 0.0 5.0 0.0 5.0;
+    -fx-padding: 10;
+/*    -fx-hgap: 10;*/
+    -fx-vgap: 10;
+}
+.glgl_dialog_header {
+    -fx-font-weight: bold;
+    -fx-font-size: 18pt
+}
+.glgl_dialog_prompt {
+    -fx-font-weight: bold;
+    -fx-font-size: 14pt;
+}
+.glgl_dialog_text_field, .glgl_dialog_date_picker {
+    -fx-min-width:250px;
+    -fx-max-width:250px;
+    -fx-min-height:50px;
+    -fx-max-height:50px;
+    -fx-font-weight:bold;
+    -fx-font-size:14pt;
+}
+.glgl_dialog_button {
+    -fx-min-width:100px;
+    -fx-max-width:100px;
+    -fx-min-height:50px;
+    -fx-max-height:50px;
+    -fx-font-weight: bold;
+    -fx-font-size: 16pt;
+}
+.tooltip {
+    -fx-font-size:12pt;
+    -fx-font-weight:bold;
+    -fx-background-radius: 8 8 8 8;
+    -fx-background-color:-swatch-bright-accent;
+}
