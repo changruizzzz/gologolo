@@ -9,6 +9,8 @@ import djf.ui.dialogs.AppDialogsFacade;
 import java.io.File;
 import java.io.IOException;
 import static djf.AppPropertyType.APP_UNDO_FOOLPROOF_SETTINGS;
+import djf.components.AppDataComponent;
+import djf.components.AppFileComponent;
 import properties_manager.PropertiesManager;
 
 /**
@@ -155,7 +157,7 @@ public class AppFileModule {
         // REMEMBEr THE FILE THAT'S BEEN LOADED
         saved = true; 
         workFile = selectedFile;
-
+        
         // LOAD THE FILE INTO THE DATA
         app.getFileComponent().loadData(app.getDataComponent(), selectedFile.getAbsolutePath());
 
@@ -164,7 +166,8 @@ public class AppFileModule {
         String title = props.getProperty(APP_TITLE) + " - " + workFile.getName();
         app.getGUIModule().getWindow().setTitle(title);
         
+        //@todo
         // RESET THE UI CONTROLS
-        app.getFoolproofModule().updateAll();
+//        app.getFoolproofModule().updateAll();
     }
 }

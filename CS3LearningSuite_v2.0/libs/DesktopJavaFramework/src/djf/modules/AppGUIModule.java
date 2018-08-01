@@ -18,13 +18,10 @@ import djf.ui.controllers.AppKeyController;
 import static djf.modules.AppLanguageModule.FILE_PROTOCOL;
 import djf.modules.AppLanguageModule.LanguageException;
 import djf.ui.AppNodesBuilder;
-import djf.ui.controllers.AppZoomController;
 import java.net.URL;
 import java.util.HashMap;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
 
 /**
@@ -45,7 +42,6 @@ public class AppGUIModule {
     protected AppHelpController helpController;
     protected AppKeyController keyController;
     protected AppUndoController undoController;
-    protected AppZoomController zoomController;
 
 
     // THIS IS THE APPLICATION WINDOW
@@ -407,35 +403,7 @@ public class AppGUIModule {
         }
     }
     
-    private void initZoomToolbar() {
-        zoomToolbar = new ToolBar();
-        topToolbarPane.getChildren().add(zoomToolbar);
-        zoomController = new AppZoomController(app);
 
-        // THIS IS AN ALL OR NOTHING TOOLBAR
-        Button resetButton = nodesBuilder.buildIconButton(RESET_VIEW_BUTTON, null, zoomToolbar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        resetButton.setOnAction(e -> {
-            zoomController.processZoomRequest();
-        });
-        Button zoomInButton = nodesBuilder.buildIconButton(ZOOM_IN_BUTTON, null, zoomToolbar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        zoomInButton.setOnAction(e -> {
-            zoomController.processZoomRequest();
-        });
-        Button zoomOutButton = nodesBuilder.buildIconButton(ZOOM_OUT_BUTTON, null, zoomToolbar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        zoomOutButton.setOnAction(e -> {
-            zoomController.processZoomRequest();
-        });
-
-        Button resizeButton = nodesBuilder.buildIconButton(RESIZE_BUTTON, null, zoomToolbar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        resizeButton.setOnAction(e -> {
-            zoomController.processResizeRequest();
-        });
-        
-        CheckBox snapBox = nodesBuilder.buildCheckBox(SNAP_BOX, null, zoomToolbar, null, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        Label snapLabel = nodesBuilder.buildLabel(SNAP_BUTTON, null, zoomToolbar, CLASS_DJF_TOOLBAR_TEXT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        
-        
-    }
 
     // INITIALIZE THE WINDOW (i.e. STAGE) PUTTING ALL THE CONTROLS
     // THERE EXCEPT THE WORKSPACE, WHICH WILL BE ADDED THE FIRST
@@ -469,7 +437,7 @@ public class AppGUIModule {
         String appLogo = FILE_PROTOCOL + imagesPath + props.getProperty(APP_LOGO);
         Image appWindowLogo = new Image(appLogo);
         primaryStage.getIcons().add(appWindowLogo);
-        primaryStage.setIconified(true);
+        primaryStage.setIconified(false);
 
         // NOW TIE THE SCENE TO THE WINDOW
         primaryStage.setScene(primaryScene);

@@ -11,6 +11,7 @@ import djf.components.AppDataComponent;
 import djf.components.AppFileComponent;
 import djf.components.AppWorkspaceComponent;
 import glgl.data.GoLoData;
+import glgl.files.GoLoFiles;
 import glgl.workspace.GoLoWorkspace;
 import java.util.Locale;
 import static javafx.application.Application.launch;
@@ -66,7 +67,7 @@ public class GoLogoLoApp extends AppTemplate {
     
     @Override
     public AppFileComponent buildFileComponent() {
-        return null;
+        return new GoLoFiles();
     }
     
 }

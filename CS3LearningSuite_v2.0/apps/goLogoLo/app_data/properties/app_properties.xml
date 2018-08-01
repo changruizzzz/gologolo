@@ -23,7 +23,7 @@
         <property name="APP_PATH_WEB"       value="./app_data/web/"></property>
         <property name="PREF_WIDTH"         value="1400"></property>
         <property name="PREF_HEIGHT"        value="930"></property>
-        <property name="START_MAXIMIZED"    value="true"></property>
+        <property name="START_MAXIMIZED"    value="false"></property>
 
         <!-- TOP TOOLBARS AND CONTROLS TO INCLUDE -->
         <property name="HAS_WELCOME_DIALOG"     value="true"></property>
@@ -43,7 +43,6 @@
         <property name="HAS_HELP"               value="true"></property>
         <property name="HAS_LANGUAGE"           value="true"></property>
         <property name="HAS_ABOUT"              value="true"></property>
-        <property name="HAS_ZOOM_TOOLBAR"       value="true"></property>
 
 
         <!-- PROGRAM ICON FILES - FILE TOOLBAR -->        

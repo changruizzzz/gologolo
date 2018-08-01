@@ -5,12 +5,21 @@
  */
 package glgl.workspace;
 
+import static djf.AppPropertyType.RESET_VIEW_BUTTON;
+import static djf.AppPropertyType.RESIZE_BUTTON;
+import static djf.AppPropertyType.SNAP_BOX;
+import static djf.AppPropertyType.SNAP_BUTTON;
+import static djf.AppPropertyType.ZOOM_IN_BUTTON;
+import static djf.AppPropertyType.ZOOM_OUT_BUTTON;
 import djf.components.AppWorkspaceComponent;
 import static djf.modules.AppGUIModule.DISABLED;
 import static djf.modules.AppGUIModule.ENABLED;
 import static djf.modules.AppGUIModule.FOCUS_TRAVERSABLE;
 import static djf.modules.AppGUIModule.HAS_KEY_HANDLER;
 import djf.ui.AppNodesBuilder;
+import static djf.ui.style.DJFStyle.CLASS_DJF_ICON_BUTTON;
+import static djf.ui.style.DJFStyle.CLASS_DJF_TOOLBAR_PANE;
+import static djf.ui.style.DJFStyle.CLASS_DJF_TOOLBAR_TEXT;
 import static glgl.GoLoPropertyType.GLGL_ADD_CIRCLE_BUTTON;
 import static glgl.GoLoPropertyType.GLGL_ADD_IMAGE_BUTTON;
 import static glgl.GoLoPropertyType.GLGL_ADD_RECTANGLE_BUTTON;
@@ -67,7 +76,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import properties_manager.PropertiesManager;
 
-import static glgl.GoLoPropertyType.GLGL_PANE;
 import static glgl.GoLoPropertyType.GLGL_RADIUS_SLIDER;
 import static glgl.GoLoPropertyType.GLGL_REMOVE_BUTTON;
 import static glgl.GoLoPropertyType.GLGL_STOP_0_COLOR_PICKER;
@@ -90,18 +98,19 @@ import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_COMBO;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_FUNCTION_PANE;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_ICON_BUTTON;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_ITEM_PANE;
-import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_PANE;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_PROMPT;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_SLIDER;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_SMALL_HEADER;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_TABLE;
 import java.time.LocalDate;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.ToolBar;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 
@@ -129,10 +138,38 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         
         // THIS WILL BUILD ALL OF OUR JavaFX COMPONENTS FOR US
-        AppNodesBuilder glglBuilder = app.getGUIModule().getNodesBuilder();
+        AppNodesBuilder glglNodesBuilder = app.getGUIModule().getNodesBuilder();
         
         
-//        app.getGUIModule().getTopToolbarPane().getChildren().add(3, workspace);
+        ToolBar zoomToolBar = new ToolBar();
+        zoomToolBar.getStyleClass().add(CLASS_DJF_TOOLBAR_PANE);
+//        zoomController = new AppZoomController(app);
+
+        // THIS IS AN ALL OR NOTHING TOOLBAR
+        Button resetButton = glglNodesBuilder.buildIconButton(RESET_VIEW_BUTTON, null, zoomToolBar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        resetButton.setOnAction(e -> {
+//            zoomController.processZoomRequest();
+        });
+        Button zoomInButton = glglNodesBuilder.buildIconButton(ZOOM_IN_BUTTON, null, zoomToolBar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        zoomInButton.setOnAction(e -> {
+//            zoomController.processZoomRequest();
+        });
+        Button zoomOutButton = glglNodesBuilder.buildIconButton(ZOOM_OUT_BUTTON, null, zoomToolBar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        zoomOutButton.setOnAction(e -> {
+//            zoomController.processZoomRequest();
+        });
+
+        Button resizeButton = glglNodesBuilder.buildIconButton(RESIZE_BUTTON, null, zoomToolBar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        resizeButton.setOnAction(e -> {
+//            zoomController.processResizeRequest();
+        });
+        
+        CheckBox snapBox = glglNodesBuilder.buildCheckBox(SNAP_BOX, null, zoomToolBar, null, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        Label snapLabel = glglNodesBuilder.buildLabel(SNAP_BUTTON, null, zoomToolBar, CLASS_DJF_TOOLBAR_TEXT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        
+        
+    
+        app.getGUIModule().getTopToolbarPane().getChildren().add(3, zoomToolBar);
                 
                 
                 
@@ -141,13 +178,13 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
 	// THIS HOLDS ALL THE CONTROLS IN THE WORKSPACE
         BorderPane glglPane = new BorderPane();
         // THIS HAS THE ITEMS PANE COMPONENTS IN THE LEFT
-        VBox itemsPane              = glglBuilder.buildVBox(GLGL_ITEMS_PANE,                    null,       null,   CLASS_GLGL_ITEM_PANE, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
+        VBox itemsPane              = glglNodesBuilder.buildVBox(GLGL_ITEMS_PANE,                    null,       null,   CLASS_GLGL_ITEM_PANE, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
         glglPane.setLeft(itemsPane);
         // AND NOW THE TABLE
-        TableView<GoLoItemPrototype> itemsTable = glglBuilder.buildTableView(GLGL_ITEMS_TABLE_VIEW,       itemsPane,          null,   CLASS_GLGL_TABLE, HAS_KEY_HANDLER,    FOCUS_TRAVERSABLE,  true);
-        TableColumn orderColumn              = glglBuilder.buildTableColumn(  GLGL_ORDER_COLUMN,    itemsTable,         CLASS_GLGL_COLUMN);
-        TableColumn nameColumn           = glglBuilder.buildTableColumn(  GLGL_NAME_COLUMN, itemsTable,         CLASS_GLGL_COLUMN);
-        TableColumn typeColumn             = glglBuilder.buildTableColumn(  GLGL_TYPE_COLUMN,  itemsTable,         CLASS_GLGL_COLUMN);
+        TableView<GoLoItemPrototype> itemsTable = glglNodesBuilder.buildTableView(GLGL_ITEMS_TABLE_VIEW,       itemsPane,          null,   CLASS_GLGL_TABLE, HAS_KEY_HANDLER,    FOCUS_TRAVERSABLE,  true);
+        TableColumn orderColumn              = glglNodesBuilder.buildTableColumn(  GLGL_ORDER_COLUMN,    itemsTable,         CLASS_GLGL_COLUMN);
+        TableColumn nameColumn           = glglNodesBuilder.buildTableColumn(  GLGL_NAME_COLUMN, itemsTable,         CLASS_GLGL_COLUMN);
+        TableColumn typeColumn             = glglNodesBuilder.buildTableColumn(  GLGL_TYPE_COLUMN,  itemsTable,         CLASS_GLGL_COLUMN);
         itemsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         // SPECIFY THE TYPES FOR THE COLUMNS
@@ -155,17 +192,17 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
         nameColumn.setCellValueFactory(  new PropertyValueFactory<String,    String>("Name"));
         typeColumn.setCellValueFactory(    new PropertyValueFactory<LocalDate, String>("Type"));
         
-        HBox itemButtonsPane        = glglBuilder.buildHBox(GLGL_ITEM_BUTTONS_PANE,             itemsPane,          null,   CLASS_GLGL_BOX, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
-        Button moveItemUpButton     = glglBuilder.buildIconButton(GLGL_MOVE_ITEM_UP_BUTTON,     itemButtonsPane,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
-        Button moveItemDownButton   = glglBuilder.buildIconButton(GLGL_MOVE_ITEM_DOWN_BUTTON,   itemButtonsPane,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
-        Button editItemButton       = glglBuilder.buildIconButton(GLGL_EDIT_ITEM_BUTTON,        itemButtonsPane,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
+        HBox itemButtonsPane        = glglNodesBuilder.buildHBox(GLGL_ITEM_BUTTONS_PANE,             itemsPane,          null,   CLASS_GLGL_BOX, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
+        Button moveItemUpButton     = glglNodesBuilder.buildIconButton(GLGL_MOVE_ITEM_UP_BUTTON,     itemButtonsPane,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
+        Button moveItemDownButton   = glglNodesBuilder.buildIconButton(GLGL_MOVE_ITEM_DOWN_BUTTON,   itemButtonsPane,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
+        Button editItemButton       = glglNodesBuilder.buildIconButton(GLGL_EDIT_ITEM_BUTTON,        itemButtonsPane,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
 
 
 
         
         
         //This IS THE MAIN WORKING AREA IN THE MIDDLE
-        VBox bodyPane                = glglBuilder.buildVBox(GLGL_BODY_PANE,                    null,       null,   CLASS_GLGL_BODY, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
+        VBox bodyPane                = glglNodesBuilder.buildVBox(GLGL_BODY_PANE,                    null,       null,   CLASS_GLGL_BODY, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
         glglPane.setCenter(bodyPane);
         
 
@@ -175,60 +212,60 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
 
 
         //THIS IS THE CONTROL PANEL AND ALL BUTTONS IN THE RIGHT 
-        VBox functionPane               = glglBuilder.buildVBox(GLGL_FUNCTION_PANE,                 null,   null,   CLASS_GLGL_FUNCTION_PANE, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
+        VBox functionPane               = glglNodesBuilder.buildVBox(GLGL_FUNCTION_PANE,                 null,   null,   CLASS_GLGL_FUNCTION_PANE, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
         glglPane.setRight(functionPane);
         //ADD/DELETE ELEMENTS CONTROL
-        HBox elementsBox                = glglBuilder.buildHBox(GLGL_ELEMENTS_BOX,                  functionPane,   null,   CLASS_GLGL_BOX, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
-        Button addTextButton            = glglBuilder.buildIconButton(GLGL_ADD_TEXT_BUTTON,         elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
-        Button addImageButton           = glglBuilder.buildIconButton(GLGL_ADD_IMAGE_BUTTON,        elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
-        Button addRectangleButton       = glglBuilder.buildIconButton(GLGL_ADD_RECTANGLE_BUTTON,    elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
-        Button addCircleButton          = glglBuilder.buildIconButton(GLGL_ADD_CIRCLE_BUTTON,       elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
-        Button addTriangleButton        = glglBuilder.buildIconButton(GLGL_ADD_TRIANGLE_BUTTON,     elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
-        Button RemoveButton             = glglBuilder.buildIconButton(GLGL_REMOVE_BUTTON,           elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  DISABLED);
+        HBox elementsBox                = glglNodesBuilder.buildHBox(GLGL_ELEMENTS_BOX,                  functionPane,   null,   CLASS_GLGL_BOX, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
+        Button addTextButton            = glglNodesBuilder.buildIconButton(GLGL_ADD_TEXT_BUTTON,         elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
+        Button addImageButton           = glglNodesBuilder.buildIconButton(GLGL_ADD_IMAGE_BUTTON,        elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
+        Button addRectangleButton       = glglNodesBuilder.buildIconButton(GLGL_ADD_RECTANGLE_BUTTON,    elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
+        Button addCircleButton          = glglNodesBuilder.buildIconButton(GLGL_ADD_CIRCLE_BUTTON,       elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
+        Button addTriangleButton        = glglNodesBuilder.buildIconButton(GLGL_ADD_TRIANGLE_BUTTON,     elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
+        Button RemoveButton             = glglNodesBuilder.buildIconButton(GLGL_REMOVE_BUTTON,           elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  DISABLED);
 	//FONT SETTING CONTROL
-        VBox fontSettingBox             = glglBuilder.buildVBox(GLGL_FONT_SETTING_BOX,            functionPane,   null,   CLASS_GLGL_BOX, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
-        HBox fontSettingCombo           = glglBuilder.buildHBox(GLGL_FONT_SETTING_COMBO,                  fontSettingBox,   null,   CLASS_GLGL_BOX, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
-        ComboBox fontCombo              = glglBuilder.buildComboBox(GLGL_FONT_COMBO, GLGL_FONT_OPTIONS, GLGL_DEFAULT_FONT, fontSettingCombo, null, CLASS_GLGL_COMBO, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        ComboBox fontSizeCombo          = glglBuilder.buildComboBox(GLGL_FONT_SIZE_COMBO, GLGL_FONT_SIZE_OPTIONS, GLGL_DEFAULT_FONT_SIZE, fontSettingCombo, null, CLASS_GLGL_COMBO, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        VBox fontSettingBox             = glglNodesBuilder.buildVBox(GLGL_FONT_SETTING_BOX,            functionPane,   null,   CLASS_GLGL_BOX, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
+        HBox fontSettingCombo           = glglNodesBuilder.buildHBox(GLGL_FONT_SETTING_COMBO,                  fontSettingBox,   null,   CLASS_GLGL_BOX, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
+        ComboBox fontCombo              = glglNodesBuilder.buildComboBox(GLGL_FONT_COMBO, GLGL_FONT_OPTIONS, GLGL_DEFAULT_FONT, fontSettingCombo, null, CLASS_GLGL_COMBO, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        ComboBox fontSizeCombo          = glglNodesBuilder.buildComboBox(GLGL_FONT_SIZE_COMBO, GLGL_FONT_SIZE_OPTIONS, GLGL_DEFAULT_FONT_SIZE, fontSettingCombo, null, CLASS_GLGL_COMBO, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         
-        HBox fontStyleBox                = glglBuilder.buildHBox(GLGL_FONT_STYLE_BOX,                  fontSettingBox,   null,   CLASS_GLGL_BOX, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);        
-        Button boldButton               = glglBuilder.buildIconButton(GLGL_BOLD_BUTTON,         fontStyleBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
-        Button italicButton               = glglBuilder.buildIconButton(GLGL_ITALIC_BUTTON,         fontStyleBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
-        Button increaseFontSizeButton               = glglBuilder.buildIconButton(GLGL_INCREASE_FONT_SIZE_BUTTON,         fontStyleBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
-        Button DecreaseFontSizeButton               = glglBuilder.buildIconButton(GLGL_DECREASE_FONT_SIZE_BUTTON,         fontStyleBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
-        Button underlineButton               = glglBuilder.buildIconButton(GLGL_UNDERLINE_BUTTON,         fontStyleBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
+        HBox fontStyleBox                = glglNodesBuilder.buildHBox(GLGL_FONT_STYLE_BOX,                  fontSettingBox,   null,   CLASS_GLGL_BOX, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);        
+        Button boldButton               = glglNodesBuilder.buildIconButton(GLGL_BOLD_BUTTON,         fontStyleBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
+        Button italicButton               = glglNodesBuilder.buildIconButton(GLGL_ITALIC_BUTTON,         fontStyleBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
+        Button increaseFontSizeButton               = glglNodesBuilder.buildIconButton(GLGL_INCREASE_FONT_SIZE_BUTTON,         fontStyleBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
+        Button DecreaseFontSizeButton               = glglNodesBuilder.buildIconButton(GLGL_DECREASE_FONT_SIZE_BUTTON,         fontStyleBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
+        Button underlineButton               = glglNodesBuilder.buildIconButton(GLGL_UNDERLINE_BUTTON,         fontStyleBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
         
         //BORDER CONTROL
-        VBox borderBox                  = glglBuilder.buildVBox(GLGL_BORDER_BOX,                    functionPane,   null,   CLASS_GLGL_BOX, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
-        Label thicknessSliderLable      = glglBuilder.buildLabel(GLGL_BORDER_THICKNESS_LABEL, borderBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        Slider thicknessSlider          = glglBuilder.buildSlider(GLGL_THICKNESS_SLIDER, borderBox, null, CLASS_GLGL_SLIDER, 0, 100, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        Label radiusSliderLable      = glglBuilder.buildLabel(GLGL_BORDER_RADIUS_LABEL, borderBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        Slider radiusSlider          = glglBuilder.buildSlider(GLGL_RADIUS_SLIDER, borderBox, null, CLASS_GLGL_SLIDER, 0, 100, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        Label borderColorPickerLable      = glglBuilder.buildLabel(GLGL_BORDER_COLOR_PICKER_LABEL, borderBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        ColorPicker borderColorPicker =glglBuilder.buildColorPicker(GLGL_BORDER_COLOR_PICKER, borderBox, null, CLASS_GLGL_COLOR_PICKER, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        VBox borderBox                  = glglNodesBuilder.buildVBox(GLGL_BORDER_BOX,                    functionPane,   null,   CLASS_GLGL_BOX, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
+        Label thicknessSliderLable      = glglNodesBuilder.buildLabel(GLGL_BORDER_THICKNESS_LABEL, borderBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        Slider thicknessSlider          = glglNodesBuilder.buildSlider(GLGL_THICKNESS_SLIDER, borderBox, null, CLASS_GLGL_SLIDER, 0, 100, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        Label radiusSliderLable      = glglNodesBuilder.buildLabel(GLGL_BORDER_RADIUS_LABEL, borderBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        Slider radiusSlider          = glglNodesBuilder.buildSlider(GLGL_RADIUS_SLIDER, borderBox, null, CLASS_GLGL_SLIDER, 0, 100, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        Label borderColorPickerLable      = glglNodesBuilder.buildLabel(GLGL_BORDER_COLOR_PICKER_LABEL, borderBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        ColorPicker borderColorPicker =glglNodesBuilder.buildColorPicker(GLGL_BORDER_COLOR_PICKER, borderBox, null, CLASS_GLGL_COLOR_PICKER, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         
         //COLOR GRADIENT CONTROL
-        VBox gradientBox                  = glglBuilder.buildVBox(GLGL_COLOR_GRADIENT_BOX,                    functionPane,   null,   CLASS_GLGL_BOX, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
-        Label colorGradientLable      = glglBuilder.buildLabel(GLGL_COLOR_GRADIENT_LABEL, gradientBox, null, CLASS_GLGL_SMALL_HEADER, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        Label focusAngleLable      = glglBuilder.buildLabel(GLGL_FOCUS_ANGLE_LABEL, gradientBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        Slider focusAngleSlider          = glglBuilder.buildSlider(GLGL_FOCUS_ANGLE_SLIDER, gradientBox, null, CLASS_GLGL_SLIDER, 0, 100, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        Label focusDistanceLable      = glglBuilder.buildLabel(GLGL_FOCUS_DISTANCE_LABEL, gradientBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        Slider focusDistanceSlider          = glglBuilder.buildSlider(GLGL_FOCUS_DISTANCE_SLIDER, gradientBox, null, CLASS_GLGL_SLIDER, 0, 100, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        Label centerXSliderLable      = glglBuilder.buildLabel(GLGL_CENTER_X_LABEL, gradientBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        Slider centerXSlider          = glglBuilder.buildSlider(GLGL_CENTER_X_SLIDER, gradientBox, null, CLASS_GLGL_SLIDER, 0, 100, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        Label centerYSliderLable      = glglBuilder.buildLabel(GLGL_CENTER_Y_LABEL, gradientBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        Slider centerYSlider          = glglBuilder.buildSlider(GLGL_CENTER_Y_SLIDER, gradientBox, null, CLASS_GLGL_SLIDER, 0, 100, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        Label gradientRadiusliderLable      = glglBuilder.buildLabel(GLGL_GRADIENT_RADIUS_LABEL, gradientBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        Slider gradientRadiusSlider          = glglBuilder.buildSlider(GLGL_CGRADIENT_RADIUS_SLIDER, gradientBox, null, CLASS_GLGL_SLIDER, 0, 100, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        Label cycleMethodLable      = glglBuilder.buildLabel(GLGL_CYCLE_METHOD_LABEL, gradientBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        ComboBox cycleMehodCombo              = glglBuilder.buildComboBox(GLGL_CYCLE_METHOD_COMBO, GLGL_CYCLE_METHOD_OPTIONS, GLGL_DEFAULT_CYCLE_METHOD, gradientBox, null, CLASS_GLGL_COMBO, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        VBox gradientBox                  = glglNodesBuilder.buildVBox(GLGL_COLOR_GRADIENT_BOX,                    functionPane,   null,   CLASS_GLGL_BOX, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
+        Label colorGradientLable      = glglNodesBuilder.buildLabel(GLGL_COLOR_GRADIENT_LABEL, gradientBox, null, CLASS_GLGL_SMALL_HEADER, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        Label focusAngleLable      = glglNodesBuilder.buildLabel(GLGL_FOCUS_ANGLE_LABEL, gradientBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        Slider focusAngleSlider          = glglNodesBuilder.buildSlider(GLGL_FOCUS_ANGLE_SLIDER, gradientBox, null, CLASS_GLGL_SLIDER, 0, 100, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        Label focusDistanceLable      = glglNodesBuilder.buildLabel(GLGL_FOCUS_DISTANCE_LABEL, gradientBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        Slider focusDistanceSlider          = glglNodesBuilder.buildSlider(GLGL_FOCUS_DISTANCE_SLIDER, gradientBox, null, CLASS_GLGL_SLIDER, 0, 100, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        Label centerXSliderLable      = glglNodesBuilder.buildLabel(GLGL_CENTER_X_LABEL, gradientBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        Slider centerXSlider          = glglNodesBuilder.buildSlider(GLGL_CENTER_X_SLIDER, gradientBox, null, CLASS_GLGL_SLIDER, 0, 100, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        Label centerYSliderLable      = glglNodesBuilder.buildLabel(GLGL_CENTER_Y_LABEL, gradientBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        Slider centerYSlider          = glglNodesBuilder.buildSlider(GLGL_CENTER_Y_SLIDER, gradientBox, null, CLASS_GLGL_SLIDER, 0, 100, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        Label gradientRadiusliderLable      = glglNodesBuilder.buildLabel(GLGL_GRADIENT_RADIUS_LABEL, gradientBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        Slider gradientRadiusSlider          = glglNodesBuilder.buildSlider(GLGL_CGRADIENT_RADIUS_SLIDER, gradientBox, null, CLASS_GLGL_SLIDER, 0, 100, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        Label cycleMethodLable      = glglNodesBuilder.buildLabel(GLGL_CYCLE_METHOD_LABEL, gradientBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        ComboBox cycleMehodCombo              = glglNodesBuilder.buildComboBox(GLGL_CYCLE_METHOD_COMBO, GLGL_CYCLE_METHOD_OPTIONS, GLGL_DEFAULT_CYCLE_METHOD, gradientBox, null, CLASS_GLGL_COMBO, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
 
 
 
-        Label stop0ColorPickerLable      = glglBuilder.buildLabel(GLGL_STOP_0_COLOR_PICKER_LABEL, gradientBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        ColorPicker stop0ColorPicker =glglBuilder.buildColorPicker(GLGL_STOP_0_COLOR_PICKER, gradientBox, null, CLASS_GLGL_COLOR_PICKER, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        Label stop1ColorPickerLable      = glglBuilder.buildLabel(GLGL_STOP_1_COLOR_PICKER_LABEL, gradientBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        ColorPicker stop1ColorPicker =glglBuilder.buildColorPicker(GLGL_STOP_1_COLOR_PICKER, gradientBox, null, CLASS_GLGL_COLOR_PICKER, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        Label stop0ColorPickerLable      = glglNodesBuilder.buildLabel(GLGL_STOP_0_COLOR_PICKER_LABEL, gradientBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        ColorPicker stop0ColorPicker =glglNodesBuilder.buildColorPicker(GLGL_STOP_0_COLOR_PICKER, gradientBox, null, CLASS_GLGL_COLOR_PICKER, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        Label stop1ColorPickerLable      = glglNodesBuilder.buildLabel(GLGL_STOP_1_COLOR_PICKER_LABEL, gradientBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        ColorPicker stop1ColorPicker =glglNodesBuilder.buildColorPicker(GLGL_STOP_1_COLOR_PICKER, gradientBox, null, CLASS_GLGL_COLOR_PICKER, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
 
         
         
@@ -297,7 +334,7 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
 //        foolproofSettings.registerModeSettings(GLGL_FOOLPROOF_SETTINGS, 
 //                new ToDoSelectionFoolproofDesign((ToDoListMakerApp)app));
     }
-
+    
     @Override
     public void processWorkspaceKeyEvent(KeyEvent ke) {
        // System.out.println("WORKSPACE REPONSE TO " + ke.getCharacter());

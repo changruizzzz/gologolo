@@ -227,8 +227,7 @@
 }
 
 .glgl_combo {
-    -fx-min-width: 75;
-    -fx-pref-width: 200;
+    -fx-min-width: 65;
 }
 
 .glgl_color_picker {
