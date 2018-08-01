@@ -40,11 +40,13 @@ public class GLGLStyle {
 
     
     // STYLE CLASSES FOR THE ADD/EDIT ITEM DIALOG
-    public static final String CLASS_TDLM_DIALOG_GRID           = "tdlm_dialog_grid";
-    public static final String CLASS_TDLM_DIALOG_HEADER         = "tdlm_dialog_header";
-    public static final String CLASS_TDLM_DIALOG_PROMPT         = "tdlm_dialog_prompt";
-    public static final String CLASS_TDLM_DIALOG_TEXT_FIELD     = "tdlm_dialog_text_field";
-    public static final String CLASS_TDLM_DIALOG_DATE_PICKER    = "tdlm_dialog_date_picker";
-    public static final String CLASS_TDLM_DIALOG_CHECK_BOX      = "tdlm_dialog_check_box";
-    public static final String CLASS_TDLM_DIALOG_BUTTON         = "tdlm_dialog_button";
+    public static final String CLASS_GLGL_DIALOG_GRID           = "glgl_dialog_grid";
+    public static final String CLASS_GLGL_DIALOG_HEADER         = "glgl_dialog_header";
+    public static final String CLASS_GLGL_DIALOG_PROMPT         = "glgl_dialog_prompt";
+    public static final String CLASS_GLGL_DIALOG_TEXT_FIELD     = "glgl_dialog_text_field";
+    public static final String CLASS_GLGL_DIALOG_BUTTON         = "glgl_dialog_button";
+    public static final String CLASS_GLGL_DIALOG_PANE           = "glgl_dialog_pane";
+    public static final String CLASS_GLGL_DIALOG_TITLE_PANE     = "glgl_dialog_title_pane";
+    
+
 }

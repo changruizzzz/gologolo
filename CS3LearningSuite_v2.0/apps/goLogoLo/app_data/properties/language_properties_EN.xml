@@ -80,11 +80,11 @@
 
 
         <!-- ABOUT DIALOG -->
-        <property name="ABOUT_TITLE"            value="About TDLM"></property>
-        <property name="ABOUT_CONTENT"          value="TDLM, the To Do List Maker - Debugging Enterprises - © 2017"></property>
+        <property name="ABOUT_TITLE"            value="About GLGL"></property>
+        <property name="ABOUT_CONTENT"          value="GLGL, the To Do List Maker - Debugging Enterprises - © 2017"></property>
 
 
-        <!-- ENGLISH LANGUAGE SETTINGS SPECIFICALLY FOR TDLM CONTROLS -->
+        <!-- ENGLISH LANGUAGE SETTINGS SPECIFICALLY FOR GLGL CONTROLS -->
         
         <!-- LANGUAGE-DEPENDENT TEXT FOR WORKSPACE CONTROLS -->
         <property name="GOLOGOLO_LABEL_TEXT"                            value="@goLogoLo"></property>
@@ -124,17 +124,19 @@
 
         
         <!-- LANGUAGE-DEPENDENT TEXT FOR ITEM DIALOG CONTROLS -->
-        <property name="TDLM_ITEM_DIALOG_HEADER_TEXT"               value="Add/Edit Items"></property>
-        <property name="TDLM_ITEM_DIALOG_ADD_HEADER_TEXT"           value="Add Item"></property>
-        <property name="TDLM_ITEM_DIALOG_EDIT_HEADER_TEXT"          value="Edit Item"></property>
-        <property name="TDLM_ITEM_DIALOG_CATEGORY_PROMPT_TEXT"      value="Category:"></property>
-        <property name="TDLM_ITEM_DIALOG_DESCRIPTION_PROMPT_TEXT"   value="Description:"></property>
-        <property name="TDLM_ITEM_DIALOG_START_DATE_PROMPT_TEXT"    value="Start Date:"></property>
-        <property name="TDLM_ITEM_DIALOG_END_DATE_PROMPT_TEXT"      value="End Date:"></property>
-        <property name="TDLM_ITEM_DIALOG_ASSIGNED_TO_PROMPT_TEXT"   value="Assigned To:"></property>
-        <property name="TDLM_ITEM_DIALOG_COMPLETED_PROMPT_TEXT"     value="Completed:"></property>
-        <property name="TDLM_ITEM_DIALOG_OK_BUTTON_TEXT"            value="OK"></property>
-        <property name="TDLM_ITEM_DIALOG_CANCEL_BUTTON_TEXT"        value="Cancel"></property>       
+        <property name="GLGL_ITEM_DIALOG_TITLE_LABEL_TEXT"          value="goLogoLo"></property>
+        <property name="GLGL_ITEM_DIALOG_RESIZE_HEADER_TEXT"         value="Change Logo Dimensions"></property>
+        <property name="GLGL_ITEM_DIALOG_RENAME_HEADER_TEXT"         value="Rename Layer"></property>
+
+
+        <property name="GLGL_ITEM_DIALOG_HEADER_LABEL_TEXT"               value="Edit Item"></property>
+        <property name="GLGL_ITEM_DIALOG_RENAME_LABEL_TEXT"               value="Layer's Name:"></property>
+
+        <property name="GLGL_ITEM_DIALOG_ADD_HEADER_TEXT"           value="Add Item"></property>
+        <property name="GLGL_ITEM_DIALOG_HEIGHT_LABEL_TEXT"        value="Height:"></property>
+        <property name="GLGL_ITEM_DIALOG_WIDTH_LABEL_TEXT"         value="Width:"></property>
+        <property name="GLGL_ITEM_DIALOG_OK_BUTTON_TEXT"            value="OK"></property>
+        <property name="GLGL_ITEM_DIALOG_CANCEL_BUTTON_TEXT"        value="Cancel"></property>       
        
         <!-- TO SWITCH BACK TO ANOTHER LANGUAGE -->
         <property name="LANGUAGE_DIALOG_TITLE"          value="App Language Selection"></property>
@@ -146,7 +148,7 @@
 
     </property_list>
     
-    <!-- TDLM COMBO BOX CHOICES -->
+    <!-- GLGL COMBO BOX CHOICES -->
     <property_options_list>
         <property_options name="LANGUAGE_OPTIONS">
             <option>English</option>

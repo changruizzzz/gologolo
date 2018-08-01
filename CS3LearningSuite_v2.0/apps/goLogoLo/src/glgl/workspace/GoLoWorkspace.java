@@ -91,6 +91,7 @@ import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_BOX;
 
 import glgl.GoLogoLoApp;
 import glgl.data.GoLoItemPrototype;
+import glgl.workspace.controllers.ItemsController;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_BODY;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_COLOR_PICKER;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_COLUMN;
@@ -102,7 +103,6 @@ import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_PROMPT;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_SLIDER;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_SMALL_HEADER;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_TABLE;
-import java.time.LocalDate;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
@@ -137,15 +137,16 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
         // FIRST LOAD THE FONT FAMILIES FOR THE COMBO BOX
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         
+        
+        
+        ItemsController itemsController = new ItemsController((GoLogoLoApp)app);
+                
         // THIS WILL BUILD ALL OF OUR JavaFX COMPONENTS FOR US
         AppNodesBuilder glglNodesBuilder = app.getGUIModule().getNodesBuilder();
         
-        
+        //ADD ZOOM TOOL BAR TO THE TOP TOOL BAR
         ToolBar zoomToolBar = new ToolBar();
         zoomToolBar.getStyleClass().add(CLASS_DJF_TOOLBAR_PANE);
-//        zoomController = new AppZoomController(app);
-
-        // THIS IS AN ALL OR NOTHING TOOLBAR
         Button resetButton = glglNodesBuilder.buildIconButton(RESET_VIEW_BUTTON, null, zoomToolBar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         resetButton.setOnAction(e -> {
 //            zoomController.processZoomRequest();
@@ -161,14 +162,10 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
 
         Button resizeButton = glglNodesBuilder.buildIconButton(RESIZE_BUTTON, null, zoomToolBar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         resizeButton.setOnAction(e -> {
-//            zoomController.processResizeRequest();
-        });
-        
+            itemsController.processResize();
+        }); 
         CheckBox snapBox = glglNodesBuilder.buildCheckBox(SNAP_BOX, null, zoomToolBar, null, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         Label snapLabel = glglNodesBuilder.buildLabel(SNAP_BUTTON, null, zoomToolBar, CLASS_DJF_TOOLBAR_TEXT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        
-        
-    
         app.getGUIModule().getTopToolbarPane().getChildren().add(3, zoomToolBar);
                 
                 
@@ -188,15 +185,17 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
         itemsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         // SPECIFY THE TYPES FOR THE COLUMNS
-        orderColumn.setCellValueFactory(     new PropertyValueFactory<String,    String>("Order"));
+        orderColumn.setCellValueFactory(     new PropertyValueFactory<Integer,    String>("Order"));
         nameColumn.setCellValueFactory(  new PropertyValueFactory<String,    String>("Name"));
-        typeColumn.setCellValueFactory(    new PropertyValueFactory<LocalDate, String>("Type"));
+        typeColumn.setCellValueFactory(    new PropertyValueFactory<String, String>("Type"));
         
         HBox itemButtonsPane        = glglNodesBuilder.buildHBox(GLGL_ITEM_BUTTONS_PANE,             itemsPane,          null,   CLASS_GLGL_BOX, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
         Button moveItemUpButton     = glglNodesBuilder.buildIconButton(GLGL_MOVE_ITEM_UP_BUTTON,     itemButtonsPane,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
         Button moveItemDownButton   = glglNodesBuilder.buildIconButton(GLGL_MOVE_ITEM_DOWN_BUTTON,   itemButtonsPane,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
         Button editItemButton       = glglNodesBuilder.buildIconButton(GLGL_EDIT_ITEM_BUTTON,        itemButtonsPane,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
-
+        editItemButton.setOnAction(e -> {
+            itemsController.processRename();
+        });
 
 
         

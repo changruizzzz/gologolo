@@ -24,7 +24,9 @@
     */
     -swatch-neutral:        #dbdbdb;
     -swatch-primary:        #ededed;
+    -swatch-down:           #f2f2f2;
     -swatch-complement:     #eaeaea;
+    
     -swatch-bright-accent:  #5fbf82;
     
     -fx-font-family: "Helvetica";
@@ -236,36 +238,64 @@
 
 /* FOR DIALOGS */
 .glgl_dialog_grid {
-    -fx-background-color: -swatch-accent;
-    -fx-background-radius: 5.0;
-    -fx-background-insets: 0.0 5.0 0.0 5.0;
+
+
     -fx-padding: 10;
-    -fx-hgap: 10;
-    -fx-vgap: 10;
+    -fx-hgap: 7;
+    -fx-vgap: 7;
+    -fx-max-width:400;
+    -fx-min-width:400;
+    -fx-max-height:200;
+    -fx-min-height:100;
+
+    
 }
+.glgl_dialog_title_pane {
+    -fx-background-color: -swatch-bright-accent;
+    -fx-text-fill: white;
+    -fx-font-size:20;
+    -fx-font-weight: bold;
+    -fx-min-width:400;
+    -fx-padding: 10;
+}
+.glgl_dialog_pane {
+    -fx-background-color: #ebebeb;
+}
+
 .glgl_dialog_header {
+    -fx-min-width:400;
     -fx-font-weight: bold;
-    -fx-font-size: 18pt
+    -fx-font-size: 12pt;
+    -fx-padding: 5;
 }
-.glgl_dialog_prompt {
-    -fx-font-weight: bold;
-    -fx-font-size: 14pt;
-}
-.glgl_dialog_text_field, .glgl_dialog_date_picker {
-    -fx-min-width:250px;
-    -fx-max-width:250px;
-    -fx-min-height:50px;
-    -fx-max-height:50px;
+
+.glgl_dialog_text_field {
+    -fx-min-width:200px;
+    -fx-max-width:200px;
+    -fx-max-height:40px;
     -fx-font-weight:bold;
     -fx-font-size:14pt;
 }
-.glgl_dialog_button {
-    -fx-min-width:100px;
-    -fx-max-width:100px;
+.glgl_dialog_prompt {
+    -fx-min-width:80px;
+    -fx-max-width:130px;
     -fx-min-height:50px;
     -fx-max-height:50px;
+    -fx-font-size: 10pt;
+    -fx-font-weight:bold;
+
+}
+.glgl_dialog_button {
+    -fx-min-width:200px;
+    -fx-max-width:200px;
+    -fx-min-height:40px;
+    -fx-max-height:40px;
     -fx-font-weight: bold;
-    -fx-font-size: 16pt;
+    -fx-font-size: 10pt;
+/*    -fx-background-color:-swatch-bright-accent;*/
+}
+.glgl_dialog_button:hover {
+    -fx-background-color:#e05757;
 }
 .tooltip {
     -fx-font-size:12pt;
