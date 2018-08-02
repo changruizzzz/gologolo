@@ -93,7 +93,8 @@ public class AppFileModule {
         app.getGUIModule().getWindow().setTitle(props.getProperty(APP_TITLE));
         
         // RESET THE UI CONTROLS
-        app.getFoolproofModule().updateAll();
+        //@todo
+//        app.getFoolproofModule().updateAll();
     }
     
     public void closeWork() {

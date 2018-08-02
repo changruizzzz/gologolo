@@ -44,7 +44,8 @@ public class GLGLStyle {
     public static final String CLASS_GLGL_DIALOG_HEADER         = "glgl_dialog_header";
     public static final String CLASS_GLGL_DIALOG_PROMPT         = "glgl_dialog_prompt";
     public static final String CLASS_GLGL_DIALOG_TEXT_FIELD     = "glgl_dialog_text_field";
-    public static final String CLASS_GLGL_DIALOG_BUTTON         = "glgl_dialog_button";
+    public static final String CLASS_GLGL_DIALOG_CANCEL_BUTTON         = "glgl_dialog_cancel_button";
+    public static final String CLASS_GLGL_DIALOG_OK_BUTTON         = "glgl_dialog_ok_button";
     public static final String CLASS_GLGL_DIALOG_PANE           = "glgl_dialog_pane";
     public static final String CLASS_GLGL_DIALOG_TITLE_PANE     = "glgl_dialog_title_pane";
     

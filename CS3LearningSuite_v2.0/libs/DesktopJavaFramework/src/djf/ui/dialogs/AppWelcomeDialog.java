@@ -59,6 +59,7 @@ public class AppWelcomeDialog extends Stage {
     String selectedWorkName = null;
 
     public AppWelcomeDialog(AppTemplate app) {
+        
         // GET THE RECENT WORK
         AppRecentWorkModule recentWork = app.getRecentWorkModule();
                 
@@ -132,6 +133,7 @@ public class AppWelcomeDialog extends Stage {
         
         // WE ORGANIZE EVERYTHING IN HERE
         BorderPane dialogPane = new BorderPane();
+        dialogPane.getStyleClass().add(CLASS_DJF_WELCOME_PANE);
         if(labeled) {
             dialogPane.setTop(titleLabel);
         }

@@ -30,7 +30,7 @@
     -swatch-bright-accent:  #5fbf82;
     
     -fx-font-family: "Helvetica";
-
+    
 }
 /** 
     FIRST WE HAVE THE CONTROLS THAT THE DESKTOP JAVA FRAMEWORK
@@ -75,16 +75,17 @@
     -fx-min-width: 820;
     -fx-padding: 20;
 }
+.djf_welcome_pane {
+    -fx-background-color: transparent;
+}
 .djf_welcome_banner {
     -fx-background-color: -swatch-complement;    
     -fx-border-color:transparent;
-    -fx-border-width:10;
 }
 .djf_welcome_header {
     -fx-font-size: 30pt;
     -fx-padding: 15;
     -fx-background-color: transparent;
-    -fx-border-color: -swatch-complement;
 }
 .djf_welcome_recent_pane {
     -fx-pref-width: 280;
@@ -285,7 +286,7 @@
     -fx-font-weight:bold;
 
 }
-.glgl_dialog_button {
+.glgl_dialog_cancel_button, .glgl_dialog_ok_button {
     -fx-min-width:200px;
     -fx-max-width:200px;
     -fx-min-height:40px;
@@ -294,7 +295,10 @@
     -fx-font-size: 10pt;
 /*    -fx-background-color:-swatch-bright-accent;*/
 }
-.glgl_dialog_button:hover {
+.glgl_dialog_ok_button:hover {
+    -fx-background-color:-swatch-bright-accent;
+}
+.glgl_dialog_cancel_button:hover {
     -fx-background-color:#e05757;
 }
 .tooltip {

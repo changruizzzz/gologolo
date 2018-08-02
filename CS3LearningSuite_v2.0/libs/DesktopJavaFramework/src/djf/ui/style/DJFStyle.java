@@ -28,6 +28,8 @@ public class DJFStyle {
     /**
      * THE FOLLOWING STYLESHEET CLASSES ARE FOR THE WELCOME DIALOG
      */
+    public static final String CLASS_DJF_WELCOME_PANE = "djf_welcome_pane";
+
     public static final String CLASS_DJF_WELCOME_BANNER = "djf_welcome_banner";
     
     public static final String CLASS_DJF_WELCOME_HEADER = "djf_welcome_header";

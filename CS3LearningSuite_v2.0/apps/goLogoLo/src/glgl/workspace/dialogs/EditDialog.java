@@ -29,9 +29,10 @@ import javafx.stage.Stage;
 import properties_manager.PropertiesManager;
 import glgl.GoLogoLoApp;
 import glgl.data.GoLoItemPrototype;
-import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_DIALOG_BUTTON;
+import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_DIALOG_CANCEL_BUTTON;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_DIALOG_GRID;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_DIALOG_HEADER;
+import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_DIALOG_OK_BUTTON;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_DIALOG_PANE;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_DIALOG_PROMPT;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_DIALOG_TEXT_FIELD;
@@ -110,8 +111,8 @@ public class EditDialog extends Stage {
         
         // THE NODES ABOVE GO DIRECTLY INSIDE THE GRID
         dialogPane.setTop(headerPane);
-        okButton = nodesBuilder.buildTextButton(GLGL_ITEM_DIALOG_OK_BUTTON, okCancelPane, null, CLASS_GLGL_DIALOG_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        cancelButton = nodesBuilder.buildTextButton(GLGL_ITEM_DIALOG_CANCEL_BUTTON, okCancelPane, null, CLASS_GLGL_DIALOG_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        okButton = nodesBuilder.buildTextButton(GLGL_ITEM_DIALOG_OK_BUTTON, okCancelPane, null, CLASS_GLGL_DIALOG_OK_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        cancelButton = nodesBuilder.buildTextButton(GLGL_ITEM_DIALOG_CANCEL_BUTTON, okCancelPane, null, CLASS_GLGL_DIALOG_CANCEL_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         okCancelPane.setAlignment(Pos.CENTER);
         dialogPane.setBottom(okCancelPane);
         heightLabel = nodesBuilder.buildLabel(GLGL_ITEM_DIALOG_HEIGHT_LABEL, null, null, CLASS_GLGL_DIALOG_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);

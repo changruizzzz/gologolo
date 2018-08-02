@@ -307,19 +307,19 @@ public class AppGUIModule {
             });
         }
         if (props.isTrue(HAS_CLOSE)) {
-            Button closeButton = nodesBuilder.buildIconButton(CLOSE_BUTTON, null, fileToolbar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, DISABLED);
+            Button closeButton = nodesBuilder.buildIconButton(CLOSE_BUTTON, null, fileToolbar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
             closeButton.setOnAction(e -> {
                 fileController.processCloseRequest();
             });
         }
         if (props.isTrue(HAS_SAVE)) {
-            Button saveButton = nodesBuilder.buildIconButton(SAVE_BUTTON, null, fileToolbar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, DISABLED);
+            Button saveButton = nodesBuilder.buildIconButton(SAVE_BUTTON, null, fileToolbar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
             saveButton.setOnAction(e -> {
                 fileController.processSaveRequest();
             });
         }
         if (props.isTrue(HAS_EXPORT)) {
-            Button exportButton = nodesBuilder.buildIconButton(EXPORT_BUTTON, null, fileToolbar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, DISABLED);
+            Button exportButton = nodesBuilder.buildIconButton(EXPORT_BUTTON, null, fileToolbar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
             exportButton.setOnAction(e -> {
                 fileController.processExportRequest();
             });
@@ -340,9 +340,9 @@ public class AppGUIModule {
         topToolbarPane.getChildren().add(clipboardToolbar);
 
         // THIS IS AN ALL OR NOTHING TOOLBAR
-        Button cutButton = nodesBuilder.buildIconButton(CUT_BUTTON, null, clipboardToolbar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, DISABLED);
-        Button copyButton = nodesBuilder.buildIconButton(COPY_BUTTON, null, clipboardToolbar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, DISABLED);
-        Button pasteButton = nodesBuilder.buildIconButton(PASTE_BUTTON, null, clipboardToolbar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, DISABLED);
+        Button cutButton = nodesBuilder.buildIconButton(CUT_BUTTON, null, clipboardToolbar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        Button copyButton = nodesBuilder.buildIconButton(COPY_BUTTON, null, clipboardToolbar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        Button pasteButton = nodesBuilder.buildIconButton(PASTE_BUTTON, null, clipboardToolbar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
     }
 
     public void registerClipboardComponent() {
@@ -367,11 +367,11 @@ public class AppGUIModule {
         undoController = new AppUndoController(app);
 
         // THIS IS AN ALL OR NOTHING TOOLBAR
-        Button undoButton = nodesBuilder.buildIconButton(UNDO_BUTTON, null, undoToolbar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, DISABLED);
+        Button undoButton = nodesBuilder.buildIconButton(UNDO_BUTTON, null, undoToolbar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         undoButton.setOnAction(e -> {
             undoController.processUndoRequest();
         });
-        Button redoButton = nodesBuilder.buildIconButton(REDO_BUTTON, null, undoToolbar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, DISABLED);
+        Button redoButton = nodesBuilder.buildIconButton(REDO_BUTTON, null, undoToolbar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         redoButton.setOnAction(e -> {
             undoController.processRedoRequest();
         });
