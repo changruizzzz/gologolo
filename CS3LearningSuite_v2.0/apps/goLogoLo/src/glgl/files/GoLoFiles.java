@@ -49,7 +49,7 @@ import org.xml.sax.SAXException;
 import properties_manager.PropertiesManager;
 //import static tdlm.ToDoPropertyType.TDLM_EXPORT_TEMPLATE_FILE_NAME;
 import glgl.data.GoLoData;
-import glgl.data.GoLoItemPrototype;
+import glgl.data.GoLoComponentPrototype;
 
 /**
  *

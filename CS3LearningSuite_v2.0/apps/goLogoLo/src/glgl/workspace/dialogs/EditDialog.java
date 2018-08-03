@@ -28,7 +28,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import properties_manager.PropertiesManager;
 import glgl.GoLogoLoApp;
-import glgl.data.GoLoItemPrototype;
+import glgl.data.GoLoComponentPrototype;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_DIALOG_CANCEL_BUTTON;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_DIALOG_GRID;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_DIALOG_HEADER;
@@ -66,8 +66,8 @@ public class EditDialog extends Stage {
     TextField nameTextField = new TextField();
     AppNodesBuilder nodesBuilder;
     
-    GoLoItemPrototype itemToEdit;
-    GoLoItemPrototype editedItem;
+    GoLoComponentPrototype itemToEdit;
+    GoLoComponentPrototype editedItem;
     boolean editing;
     boolean finish = false;
 

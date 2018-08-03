@@ -90,7 +90,7 @@ import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_BOX;
 
 
 import glgl.GoLogoLoApp;
-import glgl.data.GoLoItemPrototype;
+import glgl.data.GoLoComponentPrototype;
 import glgl.workspace.controllers.ItemsController;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_BODY;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_COLOR_PICKER;
@@ -113,6 +113,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 
 
 
@@ -178,16 +179,16 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
         VBox itemsPane              = glglNodesBuilder.buildVBox(GLGL_ITEMS_PANE,                    null,       null,   CLASS_GLGL_ITEM_PANE, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
         glglPane.setLeft(itemsPane);
         // AND NOW THE TABLE
-        TableView<GoLoItemPrototype> itemsTable = glglNodesBuilder.buildTableView(GLGL_ITEMS_TABLE_VIEW,       itemsPane,          null,   CLASS_GLGL_TABLE, HAS_KEY_HANDLER,    FOCUS_TRAVERSABLE,  true);
+        TableView<GoLoComponentPrototype> itemsTable = glglNodesBuilder.buildTableView(GLGL_ITEMS_TABLE_VIEW,       itemsPane,          null,   CLASS_GLGL_TABLE, HAS_KEY_HANDLER,    FOCUS_TRAVERSABLE,  true);
         TableColumn orderColumn              = glglNodesBuilder.buildTableColumn(  GLGL_ORDER_COLUMN,    itemsTable,         CLASS_GLGL_COLUMN);
         TableColumn nameColumn           = glglNodesBuilder.buildTableColumn(  GLGL_NAME_COLUMN, itemsTable,         CLASS_GLGL_COLUMN);
         TableColumn typeColumn             = glglNodesBuilder.buildTableColumn(  GLGL_TYPE_COLUMN,  itemsTable,         CLASS_GLGL_COLUMN);
         itemsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         // SPECIFY THE TYPES FOR THE COLUMNS
-        orderColumn.setCellValueFactory(     new PropertyValueFactory<Integer,    String>("Order"));
-        nameColumn.setCellValueFactory(  new PropertyValueFactory<String,    String>("Name"));
-        typeColumn.setCellValueFactory(    new PropertyValueFactory<String, String>("Type"));
+        orderColumn.setCellValueFactory(     new PropertyValueFactory("order"));
+        nameColumn.setCellValueFactory(  new PropertyValueFactory("name"));
+        typeColumn.setCellValueFactory(    new PropertyValueFactory("type"));
         
         HBox itemButtonsPane        = glglNodesBuilder.buildHBox(GLGL_ITEM_BUTTONS_PANE,             itemsPane,          null,   CLASS_GLGL_BOX, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
         Button moveItemUpButton     = glglNodesBuilder.buildIconButton(GLGL_MOVE_ITEM_UP_BUTTON,     itemButtonsPane,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
@@ -201,7 +202,8 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
         
         
         //This IS THE MAIN WORKING AREA IN THE MIDDLE
-        VBox bodyPane                = glglNodesBuilder.buildVBox(GLGL_BODY_PANE,                    null,       null,   CLASS_GLGL_BODY, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
+        Pane bodyPane = new Pane();
+        bodyPane.getStyleClass().add(CLASS_GLGL_BODY);
         glglPane.setCenter(bodyPane);
         
 

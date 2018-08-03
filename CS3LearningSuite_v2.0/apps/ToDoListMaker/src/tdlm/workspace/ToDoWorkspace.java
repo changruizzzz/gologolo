@@ -129,13 +129,13 @@ public class ToDoWorkspace extends AppWorkspaceComponent {
         TableColumn completedColumn     = tdlBuilder.buildTableColumn(  TDLM_COMPLETED_COLUMN,   itemsTable,         CLASS_TDLM_COLUMN);
 
         // SPECIFY THE TYPES FOR THE COLUMNS
-        categoryColumn.setCellValueFactory(     new PropertyValueFactory<String,    String>("category"));
-        descriptionColumn.setCellValueFactory(  new PropertyValueFactory<String,    String>("description"));
-        startDateColumn.setCellValueFactory(    new PropertyValueFactory<LocalDate, String>("startDate"));
-        completedColumn.setCellValueFactory(    new PropertyValueFactory<Boolean,   String>("completed"));
-        assignedToColumn.setCellValueFactory(     new PropertyValueFactory<String,    String>("assignedTo"));
+        categoryColumn.setCellValueFactory(     new PropertyValueFactory("category"));
+        descriptionColumn.setCellValueFactory(  new PropertyValueFactory("description"));
+        startDateColumn.setCellValueFactory(    new PropertyValueFactory("startDate"));
+        completedColumn.setCellValueFactory(    new PropertyValueFactory("completed"));
+        assignedToColumn.setCellValueFactory(     new PropertyValueFactory("assignedTo"));
 
-        endDateColumn.setCellValueFactory(    new PropertyValueFactory<LocalDate, String>("endDate"));
+        endDateColumn.setCellValueFactory(    new PropertyValueFactory("endDate"));
 
 	// AND PUT EVERYTHING IN THE WORKSPACE
 	workspace = new BorderPane();

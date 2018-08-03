@@ -161,9 +161,10 @@
 
 
 .glgl_body {
-    -fx-background-color: white;
-    -fx-border:2 2 2 2;
+    -fx-background-color: -swatch-complement;
+    -fx-border-width:0 2 0 2;
     -fx-min-width: 800;
+/*    -fx-border-color: black;*/
 
 }
 .glgl_big_header, .glgl_small_header, .glgl_prompt, .glgl_text_field {
@@ -200,7 +201,7 @@
     -fx-font-size: 10pt;
     -fx-pref-width: 330;
     
-    -fx-pref-height: 800;
+    -fx-pref-height: 2000;
 
 }
 .column-header {
