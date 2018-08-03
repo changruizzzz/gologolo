@@ -49,5 +49,6 @@ public class GLGLStyle {
     public static final String CLASS_GLGL_DIALOG_PANE           = "glgl_dialog_pane";
     public static final String CLASS_GLGL_DIALOG_TITLE_PANE     = "glgl_dialog_title_pane";
     
+    public static final String CLASS_GLGL_RECTANGLE_BACK     = "glgl_rectangle_back";
 
 }

@@ -14,10 +14,15 @@ import javafx.scene.shape.Rectangle;
  * @author changruizhou
  */
 public class GoLoRectangle extends GoLoComponentPrototype {
+
     
     public GoLoRectangle() {
-        goLoShape = new Rectangle(xCoordinate, yCoordinate,750.0,750.0);
-        goLoShape.setFill(Color.ALICEBLUE);
+        goLoShape = new Rectangle(80,40);
+        type = new SimpleStringProperty("Rectangle");
+        
+    }
+    public GoLoRectangle(double width, double height) {
+        goLoShape = new Rectangle(width, height);
         type = new SimpleStringProperty("Rectangle");
         
     }

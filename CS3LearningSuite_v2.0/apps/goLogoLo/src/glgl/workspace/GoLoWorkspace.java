@@ -25,7 +25,6 @@ import static glgl.GoLoPropertyType.GLGL_ADD_IMAGE_BUTTON;
 import static glgl.GoLoPropertyType.GLGL_ADD_RECTANGLE_BUTTON;
 import static glgl.GoLoPropertyType.GLGL_ADD_TEXT_BUTTON;
 import static glgl.GoLoPropertyType.GLGL_ADD_TRIANGLE_BUTTON;
-import static glgl.GoLoPropertyType.GLGL_BODY_PANE;
 import static glgl.GoLoPropertyType.GLGL_BOLD_BUTTON;
 import static glgl.GoLoPropertyType.GLGL_BORDER_BOX;
 import static glgl.GoLoPropertyType.GLGL_BORDER_COLOR_PICKER;
@@ -91,7 +90,7 @@ import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_BOX;
 
 import glgl.GoLogoLoApp;
 import glgl.data.GoLoComponentPrototype;
-import glgl.workspace.controllers.ItemsController;
+import glgl.workspace.controllers.ComponentController;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_BODY;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_COLOR_PICKER;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_COLUMN;
@@ -103,6 +102,7 @@ import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_PROMPT;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_SLIDER;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_SMALL_HEADER;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_TABLE;
+import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
@@ -113,7 +113,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 
 
 
@@ -140,7 +140,7 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
         
         
         
-        ItemsController itemsController = new ItemsController((GoLogoLoApp)app);
+        ComponentController componentsController = new ComponentController((GoLogoLoApp)app);
                 
         // THIS WILL BUILD ALL OF OUR JavaFX COMPONENTS FOR US
         AppNodesBuilder glglNodesBuilder = app.getGUIModule().getNodesBuilder();
@@ -163,7 +163,7 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
 
         Button resizeButton = glglNodesBuilder.buildIconButton(RESIZE_BUTTON, null, zoomToolBar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         resizeButton.setOnAction(e -> {
-            itemsController.processResize();
+            componentsController.processResize();
         }); 
         CheckBox snapBox = glglNodesBuilder.buildCheckBox(SNAP_BOX, null, zoomToolBar, null, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         Label snapLabel = glglNodesBuilder.buildLabel(SNAP_BUTTON, null, zoomToolBar, CLASS_DJF_TOOLBAR_TEXT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
@@ -184,7 +184,7 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
         TableColumn nameColumn           = glglNodesBuilder.buildTableColumn(  GLGL_NAME_COLUMN, itemsTable,         CLASS_GLGL_COLUMN);
         TableColumn typeColumn             = glglNodesBuilder.buildTableColumn(  GLGL_TYPE_COLUMN,  itemsTable,         CLASS_GLGL_COLUMN);
         itemsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
+        
         // SPECIFY THE TYPES FOR THE COLUMNS
         orderColumn.setCellValueFactory(     new PropertyValueFactory("order"));
         nameColumn.setCellValueFactory(  new PropertyValueFactory("name"));
@@ -195,18 +195,17 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
         Button moveItemDownButton   = glglNodesBuilder.buildIconButton(GLGL_MOVE_ITEM_DOWN_BUTTON,   itemButtonsPane,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
         Button editItemButton       = glglNodesBuilder.buildIconButton(GLGL_EDIT_ITEM_BUTTON,        itemButtonsPane,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
         editItemButton.setOnAction(e -> {
-            itemsController.processRename();
+            componentsController.processRename();
         });
 
 
         
         
         //This IS THE MAIN WORKING AREA IN THE MIDDLE
-        Pane bodyPane = new Pane();
+        StackPane bodyPane = new StackPane();
         bodyPane.getStyleClass().add(CLASS_GLGL_BODY);
         glglPane.setCenter(bodyPane);
-        
-
+        bodyPane.setAlignment(Pos.CENTER);
 
 
 
@@ -222,8 +221,16 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
         Button addRectangleButton       = glglNodesBuilder.buildIconButton(GLGL_ADD_RECTANGLE_BUTTON,    elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
         Button addCircleButton          = glglNodesBuilder.buildIconButton(GLGL_ADD_CIRCLE_BUTTON,       elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
         Button addTriangleButton        = glglNodesBuilder.buildIconButton(GLGL_ADD_TRIANGLE_BUTTON,     elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
-        Button RemoveButton             = glglNodesBuilder.buildIconButton(GLGL_REMOVE_BUTTON,           elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  DISABLED);
-	//FONT SETTING CONTROL
+        Button RemoveButton             = glglNodesBuilder.buildIconButton(GLGL_REMOVE_BUTTON,           elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
+	addRectangleButton.setOnAction(e->{
+            componentsController.processAddRectangle();});
+        RemoveButton.setOnAction(e -> {
+            componentsController.processRemoveItems();});
+
+
+
+        //FONT SETTING CONTROL
+        
         VBox fontSettingBox             = glglNodesBuilder.buildVBox(GLGL_FONT_SETTING_BOX,            functionPane,   null,   CLASS_GLGL_BOX, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
         HBox fontSettingCombo           = glglNodesBuilder.buildHBox(GLGL_FONT_SETTING_COMBO,                  fontSettingBox,   null,   CLASS_GLGL_BOX, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
         ComboBox fontCombo              = glglNodesBuilder.buildComboBox(GLGL_FONT_COMBO, GLGL_FONT_OPTIONS, GLGL_DEFAULT_FONT, fontSettingCombo, null, CLASS_GLGL_COMBO, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);

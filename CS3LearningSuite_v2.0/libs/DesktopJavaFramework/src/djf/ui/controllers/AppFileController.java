@@ -44,7 +44,6 @@ public class AppFileController {
             if (continueToMakeNew) {
                 // RESET EVERYTHING ANEW
                 fileSettings.newWork();
-                
                 // TELL THE USER NEW WORK IS UNDERWAY
                 AppDialogsFacade.showMessageDialog(app.getGUIModule().getWindow(), NEW_SUCCESS_TITLE, NEW_SUCCESS_CONTENT);
             }

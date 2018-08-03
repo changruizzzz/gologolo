@@ -17,7 +17,6 @@ public enum GoLoPropertyType {
     GOLOGOLO_LABEL,
     
     // THIS IS THE DETAILS PANE
-
        
     // ITEMS EDITING
     GLGL_BODY_PANE,
@@ -108,5 +107,9 @@ public enum GoLoPropertyType {
     GLGL_ITEM_DIALOG_CANCEL_BUTTON,
     
     // THIS IS THE EXPORT TEMPLATE FILE NAME
-    GLGL_EXPORT_TEMPLATE_FILE_NAME
+    GLGL_EXPORT_TEMPLATE_FILE_NAME,
+    
+    //
+    GLGL_DEFAULT_WIDTH,
+    GLGL_DEFAULT_HEIGHT
 }

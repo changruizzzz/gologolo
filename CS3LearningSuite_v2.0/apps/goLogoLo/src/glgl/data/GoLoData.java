@@ -2,20 +2,22 @@ package glgl.data;
 
 import djf.components.AppDataComponent;
 import djf.modules.AppGUIModule;
+import static glgl.GoLoPropertyType.GLGL_DEFAULT_HEIGHT;
+import static glgl.GoLoPropertyType.GLGL_DEFAULT_WIDTH;
 import static glgl.GoLoPropertyType.GLGL_ITEMS_TABLE_VIEW;
 import glgl.GoLogoLoApp;
-import java.time.LocalDate;
+import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_RECTANGLE_BACK;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
-import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import properties_manager.PropertiesManager;
 
 
 /**
@@ -24,25 +26,22 @@ import javafx.scene.layout.Pane;
  */
 public class GoLoData implements AppDataComponent {
     GoLogoLoApp app;
-    ObservableList<GoLoComponentPrototype> items;
-    TableViewSelectionModel itemsSelectionModel;
-    Pane workArea;
+    ObservableList<GoLoComponentPrototype> components;
+    TableViewSelectionModel componentsSelectionModel;
+    Pane background;
     
     public GoLoData(GoLogoLoApp initApp) {
-        app = initApp;
-        workArea =(Pane)((BorderPane)((BorderPane)app.getWorkspaceComponent().getWorkspace()).getCenter()).getCenter();
-        
+        app = initApp;        
         // GET ALL THE THINGS WE'LL NEED TO MANIUPLATE THE TABLE
         TableView tableView = (TableView) app.getGUIModule().getGUINode(GLGL_ITEMS_TABLE_VIEW);
-        items = tableView.getItems();
-        itemsSelectionModel = tableView.getSelectionModel();
-        itemsSelectionModel.setSelectionMode(SelectionMode.MULTIPLE);
-        addComponent(new GoLoRectangle());
+        components = tableView.getItems();
+        componentsSelectionModel = tableView.getSelectionModel();
+        componentsSelectionModel.setSelectionMode(SelectionMode.MULTIPLE);
     }
     
     
-    public Iterator<GoLoComponentPrototype> itemsIterator() {
-        return this.items.iterator();
+    public Iterator<GoLoComponentPrototype> componentsIterator() {
+        return this.components.iterator();
     }
 
     @Override
@@ -53,15 +52,28 @@ public class GoLoData implements AppDataComponent {
         
         // CLEAR OUT THE ITEMS FROM THE TABLE
         TableView tableView = (TableView)gui.getGUINode(GLGL_ITEMS_TABLE_VIEW);
-        items = tableView.getItems();
-        items.clear();
+        components = tableView.getItems();
+        components.clear();
+        initBackground();
     }
+    public void initBackground() {
+        background = new Pane();
+        ((Pane)((BorderPane)((BorderPane)app.getWorkspaceComponent().getWorkspace()).getCenter()).getCenter()).getChildren().add(background);
+        background.getStyleClass().add(CLASS_GLGL_RECTANGLE_BACK);
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        double width = Double.parseDouble(props.getProperty(GLGL_DEFAULT_WIDTH));
+        double height = Double.parseDouble(props.getProperty(GLGL_DEFAULT_HEIGHT));
+        resize(width,height);
 
+    }
+    
+    
     public boolean isItemSelected() {
         ObservableList<GoLoComponentPrototype> selectedItems = this.getSelectedItems();
         return (selectedItems != null) && (selectedItems.size() == 1);
     }
     
+
     public boolean areItemsSelected() {
         ObservableList<GoLoComponentPrototype> selectedItems = this.getSelectedItems();
         return (selectedItems != null) && (selectedItems.size() > 1);        
@@ -71,38 +83,44 @@ public class GoLoData implements AppDataComponent {
     public boolean isUpMovable(){
         ObservableList<GoLoComponentPrototype> selectedItems = this.getSelectedItems();
         if(selectedItems != null && selectedItems.size() == 1)  
-            return items.indexOf(selectedItems.get(0)) != 0;
+            return components.indexOf(selectedItems.get(0)) != 0;
         return false;
     }
     
     public boolean isDownMovable(){
         ObservableList<GoLoComponentPrototype> selectedItems = this.getSelectedItems();
         if(selectedItems != null && selectedItems.size() == 1)  
-            return items.indexOf(selectedItems.get(0)) != items.size() - 1;
+            return components.indexOf(selectedItems.get(0)) != components.size() - 1;
         return false;
     }
 
-
+    public void resize(double width, double height) {
+        background.setMinSize(width, height);
+        background.setMaxSize(width, height);
+    }
     public void addComponent(GoLoComponentPrototype componentToAdd) {
-        items.add(componentToAdd);
-        workArea.getChildren().add(componentToAdd.goLoShape);
+        components.add(componentToAdd);
+        background.getChildren().add(componentToAdd.goLoShape);
+        componentToAdd.setOrder(background.getChildren().size());
         
     }
 
     public void removeItem(GoLoComponentPrototype componentToDelete) {
-        items.remove(componentToDelete);
+        components.remove(componentToDelete);
+        background.getChildren().remove(componentToDelete.goLoShape);
+
     }
     
-    public void replaceItem(GoLoComponentPrototype itemToEdit, GoLoComponentPrototype editedItem) {
-        int pos = items.indexOf(itemToEdit);
-        items.set(pos, editedItem);
+    public void replaceItem(GoLoComponentPrototype componentToEdit, GoLoComponentPrototype editedItem) {
+        int pos = components.indexOf(componentToEdit);
+        components.set(pos, editedItem);
         selectItem(editedItem);
     }
     
     public void moveItem(GoLoComponentPrototype initItem, int mode) {
-        int pos = items.indexOf(initItem);
-        items.set(pos, items.get(pos + mode));
-        items.set(pos + mode, initItem);
+        int pos = components.indexOf(initItem);
+        components.set(pos, components.get(pos + mode));
+        components.set(pos + mode, initItem);
         selectItem(initItem);
 
     }
@@ -114,69 +132,72 @@ public class GoLoData implements AppDataComponent {
         return getSelectedItems().get(0);
     }
     public ObservableList<GoLoComponentPrototype> getSelectedItems() {
-        return (ObservableList<GoLoComponentPrototype>)this.itemsSelectionModel.getSelectedItems();
+        return (ObservableList<GoLoComponentPrototype>)this.componentsSelectionModel.getSelectedItems();
     }
 
-    public int getItemIndex(GoLoComponentPrototype item) {
-        return items.indexOf(item);
+    public int getItemIndex(GoLoComponentPrototype component) {
+        return components.indexOf(component);
     }
 
-    public void addItemAt(GoLoComponentPrototype item, int itemIndex) {
-        items.add(itemIndex, item);
+    public void addItemAt(GoLoComponentPrototype component, int componentIndex) {
+        components.add(componentIndex, component);
     }
 
     public void moveItem(int oldIndex, int newIndex) {
-        GoLoComponentPrototype itemToMove = items.remove(oldIndex);
-        items.add(newIndex, itemToMove);
+        GoLoComponentPrototype componentToMove = components.remove(oldIndex);
+        components.add(newIndex, componentToMove);
     }
 
     public int getNumItems() {
-        return items.size();
+        return components.size();
     }
 
-    public void selectItem(GoLoComponentPrototype itemToSelect) {
-        this.itemsSelectionModel.select(itemToSelect);
+    public void selectItem(GoLoComponentPrototype componentToSelect) {
+        this.componentsSelectionModel.select(componentToSelect);
     }
 
-    public ArrayList<Integer> removeAll(ArrayList<GoLoComponentPrototype> itemsToRemove) {
-        ArrayList<Integer> itemIndices = new ArrayList();
-        for (GoLoComponentPrototype item: itemsToRemove) {
-            itemIndices.add(items.indexOf(item));
+    public ArrayList<Integer> removeAll(ArrayList<GoLoComponentPrototype> componentsToRemove) {
+        ArrayList<Integer> componentIndices = new ArrayList();
+        for (GoLoComponentPrototype component: componentsToRemove) {
+            componentIndices.add(components.indexOf(component));
         }
-        for (GoLoComponentPrototype item: itemsToRemove) {
-            items.remove(item);
+        for (GoLoComponentPrototype componentToRemove: componentsToRemove) {
+            components.remove(componentToRemove);
+            background.getChildren().remove(componentToRemove.getShape());
         }
-        return itemIndices;
+        return componentIndices;
     }
 
-    public void addAll(ArrayList<GoLoComponentPrototype> itemsToAdd, ArrayList<Integer> addItemLocations) {
-        for (int i = 0; i < itemsToAdd.size(); i++) {
-            GoLoComponentPrototype itemToAdd = itemsToAdd.get(i);
-            Integer location = addItemLocations.get(i);
-            items.add(location, itemToAdd);
+    public void addAll(ArrayList<GoLoComponentPrototype> componentsToAdd, ArrayList<Integer> addComponentLocations) {
+        for (int i = 0; i < componentsToAdd.size(); i++) {
+            GoLoComponentPrototype componentToAdd = componentsToAdd.get(i);
+            Integer location = addComponentLocations.get(i);
+            components.add(location, componentToAdd);
+            background.getChildren().add(location, componentToAdd.getShape());
         }
     }
 
     public ArrayList<GoLoComponentPrototype> getCurrentItemsOrder() {
         ArrayList<GoLoComponentPrototype> orderedItems = new ArrayList();
-        for (GoLoComponentPrototype item : items) {
-            orderedItems.add(item);
+        for (GoLoComponentPrototype component : components) {
+            orderedItems.add(component);
         }
         return orderedItems;
     }
 
     public void clearSelected() {
-        this.itemsSelectionModel.clearSelection();
+        this.componentsSelectionModel.clearSelection();
     }
 
     public void sortItems(Comparator sortComparator) {
-        Collections.sort(items, sortComparator);
+        Collections.sort(components, sortComparator);
     }
 
     public void rearrangeItems(ArrayList<GoLoComponentPrototype> oldListOrder) {
-        items.clear();
-        for (GoLoComponentPrototype item : oldListOrder) {
-            items.add(item);
+        components.clear();
+        for (GoLoComponentPrototype component : oldListOrder) {
+            components.add(component);
         }
     }
+    
 }

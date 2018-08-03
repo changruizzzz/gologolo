@@ -1,17 +1,23 @@
 package glgl.workspace.controllers;
 
 import glgl.GoLogoLoApp;
+import glgl.data.GoLoComponentPrototype;
+import glgl.data.GoLoData;
+import glgl.data.GoLoRectangle;
+import glgl.transactions.AddComponent_Transaction;
+import glgl.transactions.RemoveComponents_Transaction;
 import glgl.workspace.dialogs.EditDialog;
+import java.util.ArrayList;
 
 /**
  *
  * @author McKillaGorilla, ChangruiZhou
  */
-public class ItemsController {
+public class ComponentController {
     GoLogoLoApp app;
     EditDialog editDialog;
     
-    public ItemsController(GoLogoLoApp initApp) {
+    public ComponentController(GoLogoLoApp initApp) {
         app = initApp;
         editDialog = new EditDialog(app);
     }
@@ -38,12 +44,12 @@ public class ItemsController {
     }
     
     public void processRemoveItems() {
-//        ToDoData data = (ToDoData)app.getDataComponent();
-//        if (data.isItemSelected() || data.areItemsSelected()) {
-//            ArrayList<ToDoItemPrototype> itemsToRemove = new ArrayList(data.getSelectedItems());
-//            RemoveItems_Transaction transaction = new RemoveItems_Transaction(app, itemsToRemove);
-//            app.processTransaction(transaction);
-//        }
+        GoLoData data = (GoLoData)app.getDataComponent();
+        if (data.isItemSelected() || data.areItemsSelected()) {
+            ArrayList<GoLoComponentPrototype> itemsToRemove = new ArrayList(data.getSelectedItems());
+            RemoveComponents_Transaction transaction = new RemoveComponents_Transaction(data, itemsToRemove);
+            app.processTransaction(transaction);
+        }
     }
     
     public void processEditItem() {
@@ -56,6 +62,13 @@ public class ItemsController {
 //            app.processTransaction(transaction);
 //            itemDialog.reset();
 //        }
+    }
+    
+    public void processAddRectangle() {
+        GoLoData data = (GoLoData)app.getDataComponent();
+        GoLoRectangle component = new GoLoRectangle();
+        AddComponent_Transaction add = new AddComponent_Transaction(data, component);
+        app.processTransaction(add);
     }
     
     public void processRename() {

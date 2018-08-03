@@ -165,7 +165,12 @@
     -fx-border-width:0 2 0 2;
     -fx-min-width: 800;
 /*    -fx-border-color: black;*/
+    
+}
+.glgl_rectangle_back {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 
+    -fx-background-color:white;
 }
 .glgl_big_header, .glgl_small_header, .glgl_prompt, .glgl_text_field {
     -fx-font-weight: bold;
@@ -200,18 +205,16 @@
     -fx-border-radius: 0 0 8 8;
     -fx-font-size: 10pt;
     -fx-pref-width: 330;
-    
     -fx-pref-height: 2000;
-
 }
 .column-header {
-/*    -fx-background-color: black;*/
     -fx-font-size: 12pt;
     -fx-font-weight: bold;
+
 }
 .table-row-cell:empty {
-    -fx-background-color: #777777;
-    -fx-border-color: #777777;
+    -fx-background-color: -swatch-complement;    
+    -fx-border-color: transparent;
 } 
 
 /* FOR FUNCTION PANE */

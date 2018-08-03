@@ -111,6 +111,11 @@
         <property name="ENGLISH_ABBREVIATION"           value="EN"></property>
         <property name="KOREAN_ABBREVIATION"            value="KO"></property>
         <property name="SPANISH_ABBREVIATION"           value="ES"></property>
+        
+        
+        
+        <property name="GLGL_DEFAULT_HEIGHT"                value="300"></property>
+        <property name="GLGL_DEFAULT_WIDTH"                 value="700"></property>
 
     </property_list>
     <property_options_list>

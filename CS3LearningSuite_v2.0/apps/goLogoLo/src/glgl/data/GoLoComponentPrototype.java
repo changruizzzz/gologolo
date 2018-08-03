@@ -24,13 +24,13 @@ public class GoLoComponentPrototype {
     protected StringProperty name;
     protected IntegerProperty order;
     final double DEFAULT_X = 0;
-    final double DEFAULT_Y = 200;
+    final double DEFAULT_Y = 0;
 
     public GoLoComponentPrototype() {
         xCoordinate = DEFAULT_X;
         yCoordinate = DEFAULT_Y;
         order = new SimpleIntegerProperty(0);
-        name = new SimpleStringProperty("Layer " + order);
+        name = new SimpleStringProperty("Layer " + order.get());
     }
     public Shape getShape() {
         return goLoShape;

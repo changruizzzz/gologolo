@@ -291,7 +291,8 @@ public abstract class AppTemplate extends Application {
      */
     public void processTransaction(jTPS_Transaction transaction) {
         tps.addTransaction(transaction);
-        foolproofModule.updateAll();
+        //@todo uncomment this after implement foolproofDesign
+//        foolproofModule.updateAll();
     }
     
     // ABSTRACT FUNCTIONS TO BE IMPLEMENTED IN CONCRETE CHILD CLASSES
