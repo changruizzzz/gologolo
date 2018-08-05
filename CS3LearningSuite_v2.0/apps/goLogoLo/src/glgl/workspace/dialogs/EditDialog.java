@@ -3,6 +3,7 @@ package glgl.workspace.dialogs;
 import static djf.modules.AppGUIModule.ENABLED;
 import static djf.modules.AppGUIModule.FOCUS_TRAVERSABLE;
 import static djf.modules.AppGUIModule.HAS_KEY_HANDLER;
+import static djf.modules.AppGUIModule.NO_KEY_HANDLER;
 import djf.ui.AppNodesBuilder;
 import static glgl.GoLoPropertyType.GLGL_ITEM_DIALOG_CANCEL_BUTTON;
 import static glgl.GoLoPropertyType.GLGL_ITEM_DIALOG_HEADER_LABEL;
@@ -29,6 +30,7 @@ import javafx.stage.Stage;
 import properties_manager.PropertiesManager;
 import glgl.GoLogoLoApp;
 import glgl.data.GoLoComponentPrototype;
+import glgl.data.GoLoData;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_DIALOG_CANCEL_BUTTON;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_DIALOG_GRID;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_DIALOG_HEADER;
@@ -68,7 +70,9 @@ public class EditDialog extends Stage {
     
     GoLoComponentPrototype itemToEdit;
     GoLoComponentPrototype editedItem;
-    boolean editing;
+    double backgroundWidth = -1;
+    double backgroundHeight = -1;
+    
     boolean finish = false;
 
     EventHandler cancelHandler;
@@ -116,33 +120,34 @@ public class EditDialog extends Stage {
         okCancelPane.setAlignment(Pos.CENTER);
         dialogPane.setBottom(okCancelPane);
         heightLabel = nodesBuilder.buildLabel(GLGL_ITEM_DIALOG_HEIGHT_LABEL, null, null, CLASS_GLGL_DIALOG_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        heightTextField = nodesBuilder.buildTextField(GLGL_ITEM_DIALOG_HEIGHT_TEXT_FIELD, null, null, CLASS_GLGL_DIALOG_TEXT_FIELD, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        heightTextField = nodesBuilder.buildTextField(GLGL_ITEM_DIALOG_HEIGHT_TEXT_FIELD, null, null, CLASS_GLGL_DIALOG_TEXT_FIELD, NO_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         widthLabel = nodesBuilder.buildLabel(GLGL_ITEM_DIALOG_WIDTH_LABEL, null, null, CLASS_GLGL_DIALOG_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        widthTextField = nodesBuilder.buildTextField(GLGL_ITEM_DIALOG_WIDTH_TEXT_FIELD, null, null, CLASS_GLGL_DIALOG_TEXT_FIELD, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        widthTextField = nodesBuilder.buildTextField(GLGL_ITEM_DIALOG_WIDTH_TEXT_FIELD, null, null, CLASS_GLGL_DIALOG_TEXT_FIELD, NO_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         resizeGridPane.add(heightLabel, 0, 0, 1, 1);
         resizeGridPane.add(heightTextField, 1, 0, 1, 1);
         resizeGridPane.add(widthLabel, 0, 1, 1, 1);
         resizeGridPane.add(widthTextField, 1, 1, 1, 1);
         nameLabel = nodesBuilder.buildLabel(GLGL_ITEM_DIALOG_RENAME_LABEL, null, null, CLASS_GLGL_DIALOG_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        nameTextField = nodesBuilder.buildTextField(GLGL_ITEM_DIALOG_RENAME_TEXT_FIELD, null, null, CLASS_GLGL_DIALOG_TEXT_FIELD, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);  
+        nameTextField = nodesBuilder.buildTextField(GLGL_ITEM_DIALOG_RENAME_TEXT_FIELD, null, null, CLASS_GLGL_DIALOG_TEXT_FIELD, NO_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);  
         renameGridPane.add(nameLabel, 0, 0, 1, 1);
         renameGridPane.add(nameTextField, 1, 0, 1, 1);
         resizeGridPane.setAlignment(Pos.CENTER);
         renameGridPane.setAlignment(Pos.CENTER);
 
 
-        // AND SETUP THE EVENT HANDLERS
-//        categoryTextField.setOnAction(e->{
-//            processCompleteWork();
+//         AND SETUP THE EVENT HANDLERS
+        widthTextField.setOnAction(e->{
+            processResizeWork();
+        });
+        heightTextField.setOnAction(e->{
+            processResizeWork();
+        });
+//        nameTextField.setOnAction(e->{
+//            processRenameWork();
 //        });
-//        descriptionTextField.setOnAction(e->{
-//            processCompleteWork();
-//        });
-//        okButton.setOnAction(e->{
-//            processCompleteWork();
-//        });
+        
         cancelButton.setOnAction(e->{
-            editedItem = null;
+            reset();
             this.hide();
         });   
     }
@@ -158,36 +163,26 @@ public class EditDialog extends Stage {
 //        this.hide();
 //    }
     
-//    private void processCompleteWork() {
-//        // GET THE SETTINGS
-//        String category = categoryTextField.getText();
-//        String description = descriptionTextField.getText();
-//        
-//        // IF WE ARE EDITING
-//        ToDoData data = (ToDoData)app.getDataComponent();
-//        if (editing) {
-//            if (data.isValidToDoItemEdit(itemToEdit, category, description, startDate, endDate, completed)) {
-//                editItem = new ToDoItemPrototype(category, description, startDate, endDate, assignedTo, completed);
-//                finish = true;
-//            }
-//        }
-//        // IF WE ARE ADDING
-//        else {
-//            if (data.isValidNewToDoItem(category, description, startDate, endDate, completed)) {
-//                this.makeNewItem();
-//                finish = true;
-////            }
-//        }
-//        
-//        // CLOSE THE DIALOG
-//        if(finish) {
-//            this.hide();
-//            finish = false;
-//        }        
-//        else {
-//            showErrorDialog(data.checkErrorType(category, description, startDate, endDate, completed));
-//        }
-//    }
+    private void processResizeWork() {
+        
+        try {
+            double newWidth = Double.parseDouble(widthTextField.getText());
+            double newHeight = Double.parseDouble(heightTextField.getText());
+            if(newWidth >= 0 && newHeight >= 0) {
+                backgroundWidth = newWidth;
+                backgroundHeight = newHeight;
+                finish = true;
+        }
+        } catch(NumberFormatException nfe) {
+            System.out.println("Wrong format");
+            
+        } 
+        if(finish) {
+            this.hide();
+        }
+
+
+    }
 
     public void showResizeDialog() {  
         dialogPane.setCenter(resizeGridPane);
@@ -196,6 +191,11 @@ public class EditDialog extends Stage {
         String headerText = props.getProperty(GLGL_ITEM_DIALOG_RESIZE_HEADER_TEXT);
         setTitle(headerText);
         headerLabel.setText(headerText);
+        widthTextField.setText("" + ((GoLoData)app.getDataComponent()).getBackground().getMaxWidth());
+        heightTextField.setText("" + ((GoLoData)app.getDataComponent()).getBackground().getMaxHeight());
+        okButton.setOnAction(e->{
+            processResizeWork();
+        });
          // AND OPEN THE DIALOG
         showAndWait();
 
@@ -222,9 +222,7 @@ public class EditDialog extends Stage {
 //        headerLabel.setText(headerText);
 //        setTitle(headerText);
         
-        // WE'LL ONLY PROCEED IF THERE IS A LINE TO EDIT
-        editing = true;
-        
+        // WE'LL ONLY PROCEED IF THERE IS A LINE TO EDIT        
         // USE THE TEXT IN THE HEADER FOR EDIT
 //        categoryTextField.setText(itemToEdit.getCategory());
 //        descriptionTextField.setText(itemToEdit.getDescription());
@@ -247,5 +245,11 @@ public class EditDialog extends Stage {
             djf.ui.dialogs.AppDialogsFacade.showMessageDialog(app.getGUIModule().getWindow(), "NEW_ERROR_TITLE", "DATE_ERROR");
 
     }
- 
+    
+    public double getBackgroundWidth() {
+        return backgroundWidth;
+    }
+    public double getBackgroundHeight() {
+        return backgroundHeight;
+    }
 }  

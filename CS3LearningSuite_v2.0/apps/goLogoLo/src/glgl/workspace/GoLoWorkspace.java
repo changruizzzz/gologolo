@@ -224,6 +224,9 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
         Button RemoveButton             = glglNodesBuilder.buildIconButton(GLGL_REMOVE_BUTTON,           elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
 	addRectangleButton.setOnAction(e->{
             componentsController.processAddRectangle();});
+	addTextButton.setOnAction(e->{
+            componentsController.processAddText();});
+
         RemoveButton.setOnAction(e -> {
             componentsController.processRemoveItems();});
 

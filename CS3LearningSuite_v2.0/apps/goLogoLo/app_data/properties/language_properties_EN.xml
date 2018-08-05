@@ -143,8 +143,8 @@
         <property name="LANGUAGE_DIALOG_HEADER_TEXT"    value="Choose a Language"></property>
         <property name="LANGUAGE_DIALOG_CONTENT_TEXT"   value="Select a Language for the User Interface."></property>
 
-        <property name="WORK_FILE_EXT"          value="tdlm"></property>
-	<property name="WORK_FILE_EXT_DESC"     value="To Do List Maker Files"></property>
+        <property name="WORK_FILE_EXT"          value="glg"></property>
+	<property name="WORK_FILE_EXT_DESC"     value="goLogoLo Files"></property>
 
     </property_list>
     

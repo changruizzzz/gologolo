@@ -4,14 +4,16 @@ import glgl.GoLogoLoApp;
 import glgl.data.GoLoComponentPrototype;
 import glgl.data.GoLoData;
 import glgl.data.GoLoRectangle;
+import glgl.data.GoLoText;
 import glgl.transactions.AddComponent_Transaction;
 import glgl.transactions.RemoveComponents_Transaction;
+import glgl.transactions.ResizeBackground_Transaction;
 import glgl.workspace.dialogs.EditDialog;
 import java.util.ArrayList;
 
 /**
  *
- * @author McKillaGorilla, ChangruiZhou
+ * @author ChangruiZhou
  */
 public class ComponentController {
     GoLogoLoApp app;
@@ -24,6 +26,14 @@ public class ComponentController {
     
     public void processResize() {
         editDialog.showResizeDialog();
+        double width = editDialog.getBackgroundWidth();
+        double height = editDialog.getBackgroundHeight();
+        if(width >= 0 && height >= 0) {
+            GoLoData data = (GoLoData)app.getDataComponent();
+            ResizeBackground_Transaction transaction = new ResizeBackground_Transaction(data, width, height);
+            app.processTransaction(transaction);
+            editDialog.reset();
+        } 
 //        ToDoItemPrototype newItem = itemDialog.getNewItem();        
 //        if (newItem != null) {
 //            // IF IT HAS A UNIQUE NAME AND COLOR
@@ -67,6 +77,13 @@ public class ComponentController {
     public void processAddRectangle() {
         GoLoData data = (GoLoData)app.getDataComponent();
         GoLoRectangle component = new GoLoRectangle();
+        AddComponent_Transaction add = new AddComponent_Transaction(data, component);
+        app.processTransaction(add);
+    }
+    
+    public void processAddText() {
+        GoLoData data = (GoLoData)app.getDataComponent();
+        GoLoText component = new GoLoText();
         AddComponent_Transaction add = new AddComponent_Transaction(data, component);
         app.processTransaction(add);
     }

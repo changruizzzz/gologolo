@@ -17,6 +17,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import properties_manager.PropertiesManager;
 
 
@@ -28,7 +29,8 @@ public class GoLoData implements AppDataComponent {
     GoLogoLoApp app;
     ObservableList<GoLoComponentPrototype> components;
     TableViewSelectionModel componentsSelectionModel;
-    Pane background;
+    StackPane background;
+    StackPane workspacePane;
     
     public GoLoData(GoLogoLoApp initApp) {
         app = initApp;        
@@ -37,6 +39,7 @@ public class GoLoData implements AppDataComponent {
         components = tableView.getItems();
         componentsSelectionModel = tableView.getSelectionModel();
         componentsSelectionModel.setSelectionMode(SelectionMode.MULTIPLE);
+        workspacePane = (StackPane)((BorderPane)((BorderPane)app.getWorkspaceComponent().getWorkspace()).getCenter()).getCenter();
     }
     
     
@@ -57,14 +60,16 @@ public class GoLoData implements AppDataComponent {
         initBackground();
     }
     public void initBackground() {
-        background = new Pane();
-        ((Pane)((BorderPane)((BorderPane)app.getWorkspaceComponent().getWorkspace()).getCenter()).getCenter()).getChildren().add(background);
+        background = new StackPane();
+//        ((Pane)((BorderPane)((BorderPane)app.getWorkspaceComponent().getWorkspace()).getCenter()).getCenter()).getChildren().add(background);
+        workspacePane.getChildren().clear();
+        workspacePane.getChildren().add(background);
         background.getStyleClass().add(CLASS_GLGL_RECTANGLE_BACK);
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         double width = Double.parseDouble(props.getProperty(GLGL_DEFAULT_WIDTH));
         double height = Double.parseDouble(props.getProperty(GLGL_DEFAULT_HEIGHT));
         resize(width,height);
-
+//        System.out.print(background.get);
     }
     
     
@@ -200,4 +205,10 @@ public class GoLoData implements AppDataComponent {
         }
     }
     
+    public Iterator<GoLoComponentPrototype> itemsIterator() {
+        return this.components.iterator();
+    }
+    public Pane getBackground() {
+        return background;
+    }
 }

@@ -18,11 +18,12 @@ public class GoLoRectangle extends GoLoComponentPrototype {
     
     public GoLoRectangle() {
         goLoShape = new Rectangle(80,40);
-        type = new SimpleStringProperty("Rectangle");
-        
+        goLoShape.setFill(Color.ALICEBLUE);
+        type = new SimpleStringProperty("Rectangle");  
     }
-    public GoLoRectangle(double width, double height) {
-        goLoShape = new Rectangle(width, height);
+    public GoLoRectangle(double x, double y, double width, double height, Color fill) {
+        goLoShape = new Rectangle(x, y, width, height);
+        goLoShape.setFill(fill);
         type = new SimpleStringProperty("Rectangle");
         
     }

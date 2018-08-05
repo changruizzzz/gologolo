@@ -1,7 +1,5 @@
 package glgl.files;
 
-import static djf.AppPropertyType.APP_EXPORT_PAGE;
-import static djf.AppPropertyType.APP_PATH_EXPORT;
 import djf.components.AppDataComponent;
 import djf.components.AppFileComponent;
 import java.io.File;
@@ -12,9 +10,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.net.URL;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -29,9 +24,6 @@ import javax.json.JsonWriter;
 import javax.json.JsonWriterFactory;
 import javax.json.stream.JsonGenerator;
 import javax.swing.text.html.HTML;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -45,11 +37,17 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-import properties_manager.PropertiesManager;
 //import static tdlm.ToDoPropertyType.TDLM_EXPORT_TEMPLATE_FILE_NAME;
 import glgl.data.GoLoData;
 import glgl.data.GoLoComponentPrototype;
+import glgl.data.GoLoRectangle;
+import glgl.data.GoLoText;
+import javafx.geometry.VPos;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontSmoothingType;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextBoundsType;
 
 /**
  *
@@ -58,16 +56,14 @@ import glgl.data.GoLoComponentPrototype;
 public class GoLoFiles implements AppFileComponent {
     //todo all
     // FOR JSON SAVING AND LOADING
-    static final String JSON_CATEGORY = "category";
-    static final String JSON_DESCRIPTION = "description";
-    static final String JSON_ASSIGNED_TO = "assigned_to";
 
-    static final String JSON_START_DATE = "start_date";
-    static final String JSON_END_DATE = "end_date";
-    static final String JSON_COMPLETED = "completed";
-    static final String JSON_OWNER = "owner";
-    static final String JSON_NAME = "name";
+
     static final String JSON_ITEMS = "items";
+    static final String JSON_WIDTH = "width";
+    static final String JSON_HEIGHT = "height";
+    static final String JSON_TYPE = "type";
+    static final String JSON_SHAPE = "shape";
+
     
     // FOR EXPORTING TO HTML
     static final String TITLE_TAG = "title";
@@ -87,53 +83,50 @@ public class GoLoFiles implements AppFileComponent {
      */
     @Override
     public void saveData(AppDataComponent data, String filePath) throws IOException {
-//	// GET THE DATA
-//	ToDoData toDoData = (ToDoData)data;
+	// GET THE DATA
+	GoLoData goLoData = (GoLoData)data;
 //	
-//	// FIRST THE LIST NAME AND OWNER
-//        String name = toDoData.getName();
-//        String owner = toDoData.getOwner();
-//        
-//	// NOW BUILD THE JSON ARRAY FOR THE LIST
-//	JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
-//        Iterator<ToDoItemPrototype> itemsIt = toDoData.itemsIterator();
-//	while (itemsIt.hasNext()) {	
-//            ToDoItemPrototype item = itemsIt.next();
-//	    JsonObject itemJson = Json.createObjectBuilder()
-//		    .add(JSON_CATEGORY, item.getCategory())
-//		    .add(JSON_DESCRIPTION, item.getDescription())
-//		    .add(JSON_START_DATE, item.getStartDate().toString())
-//                    .add(JSON_END_DATE, item.getEndDate().toString())
-//		    .add(JSON_COMPLETED, item.isCompleted())
-//                    .add(JSON_ASSIGNED_TO, item.getAssignedTo()).build();
-//	    arrayBuilder.add(itemJson);
-//	}
-//	JsonArray itemsArray = arrayBuilder.build();
-//	
-//	// THEN PUT IT ALL TOGETHER IN A JsonObject
-//	JsonObject toDoDataJSO = Json.createObjectBuilder()
-//                .add(JSON_NAME, name)
-//                .add(JSON_OWNER, owner)
-//		.add(JSON_ITEMS, itemsArray)
-//		.build();
-//	
-//	// AND NOW OUTPUT IT TO A JSON FILE WITH PRETTY PRINTING
-//	Map<String, Object> properties = new HashMap<>(1);
-//	properties.put(JsonGenerator.PRETTY_PRINTING, true);
-//	JsonWriterFactory writerFactory = Json.createWriterFactory(properties);
-//	StringWriter sw = new StringWriter();
-//	JsonWriter jsonWriter = writerFactory.createWriter(sw);
-//	jsonWriter.writeObject(toDoDataJSO);
-//	jsonWriter.close();
-//
-//	// INIT THE WRITER
-//	OutputStream os = new FileOutputStream(filePath);
-//	JsonWriter jsonFileWriter = Json.createWriter(os);
-//	jsonFileWriter.writeObject(toDoDataJSO);
-//	String prettyPrinted = sw.toString();
-//	PrintWriter pw = new PrintWriter(filePath);
-//	pw.write(prettyPrinted);
-//	pw.close();
+	// FIRST THE Width and Height of background
+        String width = "" + goLoData.getBackground().getWidth();
+        String height = "" + goLoData.getBackground().getHeight();
+        
+        
+	// NOW BUILD THE JSON ARRAY FOR THE LIST
+	JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+        Iterator<GoLoComponentPrototype> itemsIt = goLoData.itemsIterator();
+	while (itemsIt.hasNext()) {	
+            GoLoComponentPrototype item = itemsIt.next();
+	    JsonObject itemJson = Json.createObjectBuilder()
+		    .add(JSON_TYPE, item.getType())
+                    .add(JSON_SHAPE, item.getShape().toString()).build();
+	    arrayBuilder.add(itemJson);
+	}
+	JsonArray itemsArray = arrayBuilder.build();
+	
+	// THEN PUT IT ALL TOGETHER IN A JsonObject
+	JsonObject goLoDataJSO = Json.createObjectBuilder()
+                .add(JSON_WIDTH, width)
+                .add(JSON_HEIGHT, height)
+		.add(JSON_ITEMS, itemsArray)
+		.build();
+	
+	// AND NOW OUTPUT IT TO A JSON FILE WITH PRETTY PRINTING
+	Map<String, Object> properties = new HashMap<>(1);
+	properties.put(JsonGenerator.PRETTY_PRINTING, true);
+	JsonWriterFactory writerFactory = Json.createWriterFactory(properties);
+	StringWriter sw = new StringWriter();
+	JsonWriter jsonWriter = writerFactory.createWriter(sw);
+	jsonWriter.writeObject(goLoDataJSO);
+	jsonWriter.close();
+
+	// INIT THE WRITER
+	OutputStream os = new FileOutputStream(filePath);
+	JsonWriter jsonFileWriter = Json.createWriter(os);
+	jsonFileWriter.writeObject(goLoDataJSO);
+	String prettyPrinted = sw.toString();
+	PrintWriter pw = new PrintWriter(filePath);
+	pw.write(prettyPrinted);
+	pw.close();
     }
     
     /**
@@ -152,26 +145,24 @@ public class GoLoFiles implements AppFileComponent {
      */
     @Override
     public void loadData(AppDataComponent data, String filePath) throws IOException {
-//	// CLEAR THE OLD DATA OUT
-//	ToDoData toDoData = (ToDoData)data;
-//	toDoData.reset();
-//	
-//	// LOAD THE JSON FILE WITH ALL THE DATA
-//	JsonObject json = loadJSONFile(filePath);
-//	
-//	// LOAD LIST NAME AND OWNER
-//	String owner = json.getString(JSON_OWNER);
-//        toDoData.setOwner(owner);
-//        String name = json.getString(JSON_NAME);
-//        toDoData.setName(name);
-//	
-//	// AND NOW LOAD ALL THE ITEMS
-//	JsonArray jsonItemArray = json.getJsonArray(JSON_ITEMS);
-//	for (int i = 0; i < jsonItemArray.size(); i++) {
-//	    JsonObject jsonItem = jsonItemArray.getJsonObject(i);
-//	    ToDoItemPrototype item = loadItem(jsonItem);
-//	    toDoData.addItem(item);
-//	}
+	// CLEAR THE OLD DATA OUT
+	GoLoData goLoData = (GoLoData)data;
+	goLoData.reset();
+	
+	// LOAD THE JSON FILE WITH ALL THE DATA
+	JsonObject json = loadJSONFile(filePath);
+	
+	// LOAD LIST NAME AND OWNER
+	double width = Double.parseDouble(json.getString(JSON_WIDTH));
+        double height = Double.parseDouble(json.getString(JSON_HEIGHT));
+        goLoData.resize(width, height);	
+	// AND NOW LOAD ALL THE ITEMS
+	JsonArray jsonItemArray = json.getJsonArray(JSON_ITEMS);
+	for (int i = 0; i < jsonItemArray.size(); i++) {
+	    JsonObject jsonItem = jsonItemArray.getJsonObject(i);
+	    GoLoComponentPrototype item = loadItem(jsonItem);
+	    goLoData.addComponent(item);
+	}
     }
     
     public double getDataAsDouble(JsonObject json, String dataName) {
@@ -180,25 +171,68 @@ public class GoLoFiles implements AppFileComponent {
 	return number.bigDecimalValue().doubleValue();	
     }
     
-    public void /*ToDoItemPrototype*/ loadItem(JsonObject jsonItem) {
-//	// GET THE DATA
-//	String category = jsonItem.getString(JSON_CATEGORY);
-//	String description = jsonItem.getString(JSON_DESCRIPTION);
-//        String startDateText = jsonItem.getString(JSON_START_DATE);
-//        String endDateText = jsonItem.getString(JSON_END_DATE);
-//        String assignedTo = jsonItem.getString(JSON_ASSIGNED_TO);
-//        LocalDate startDate = LocalDate.parse(startDateText, DateTimeFormatter.ISO_DATE);
-//        LocalDate endDate = LocalDate.parse(endDateText, DateTimeFormatter.ISO_DATE);
-//
-//        boolean completed = jsonItem.getBoolean(JSON_COMPLETED);
-//        
-//	// THEN USE THE DATA TO BUILD AN ITEM
-//        ToDoItemPrototype item = new ToDoItemPrototype(category, description, startDate, endDate, assignedTo, completed);
-//        
-//	// ALL DONE, RETURN IT
-//	return item;
+    public GoLoComponentPrototype loadItem(JsonObject jsonItem) {
+	// GET THE DATA
+        String type = jsonItem.getString(JSON_TYPE);
+        String shape = jsonItem.getString(JSON_SHAPE);
+        if(type.equals("Rectangle") || type.equals("Triangle") || type.equals("Text") || type.equals("Circle")) {
+            return loadShape(type, shape);
+        }
+        else
+            return loadImage(shape);
+        
     }
-
+    
+    private GoLoComponentPrototype loadShape(String type, String shape) {
+        String[] values = parseShapeString(shape);
+        if(type.equals("Rectangle"))
+            return loadRectangle(values);
+        if(type.equals("Text"))
+            return loadText(values);
+        return null;
+    }
+    
+    private GoLoComponentPrototype loadImage(String shape) {
+        return null;
+    }
+    
+    private String[] parseShapeString(String origin) {
+        String valueString = origin.substring(origin.indexOf('[') + 1, origin.length() - 1);
+        String[] values = valueString.split(", ");
+        for(int i = 0; i < values.length; i++)
+            values[i] = values[i].substring(values[i].indexOf('=') + 1);        
+        return values;
+    }
+    
+    private GoLoRectangle loadRectangle(String[] values) {
+        double x = Double.parseDouble(values[0]);
+        double y = Double.parseDouble(values[1]);
+        double width = Double.parseDouble(values[2]);
+        double height = Double.parseDouble(values[3]);
+        Color fill = Color.valueOf(values[4]);
+//        String fillValue = values[4];
+        GoLoRectangle returnMe = new GoLoRectangle(x, y, width, height, fill);
+        return returnMe;
+    }
+    
+    private GoLoText loadText(String[] values) {
+//        for(int i =0; i < values.length; i++) {
+//            System.out.println(values[i]);
+//        }
+        String text = values[0].substring(1, values[0].length() - 1);
+        double x = Double.parseDouble(values[1]);
+        double y = Double.parseDouble(values[2]);
+        TextAlignment alignment = TextAlignment.valueOf(values[3]);
+        VPos origin = VPos.valueOf(values[4]);
+        TextBoundsType boundsType = TextBoundsType.valueOf(values[5]);
+        String fontName = values[6].substring(values[6].indexOf('=') + 1);
+        double fontSize = Double.parseDouble(values[9].substring(0,values[9].length() - 1));
+        Font font = new Font(fontName, fontSize);
+        FontSmoothingType fontSmoothingType =  FontSmoothingType.valueOf(values[10]);
+        Color fill = Color.valueOf(values[11]);
+        GoLoText returnMe = new GoLoText(x, y, text, alignment, origin, boundsType, font, fontSmoothingType, fill);
+        return returnMe;
+    }
     // HELPER METHOD FOR LOADING DATA FROM A JSON FORMAT
     private JsonObject loadJSONFile(String jsonFilePath) throws IOException {
 	InputStream is = new FileInputStream(jsonFilePath);

@@ -18,17 +18,13 @@ import javafx.scene.shape.Shape;
 public class GoLoComponentPrototype {
     
     protected Shape goLoShape;
-    protected double xCoordinate;
-    protected double yCoordinate;
     protected StringProperty type;
     protected StringProperty name;
     protected IntegerProperty order;
-    final double DEFAULT_X = 0;
-    final double DEFAULT_Y = 0;
+
 
     public GoLoComponentPrototype() {
-        xCoordinate = DEFAULT_X;
-        yCoordinate = DEFAULT_Y;
+
         order = new SimpleIntegerProperty(0);
         name = new SimpleStringProperty("Layer " + order.get());
     }
