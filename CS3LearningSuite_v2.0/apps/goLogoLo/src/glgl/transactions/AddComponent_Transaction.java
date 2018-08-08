@@ -24,6 +24,6 @@ public class AddComponent_Transaction implements jTPS_Transaction {
 
     @Override
     public void undoTransaction() {
-        data.removeItem(componentToAdd);
+        data.removeComponent(componentToAdd);
     }
 }

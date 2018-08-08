@@ -9,6 +9,7 @@ import glgl.transactions.AddComponent_Transaction;
 import glgl.transactions.RemoveComponents_Transaction;
 import glgl.transactions.ResizeBackground_Transaction;
 import glgl.workspace.dialogs.EditDialog;
+import glgl.workspace.dialogs.TextDialog;
 import java.util.ArrayList;
 
 /**
@@ -18,10 +19,12 @@ import java.util.ArrayList;
 public class ComponentController {
     GoLogoLoApp app;
     EditDialog editDialog;
+    TextDialog textDialog;
     
     public ComponentController(GoLogoLoApp initApp) {
         app = initApp;
         editDialog = new EditDialog(app);
+        textDialog = new TextDialog(app);
     }
     
     public void processResize() {
@@ -34,23 +37,6 @@ public class ComponentController {
             app.processTransaction(transaction);
             editDialog.reset();
         } 
-//        ToDoItemPrototype newItem = itemDialog.getNewItem();        
-//        if (newItem != null) {
-//            // IF IT HAS A UNIQUE NAME AND COLOR
-//            // THEN CREATE A TRANSACTION FOR IT
-//            // AND ADD IT
-//            ToDoData data = (ToDoData)app.getDataComponent();
-//            AddItem_Transaction transaction = new AddItem_Transaction(data, newItem);
-//            app.processTransaction(transaction);
-//            //clean temporary obeject
-//            itemDialog.reset();
-//        }    
-//        // OTHERWISE TELL THE USER WHAT THEY
-//        // HAVE DONE WRONG
-//        else {
-//            
-//            
-//        }
     }
     
     public void processRemoveItems() {
@@ -83,9 +69,12 @@ public class ComponentController {
     
     public void processAddText() {
         GoLoData data = (GoLoData)app.getDataComponent();
-        GoLoText component = new GoLoText();
-        AddComponent_Transaction add = new AddComponent_Transaction(data, component);
-        app.processTransaction(add);
+        textDialog.showAddTextDialog();
+        GoLoText component = textDialog.getGoLoText();
+        if(component != null) {
+            AddComponent_Transaction add = new AddComponent_Transaction(data, component);
+            app.processTransaction(add);
+        }
     }
     
     public void processRename() {

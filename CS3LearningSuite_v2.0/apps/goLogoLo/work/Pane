@@ -1,0 +1,45 @@
+
+{
+    "width":"700.0",
+    "height":"300.0",
+    "items":[
+        {
+            "type":"Rectangle",
+            "name":"Layer 0",
+            "node":{
+                "x":483.0,
+                "y":73.0,
+                "width":160.0,
+                "height":80.0,
+                "fill":"0xf0f8ffff"
+            }
+        },
+        {
+            "type":"Text",
+            "name":"Layer 0",
+            "node":{
+                "x":59.0,
+                "y":93.0,
+                "text":"Hello",
+                "alignment":"LEFT",
+                "origin":"BASELINE",
+                "boundsType":"LOGICAL",
+                "fontName":"Helvetica Light",
+                "fontSize":22.0,
+                "fontSmoothingType":"GRAY",
+                "fill":"0x000000ff"
+            }
+        },
+        {
+            "type":"Rectangle",
+            "name":"Layer 0",
+            "node":{
+                "x":110.0,
+                "y":70.0,
+                "width":300.0,
+                "height":150.0,
+                "fill":"0xf0f8ffff"
+            }
+        }
+    ]
+}

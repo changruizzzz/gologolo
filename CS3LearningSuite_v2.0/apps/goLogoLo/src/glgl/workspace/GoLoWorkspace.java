@@ -12,7 +12,8 @@ import static djf.AppPropertyType.SNAP_BUTTON;
 import static djf.AppPropertyType.ZOOM_IN_BUTTON;
 import static djf.AppPropertyType.ZOOM_OUT_BUTTON;
 import djf.components.AppWorkspaceComponent;
-import static djf.modules.AppGUIModule.DISABLED;
+import djf.modules.AppFoolproofModule;
+import djf.modules.AppGUIModule;
 import static djf.modules.AppGUIModule.ENABLED;
 import static djf.modules.AppGUIModule.FOCUS_TRAVERSABLE;
 import static djf.modules.AppGUIModule.HAS_KEY_HANDLER;
@@ -90,7 +91,9 @@ import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_BOX;
 
 import glgl.GoLogoLoApp;
 import glgl.data.GoLoComponentPrototype;
+import glgl.data.GoLoData;
 import glgl.workspace.controllers.ComponentController;
+import glgl.workspace.controllers.ItemsTableController;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_BODY;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_COLOR_PICKER;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_COLUMN;
@@ -308,40 +311,23 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
 //        });       
 //        
 //        
-//        itemsTable.setOnMouseClicked(e -> {
-//            app.getFoolproofModule().updateAll();
-//            if(e.getClickCount() == 2) 
+        itemsTable.setOnMouseClicked(e -> {
+            ((GoLoData)app.getDataComponent()).getNodeSelectionModel().selectComponent(itemsTable.getSelectionModel().getSelectedItem());
+            app.getFoolproofModule().updateAll();
+//            if(e.getClickCount() == 2) ;
 //                itemsController.processEditItem();                
-//        });
-//
-//        ItemsTableController iTC = new ItemsTableController(app);
-//        itemsTable.widthProperty().addListener(e->{
-//            iTC.processChangeTableSize();
-//        });
-//        itemsTable.setOnSort(new EventHandler<SortEvent<TableView<ToDoItemPrototype>>>(){
-//            @Override
-//            public void handle(SortEvent<TableView<ToDoItemPrototype>> event) {
-//                ToDoData data = (ToDoData)app.getDataComponent();
-//                ArrayList<ToDoItemPrototype> oldListOrder = data.getCurrentItemsOrder();
-//                TableView view = event.getSource();
-//                ObservableList sortOrder = view.getSortOrder();
-//                if ((sortOrder != null) && (sortOrder.size() == 1)) {
-//                    TableColumn sortColumn = event.getSource().getSortOrder().get(0);
-//                    String columnText = sortColumn.getText();
-//                    SortType sortType = sortColumn.getSortType();
-//                    System.out.println("Sort by " + columnText);
-//                    event.consume();
-//                    SortItems_Transaction transaction = new SortItems_Transaction(data, oldListOrder, columnText, sortType);
-//                    app.processTransaction(transaction);
-//                    app.getFoolproofModule().updateAll();
-//                }
-//            }            
-//        });
+        });
+
+        ItemsTableController iTC = new ItemsTableController(app);
+        itemsTable.widthProperty().addListener(e->{
+            iTC.processChangeTableSize();
+        });
     }
     
     public void initFoolproofDesign() {
-//        AppGUIModule gui = app.getGUIModule();
-//        AppFoolproofModule foolproofSettings = app.getFoolproofModule();
+        AppGUIModule gui = app.getGUIModule();
+        AppFoolproofModule foolproofSettings = app.getFoolproofModule();
+        //@todo
 //        foolproofSettings.registerModeSettings(GLGL_FOOLPROOF_SETTINGS, 
 //                new ToDoSelectionFoolproofDesign((ToDoListMakerApp)app));
     }

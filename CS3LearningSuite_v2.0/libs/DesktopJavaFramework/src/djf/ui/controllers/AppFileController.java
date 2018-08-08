@@ -58,7 +58,6 @@ public class AppFileController {
      * make sure data for the current Course is not lost.
      */
     public void processLoadRequest() {
-        //@todo uncomment this when GoLoFile has been implemented.
         try {
             // WE MAY HAVE TO SAVE CURRENT WORK
             AppFileModule fileSettings = app.getFileModule();
@@ -232,8 +231,7 @@ public class AppFileController {
             try {
                 app.getFileModule().loadWork(selectedFile);
                 app.getTPS().clearAllTransactions();  
-                //@todo resolve this after foolproof design has been implemented.
-//                app.getFoolproofModule().updateAll();
+                app.getFoolproofModule().updateAll();
             } catch (Exception e) {
                 AppDialogsFacade.showMessageDialog(app.getGUIModule().getWindow(), LOAD_ERROR_TITLE, LOAD_ERROR_CONTENT);
             }

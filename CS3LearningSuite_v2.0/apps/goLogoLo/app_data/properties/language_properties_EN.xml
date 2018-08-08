@@ -132,7 +132,11 @@
         <property name="GLGL_ITEM_DIALOG_HEADER_LABEL_TEXT"               value="Edit Item"></property>
         <property name="GLGL_ITEM_DIALOG_RENAME_LABEL_TEXT"               value="Layer's Name:"></property>
 
-        <property name="GLGL_ITEM_DIALOG_ADD_HEADER_TEXT"           value="Add Item"></property>
+        <property name="GLGL_TEXT_DIALOG_ADD_HEADER_TEXT"           value="Add Text"></property>
+        <property name="GLGL_TEXT_DIALOG_EDIT_HEADER_TEXT"           value="Edit Text"></property>
+
+        <property name="GLGL_TEXT_DIALOG_TEXT_LABEL_TEXT"           value="Enter Text Here:"></property>
+
         <property name="GLGL_ITEM_DIALOG_HEIGHT_LABEL_TEXT"        value="Height:"></property>
         <property name="GLGL_ITEM_DIALOG_WIDTH_LABEL_TEXT"         value="Width:"></property>
         <property name="GLGL_ITEM_DIALOG_OK_BUTTON_TEXT"            value="OK"></property>

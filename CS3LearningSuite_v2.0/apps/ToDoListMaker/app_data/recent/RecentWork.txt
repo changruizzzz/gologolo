@@ -1,4 +1,4 @@
-try1-work/try1
-GradingCriteria-work/GradingCriteria.tdlm
 HouseRepairs-work/HouseRepairs.tdlm
+GradingCriteria-work/GradingCriteria.tdlm
+try1-work/try1
 Classwork-work/Classwork.tdlm

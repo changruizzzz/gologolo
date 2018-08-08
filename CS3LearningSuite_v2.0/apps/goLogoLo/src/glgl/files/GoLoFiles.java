@@ -37,7 +37,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-//import static tdlm.ToDoPropertyType.TDLM_EXPORT_TEMPLATE_FILE_NAME;
 import glgl.data.GoLoData;
 import glgl.data.GoLoComponentPrototype;
 import glgl.data.GoLoRectangle;
@@ -54,7 +53,6 @@ import javafx.scene.text.TextBoundsType;
  * @author Changrui Zhou
  */
 public class GoLoFiles implements AppFileComponent {
-    //todo all
     // FOR JSON SAVING AND LOADING
 
 
@@ -62,7 +60,8 @@ public class GoLoFiles implements AppFileComponent {
     static final String JSON_WIDTH = "width";
     static final String JSON_HEIGHT = "height";
     static final String JSON_TYPE = "type";
-    static final String JSON_SHAPE = "shape";
+    static final String JSON_NAME = "name";
+    static final String JSON_NODE = "node";
 
     
     // FOR EXPORTING TO HTML
@@ -93,12 +92,14 @@ public class GoLoFiles implements AppFileComponent {
         
 	// NOW BUILD THE JSON ARRAY FOR THE LIST
 	JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
-        Iterator<GoLoComponentPrototype> itemsIt = goLoData.itemsIterator();
+        Iterator<GoLoComponentPrototype> itemsIt = goLoData.componentsIterator();
 	while (itemsIt.hasNext()) {	
             GoLoComponentPrototype item = itemsIt.next();
 	    JsonObject itemJson = Json.createObjectBuilder()
 		    .add(JSON_TYPE, item.getType())
-                    .add(JSON_SHAPE, item.getShape().toString()).build();
+                    .add(JSON_NAME, item.getName())
+                    .add(JSON_NODE, item.getJsonNode())
+                    .build();
 	    arrayBuilder.add(itemJson);
 	}
 	JsonArray itemsArray = arrayBuilder.build();
@@ -165,72 +166,45 @@ public class GoLoFiles implements AppFileComponent {
 	}
     }
     
-    public double getDataAsDouble(JsonObject json, String dataName) {
-	JsonValue value = json.get(dataName);
-	JsonNumber number = (JsonNumber)value;
-	return number.bigDecimalValue().doubleValue();	
-    }
     
     public GoLoComponentPrototype loadItem(JsonObject jsonItem) {
 	// GET THE DATA
+        String name = jsonItem.getString(JSON_NAME);
         String type = jsonItem.getString(JSON_TYPE);
-        String shape = jsonItem.getString(JSON_SHAPE);
-        if(type.equals("Rectangle") || type.equals("Triangle") || type.equals("Text") || type.equals("Circle")) {
-            return loadShape(type, shape);
-        }
-        else
-            return loadImage(shape);
+        JsonObject node = jsonItem.getJsonObject(JSON_NODE);
+        if(type.equals("Rectangle"))
+            return loadRectangle(node ,name);
+        else if(type.equals("Text"))
+            return loadText(node, name);
+        return null;
         
     }
     
-    private GoLoComponentPrototype loadShape(String type, String shape) {
-        String[] values = parseShapeString(shape);
-        if(type.equals("Rectangle"))
-            return loadRectangle(values);
-        if(type.equals("Text"))
-            return loadText(values);
-        return null;
-    }
-    
-    private GoLoComponentPrototype loadImage(String shape) {
-        return null;
-    }
-    
-    private String[] parseShapeString(String origin) {
-        String valueString = origin.substring(origin.indexOf('[') + 1, origin.length() - 1);
-        String[] values = valueString.split(", ");
-        for(int i = 0; i < values.length; i++)
-            values[i] = values[i].substring(values[i].indexOf('=') + 1);        
-        return values;
-    }
-    
-    private GoLoRectangle loadRectangle(String[] values) {
-        double x = Double.parseDouble(values[0]);
-        double y = Double.parseDouble(values[1]);
-        double width = Double.parseDouble(values[2]);
-        double height = Double.parseDouble(values[3]);
-        Color fill = Color.valueOf(values[4]);
-//        String fillValue = values[4];
+    private GoLoRectangle loadRectangle(JsonObject jsonItem, String name) {
+        double x = getDataAsDouble(jsonItem, "x");
+        double y = getDataAsDouble(jsonItem, "y");
+        double width = getDataAsDouble(jsonItem, "width");
+        double height = getDataAsDouble(jsonItem, "height");
+        Color fill = Color.valueOf(jsonItem.getString("fill"));
         GoLoRectangle returnMe = new GoLoRectangle(x, y, width, height, fill);
+        returnMe.setName(name);
         return returnMe;
     }
     
-    private GoLoText loadText(String[] values) {
-//        for(int i =0; i < values.length; i++) {
-//            System.out.println(values[i]);
-//        }
-        String text = values[0].substring(1, values[0].length() - 1);
-        double x = Double.parseDouble(values[1]);
-        double y = Double.parseDouble(values[2]);
-        TextAlignment alignment = TextAlignment.valueOf(values[3]);
-        VPos origin = VPos.valueOf(values[4]);
-        TextBoundsType boundsType = TextBoundsType.valueOf(values[5]);
-        String fontName = values[6].substring(values[6].indexOf('=') + 1);
-        double fontSize = Double.parseDouble(values[9].substring(0,values[9].length() - 1));
+    private GoLoText loadText(JsonObject jsonItem, String name) {
+        String text = jsonItem.getString("text");
+        double x = getDataAsDouble(jsonItem, "x");
+        double y = getDataAsDouble(jsonItem, "y");
+        TextAlignment alignment = TextAlignment.valueOf(jsonItem.getString("alignment"));
+        VPos origin = VPos.valueOf(jsonItem.getString("origin"));
+        TextBoundsType boundsType = TextBoundsType.valueOf(jsonItem.getString("boundsType"));
+        String fontName = jsonItem.getString("fontName");
+        double fontSize = getDataAsDouble(jsonItem, "fontSize");
         Font font = new Font(fontName, fontSize);
-        FontSmoothingType fontSmoothingType =  FontSmoothingType.valueOf(values[10]);
-        Color fill = Color.valueOf(values[11]);
+        FontSmoothingType fontSmoothingType =  FontSmoothingType.valueOf(jsonItem.getString("fontSmoothingType"));
+        Color fill = Color.valueOf(jsonItem.getString("fill"));
         GoLoText returnMe = new GoLoText(x, y, text, alignment, origin, boundsType, font, fontSmoothingType, fill);
+        returnMe.setName(name);
         return returnMe;
     }
     // HELPER METHOD FOR LOADING DATA FROM A JSON FORMAT
@@ -336,5 +310,11 @@ public class GoLoFiles implements AppFileComponent {
     @Override
     public void importData(AppDataComponent data, String filePath) throws IOException {
         
+    }
+    
+    public double getDataAsDouble(JsonObject json, String dataName) {
+	JsonValue value = json.get(dataName);
+	JsonNumber number = (JsonNumber)value;
+	return number.bigDecimalValue().doubleValue();	
     }
 }

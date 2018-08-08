@@ -13,14 +13,12 @@ public class AppUndoController {
     public void processUndoRequest() {
         jTPS tps = app.getTPS();
         tps.undoTransaction();
-        //@todo
-//        app.getFoolproofModule().updateAll();
+        app.getFoolproofModule().updateAll();
     }
     
     public void processRedoRequest() {
         jTPS tps = app.getTPS();
         tps.doTransaction();
-        //@todo
-//        app.getFoolproofModule().updateAll();
+        app.getFoolproofModule().updateAll();
     }    
 }

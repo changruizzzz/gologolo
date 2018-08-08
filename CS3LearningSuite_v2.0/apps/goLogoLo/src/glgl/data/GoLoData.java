@@ -6,6 +6,7 @@ import static glgl.GoLoPropertyType.GLGL_DEFAULT_HEIGHT;
 import static glgl.GoLoPropertyType.GLGL_DEFAULT_WIDTH;
 import static glgl.GoLoPropertyType.GLGL_ITEMS_TABLE_VIEW;
 import glgl.GoLogoLoApp;
+import glgl.workspace.controllers.GoLoNodeController;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_RECTANGLE_BACK;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,110 +19,119 @@ import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import properties_manager.PropertiesManager;
-
 
 /**
  *
  * @author McKillaGorilla, ChangruiZhou
  */
 public class GoLoData implements AppDataComponent {
+
     GoLogoLoApp app;
     ObservableList<GoLoComponentPrototype> components;
     TableViewSelectionModel componentsSelectionModel;
-    StackPane background;
+    Pane background;
+    Rectangle rect;
+    Rectangle clipper;
     StackPane workspacePane;
-    
+    GoLoNodeController nodeControl;
+    GoLoNodeSelectionModel nodeSelectionModel;
+
     public GoLoData(GoLogoLoApp initApp) {
-        app = initApp;        
+        app = initApp;
         // GET ALL THE THINGS WE'LL NEED TO MANIUPLATE THE TABLE
         TableView tableView = (TableView) app.getGUIModule().getGUINode(GLGL_ITEMS_TABLE_VIEW);
         components = tableView.getItems();
         componentsSelectionModel = tableView.getSelectionModel();
         componentsSelectionModel.setSelectionMode(SelectionMode.MULTIPLE);
-        workspacePane = (StackPane)((BorderPane)((BorderPane)app.getWorkspaceComponent().getWorkspace()).getCenter()).getCenter();
-    }
-    
-    
-    public Iterator<GoLoComponentPrototype> componentsIterator() {
-        return this.components.iterator();
+        workspacePane = (StackPane) ((BorderPane) ((BorderPane) app.getWorkspaceComponent().getWorkspace()).getCenter()).getCenter();
+        nodeControl = new GoLoNodeController(app);
+        nodeSelectionModel = new GoLoNodeSelectionModel();
+        nodeSelectionModel.setTable(componentsSelectionModel);
     }
 
-    @Override
-    public void reset() {
-        AppGUIModule gui = app.getGUIModule();
-        
-        // CLEAR OUT THE TEXT FIELDS
-        
-        // CLEAR OUT THE ITEMS FROM THE TABLE
-        TableView tableView = (TableView)gui.getGUINode(GLGL_ITEMS_TABLE_VIEW);
-        components = tableView.getItems();
-        components.clear();
-        initBackground();
-    }
     public void initBackground() {
-        background = new StackPane();
-//        ((Pane)((BorderPane)((BorderPane)app.getWorkspaceComponent().getWorkspace()).getCenter()).getCenter()).getChildren().add(background);
+        background = new Pane();
+        clipper = new Rectangle();
+        rect = new Rectangle();
+        rect.setFill(Color.WHITE);
+        rect.setOnMouseClicked(e->{
+                    nodeSelectionModel.clearSelection();
+        });
         workspacePane.getChildren().clear();
         workspacePane.getChildren().add(background);
         background.getStyleClass().add(CLASS_GLGL_RECTANGLE_BACK);
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         double width = Double.parseDouble(props.getProperty(GLGL_DEFAULT_WIDTH));
         double height = Double.parseDouble(props.getProperty(GLGL_DEFAULT_HEIGHT));
-        resize(width,height);
-//        System.out.print(background.get);
+        resize(width, height);
+        background.setClip(clipper);
+        background.getChildren().add(rect);
+        nodeSelectionModel.setNodesList(background.getChildren());
+
     }
-    
-    
+
     public boolean isItemSelected() {
         ObservableList<GoLoComponentPrototype> selectedItems = this.getSelectedItems();
         return (selectedItems != null) && (selectedItems.size() == 1);
     }
-    
 
     public boolean areItemsSelected() {
         ObservableList<GoLoComponentPrototype> selectedItems = this.getSelectedItems();
-        return (selectedItems != null) && (selectedItems.size() > 1);        
+        return (selectedItems != null) && (selectedItems.size() > 1);
     }
 
-    
-    public boolean isUpMovable(){
+    public boolean isUpMovable() {
         ObservableList<GoLoComponentPrototype> selectedItems = this.getSelectedItems();
-        if(selectedItems != null && selectedItems.size() == 1)  
+        if (selectedItems != null && selectedItems.size() == 1) {
             return components.indexOf(selectedItems.get(0)) != 0;
+        }
         return false;
     }
-    
-    public boolean isDownMovable(){
+
+    public boolean isDownMovable() {
         ObservableList<GoLoComponentPrototype> selectedItems = this.getSelectedItems();
-        if(selectedItems != null && selectedItems.size() == 1)  
+        if (selectedItems != null && selectedItems.size() == 1) {
             return components.indexOf(selectedItems.get(0)) != components.size() - 1;
+        }
         return false;
     }
 
     public void resize(double width, double height) {
         background.setMinSize(width, height);
         background.setMaxSize(width, height);
+        clipper.setWidth(width);
+        clipper.setHeight(height);
+        rect.setWidth(width);
+        rect.setHeight(height);
     }
+
     public void addComponent(GoLoComponentPrototype componentToAdd) {
+        nodeSelectionModel.clearSelection();
         components.add(componentToAdd);
-        background.getChildren().add(componentToAdd.goLoShape);
-        componentToAdd.setOrder(background.getChildren().size());
-        
+        background.getChildren().add(componentToAdd.goLoNode);
+        updateIndicies();
+        makeInteractable(componentToAdd);
+        nodeSelectionModel.selectComponent(componentToAdd);
+
     }
 
-    public void removeItem(GoLoComponentPrototype componentToDelete) {
+    public void removeComponent(GoLoComponentPrototype componentToDelete) {
         components.remove(componentToDelete);
-        background.getChildren().remove(componentToDelete.goLoShape);
-
+        nodeSelectionModel.clearSelection();
+        background.getChildren().remove(componentToDelete.goLoNode);
+        updateIndicies();
     }
-    
+
     public void replaceItem(GoLoComponentPrototype componentToEdit, GoLoComponentPrototype editedItem) {
         int pos = components.indexOf(componentToEdit);
         components.set(pos, editedItem);
         selectItem(editedItem);
     }
-    
+
     public void moveItem(GoLoComponentPrototype initItem, int mode) {
         int pos = components.indexOf(initItem);
         components.set(pos, components.get(pos + mode));
@@ -136,8 +146,9 @@ public class GoLoData implements AppDataComponent {
         }
         return getSelectedItems().get(0);
     }
+
     public ObservableList<GoLoComponentPrototype> getSelectedItems() {
-        return (ObservableList<GoLoComponentPrototype>)this.componentsSelectionModel.getSelectedItems();
+        return (ObservableList<GoLoComponentPrototype>) this.componentsSelectionModel.getSelectedItems();
     }
 
     public int getItemIndex(GoLoComponentPrototype component) {
@@ -146,6 +157,10 @@ public class GoLoData implements AppDataComponent {
 
     public void addItemAt(GoLoComponentPrototype component, int componentIndex) {
         components.add(componentIndex, component);
+        background.getChildren().add(componentIndex, component.goLoNode);
+        makeInteractable(component);
+        updateIndicies();
+        nodeSelectionModel.selectComponent(component);
     }
 
     public void moveItem(int oldIndex, int newIndex) {
@@ -153,23 +168,17 @@ public class GoLoData implements AppDataComponent {
         components.add(newIndex, componentToMove);
     }
 
-    public int getNumItems() {
-        return components.size();
-    }
-
-    public void selectItem(GoLoComponentPrototype componentToSelect) {
-        this.componentsSelectionModel.select(componentToSelect);
-    }
-
     public ArrayList<Integer> removeAll(ArrayList<GoLoComponentPrototype> componentsToRemove) {
         ArrayList<Integer> componentIndices = new ArrayList();
-        for (GoLoComponentPrototype component: componentsToRemove) {
+        for (GoLoComponentPrototype component : componentsToRemove) {
             componentIndices.add(components.indexOf(component));
         }
-        for (GoLoComponentPrototype componentToRemove: componentsToRemove) {
+        nodeSelectionModel.clearSelection();
+        for (GoLoComponentPrototype componentToRemove : componentsToRemove) {
             components.remove(componentToRemove);
-            background.getChildren().remove(componentToRemove.getShape());
+            background.getChildren().remove(componentToRemove.getGoLoNode());
         }
+        updateIndicies();
         return componentIndices;
     }
 
@@ -178,8 +187,10 @@ public class GoLoData implements AppDataComponent {
             GoLoComponentPrototype componentToAdd = componentsToAdd.get(i);
             Integer location = addComponentLocations.get(i);
             components.add(location, componentToAdd);
-            background.getChildren().add(location, componentToAdd.getShape());
+            background.getChildren().add(location + 1, componentToAdd.getGoLoNode());
+            nodeSelectionModel.selectComponent(componentToAdd);
         }
+        updateIndicies();
     }
 
     public ArrayList<GoLoComponentPrototype> getCurrentItemsOrder() {
@@ -188,6 +199,14 @@ public class GoLoData implements AppDataComponent {
             orderedItems.add(component);
         }
         return orderedItems;
+    }
+
+    public int getNumItems() {
+        return components.size();
+    }
+
+    public void selectItem(GoLoComponentPrototype componentToSelect) {
+        this.componentsSelectionModel.select(componentToSelect);
     }
 
     public void clearSelected() {
@@ -204,11 +223,67 @@ public class GoLoData implements AppDataComponent {
             components.add(component);
         }
     }
-    
-    public Iterator<GoLoComponentPrototype> itemsIterator() {
-        return this.components.iterator();
+
+    @Override
+    public void reset() {
+        AppGUIModule gui = app.getGUIModule();
+
+        // CLEAR OUT THE TEXT FIELDS
+        // CLEAR OUT THE ITEMS FROM THE TABLE
+        TableView tableView = (TableView) gui.getGUINode(GLGL_ITEMS_TABLE_VIEW);
+        components = tableView.getItems();
+        components.clear();
+        nodeSelectionModel.clearSelection();
+        initBackground();
     }
+
     public Pane getBackground() {
         return background;
+    }
+
+    private void updateIndicies() {
+        for (int i = 0; i < components.size(); i++) {
+            components.get(i).setOrder(i + 1);
+        }
+    }
+
+    private void makeInteractable(GoLoComponentPrototype component) {
+        component.goLoNode.setOnMouseClicked(e-> {
+            nodeSelectionModel.selectComponent(component);
+            if (component.getType().equals("Text")) 
+                                if (e.getClickCount() == 2) {
+                    nodeControl.processChangeText((Text) component.goLoNode);}
+            app.getFoolproofModule().updateAll();
+        });
+        component.goLoNode.setOnMousePressed(e -> {
+            component.xDiff.set(e.getX() - component.getX());
+            component.yDiff.set(e.getY() - component.getY());
+            component.oldX.set(component.getX());
+            component.oldY.set(component.getY());
+        });
+        component.goLoNode.setOnMouseDragged(e -> {
+            component.setCoordinate(e.getX() - component.xDiff.get(), e.getY() - component.yDiff.get());
+        });
+        component.goLoNode.setOnMouseReleased(e -> {
+            if (component.isMoved()) {
+                nodeControl.processMove(component);
+            }
+        });
+//        if (component.getType().equals("Text")) {
+//            component.goLoNode.setOnMouseClicked(e -> {
+//                                    nodeSelectionModel.selectComponent(component);
+//
+//                if (e.getClickCount() == 2) {
+//                    nodeControl.processChangeText((Text) component.goLoNode);}
+//            });
+//        }
+    }
+    
+    public GoLoNodeSelectionModel getNodeSelectionModel() {
+        return nodeSelectionModel;
+    }
+    
+    public Iterator<GoLoComponentPrototype> componentsIterator() {
+        return this.components.iterator();
     }
 }

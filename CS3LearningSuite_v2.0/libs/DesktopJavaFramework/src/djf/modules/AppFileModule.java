@@ -38,8 +38,6 @@ public class AppFileModule {
     }
     
     /**
-     * @todo
-     * 
      * This method marks the appropriate variable such that we know
      * that the current Work has been edited since it's been saved.
      * The UI is then updated to reflect this.
@@ -93,8 +91,7 @@ public class AppFileModule {
         app.getGUIModule().getWindow().setTitle(props.getProperty(APP_TITLE));
         
         // RESET THE UI CONTROLS
-        //@todo
-//        app.getFoolproofModule().updateAll();
+        app.getFoolproofModule().updateAll();
     }
     
     public void closeWork() {
@@ -167,8 +164,7 @@ public class AppFileModule {
         String title = props.getProperty(APP_TITLE) + " - " + workFile.getName();
         app.getGUIModule().getWindow().setTitle(title);
         
-        //@todo
         // RESET THE UI CONTROLS
-//        app.getFoolproofModule().updateAll();
+        app.getFoolproofModule().updateAll();
     }
 }

@@ -1,0 +1,23 @@
+
+{
+    "width":"700.0",
+    "height":"300.0",
+    "items":[
+        {
+            "type":"Text",
+            "name":"Layer 0",
+            "node":{
+                "x":258.0,
+                "y":106.0,
+                "text":"Hello, World!",
+                "alignment":"LEFT",
+                "origin":"TOP",
+                "boundsType":"LOGICAL",
+                "fontName":"Helvetica Light",
+                "fontSize":22.0,
+                "fontSmoothingType":"GRAY",
+                "fill":"0x000000ff"
+            }
+        }
+    ]
+}

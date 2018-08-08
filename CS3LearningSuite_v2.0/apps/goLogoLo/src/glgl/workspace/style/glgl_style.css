@@ -26,7 +26,6 @@
     -swatch-primary:        #ededed;
     -swatch-down:           #f2f2f2;
     -swatch-complement:     #eaeaea;
-    
     -swatch-bright-accent:  #5fbf82;
     
     -fx-font-family: "Helvetica";
@@ -170,7 +169,7 @@
 .glgl_rectangle_back {
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 
-    -fx-background-color:white;
+/*    -fx-background-color:white;*/
 }
 .glgl_big_header, .glgl_small_header, .glgl_prompt, .glgl_text_field {
     -fx-font-weight: bold;
