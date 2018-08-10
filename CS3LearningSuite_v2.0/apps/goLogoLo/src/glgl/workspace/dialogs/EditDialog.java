@@ -39,6 +39,7 @@ import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_DIALOG_PANE;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_DIALOG_PROMPT;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_DIALOG_TEXT_FIELD;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_DIALOG_TITLE_PANE;
+import javafx.event.EventType;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -72,6 +73,7 @@ public class EditDialog extends Stage {
     GoLoComponentPrototype editedItem;
     double backgroundWidth = -1;
     double backgroundHeight = -1;
+    String name;
     
     boolean finish = false;
 
@@ -142,6 +144,10 @@ public class EditDialog extends Stage {
         heightTextField.setOnAction(e->{
             processResizeWork();
         });
+        
+        nameTextField.setOnAction(e->{
+            processRenameWork();
+        });
 //        nameTextField.setOnAction(e->{
 //            processRenameWork();
 //        });
@@ -172,13 +178,16 @@ public class EditDialog extends Stage {
                 backgroundWidth = newWidth;
                 backgroundHeight = newHeight;
                 finish = true;
-        }
+            } else {
+                showErrorDialog(1);
+            }
         } catch(NumberFormatException nfe) {
-            System.out.println("Wrong format");
+                showErrorDialog(1);
             
         } 
         if(finish) {
             this.hide();
+//            okButton.removeEventHandler(EventType.ROOT, cancelHandler);
         }
 
 
@@ -208,33 +217,21 @@ public class EditDialog extends Stage {
         String headerText = props.getProperty(GLGL_ITEM_DIALOG_RENAME_HEADER_TEXT);
         setTitle(headerText);
         headerLabel.setText(headerText);
-
+        nameTextField.setText(((GoLoData)app.getDataComponent()).getSelectedItem().getName());
+        okButton.setOnAction(e->{
+            processRenameWork();
+        });
          // AND OPEN THE DIALOG
         showAndWait();
 
     }
 
-    public void showEditDialog() {
-        // WE'LL NEED THIS FOR VALIDATION
-        
-        // USE THE TEXT IN THE HEADER FOR EDIT
-
-//        headerLabel.setText(headerText);
-//        setTitle(headerText);
-        
-        // WE'LL ONLY PROCEED IF THERE IS A LINE TO EDIT        
-        // USE THE TEXT IN THE HEADER FOR EDIT
-//        categoryTextField.setText(itemToEdit.getCategory());
-//        descriptionTextField.setText(itemToEdit.getDescription());
-
-        // AND OPEN THE DIALOG
-        showAndWait();
-    }
-
     // CLEAN TEMP DATA
     public void reset(){
-//        newItem = null;
-//        editItem = null;
+        backgroundWidth = -1;
+        backgroundHeight = -1;
+        finish = false;
+        name = null;
     }
     
 
@@ -242,7 +239,7 @@ public class EditDialog extends Stage {
         if(errorType == 0)
             djf.ui.dialogs.AppDialogsFacade.showMessageDialog(app.getGUIModule().getWindow(), "NEW_ERROR_TITLE", "FIELD_EMPTY_ERROR");
         else
-            djf.ui.dialogs.AppDialogsFacade.showMessageDialog(app.getGUIModule().getWindow(), "NEW_ERROR_TITLE", "DATE_ERROR");
+            djf.ui.dialogs.AppDialogsFacade.showMessageDialog(app.getGUIModule().getWindow(), "NEW_ERROR_TITLE", "FIELD_NEGETIVE_ERROR");
 
     }
     
@@ -251,5 +248,22 @@ public class EditDialog extends Stage {
     }
     public double getBackgroundHeight() {
         return backgroundHeight;
+    }
+
+    private void processRenameWork() {
+        String tempName = nameTextField.getText();
+        if(tempName.length() > 0) {
+            name = tempName;
+            finish = true;
+        } else {
+            showErrorDialog(0);
+        }
+        if(finish) {
+            this.hide();
+        }
+    }
+    
+    public String getNewName() {
+        return name;
     }
 }  

@@ -13,13 +13,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import properties_manager.PropertiesManager;
@@ -34,12 +35,14 @@ public class GoLoData implements AppDataComponent {
     ObservableList<GoLoComponentPrototype> components;
     TableViewSelectionModel componentsSelectionModel;
     Pane background;
-    Rectangle rect;
     Rectangle clipper;
-    StackPane workspacePane;
+    Pane workspacePane;
     GoLoNodeController nodeControl;
     GoLoNodeSelectionModel nodeSelectionModel;
-
+    boolean isNodeClicked = false;
+    boolean isCanvasClicked =false;
+    boolean isNodeDragged = false;
+    
     public GoLoData(GoLogoLoApp initApp) {
         app = initApp;
         // GET ALL THE THINGS WE'LL NEED TO MANIUPLATE THE TABLE
@@ -47,20 +50,24 @@ public class GoLoData implements AppDataComponent {
         components = tableView.getItems();
         componentsSelectionModel = tableView.getSelectionModel();
         componentsSelectionModel.setSelectionMode(SelectionMode.MULTIPLE);
-        workspacePane = (StackPane) ((BorderPane) ((BorderPane) app.getWorkspaceComponent().getWorkspace()).getCenter()).getCenter();
+        workspacePane = (StackPane)((ScrollPane) ((BorderPane) ((BorderPane) app.getWorkspaceComponent().getWorkspace()).getCenter()).getCenter()).getContent();
         nodeControl = new GoLoNodeController(app);
-        nodeSelectionModel = new GoLoNodeSelectionModel();
+        nodeSelectionModel = new GoLoNodeSelectionModel(app);
         nodeSelectionModel.setTable(componentsSelectionModel);
     }
 
     public void initBackground() {
         background = new Pane();
-        clipper = new Rectangle();
-        rect = new Rectangle();
-        rect.setFill(Color.WHITE);
-        rect.setOnMouseClicked(e->{
-                    nodeSelectionModel.clearSelection();
+        clipper = new Rectangle();;
+        background.setOnMouseClicked(e->{
+            isCanvasClicked = true;
+            if(isItemSelected() && !isNodeClicked) {
+                clearSelected();
+            } else {
+                isNodeClicked = false;
+            }
         });
+
         workspacePane.getChildren().clear();
         workspacePane.getChildren().add(background);
         background.getStyleClass().add(CLASS_GLGL_RECTANGLE_BACK);
@@ -69,9 +76,8 @@ public class GoLoData implements AppDataComponent {
         double height = Double.parseDouble(props.getProperty(GLGL_DEFAULT_HEIGHT));
         resize(width, height);
         background.setClip(clipper);
-        background.getChildren().add(rect);
         nodeSelectionModel.setNodesList(background.getChildren());
-
+        
     }
 
     public boolean isItemSelected() {
@@ -99,29 +105,32 @@ public class GoLoData implements AppDataComponent {
         }
         return false;
     }
+    
+    public GoLoNodeController getNdoeController() {
+        return nodeControl;
+    }
 
     public void resize(double width, double height) {
         background.setMinSize(width, height);
         background.setMaxSize(width, height);
         clipper.setWidth(width);
         clipper.setHeight(height);
-        rect.setWidth(width);
-        rect.setHeight(height);
+//        rect.setWidth(width);
+//        rect.setHeight(height);
     }
 
     public void addComponent(GoLoComponentPrototype componentToAdd) {
-        nodeSelectionModel.clearSelection();
+        clearSelected();
         components.add(componentToAdd);
         background.getChildren().add(componentToAdd.goLoNode);
         updateIndicies();
         makeInteractable(componentToAdd);
-        nodeSelectionModel.selectComponent(componentToAdd);
-
+        select(componentToAdd);
     }
 
     public void removeComponent(GoLoComponentPrototype componentToDelete) {
         components.remove(componentToDelete);
-        nodeSelectionModel.clearSelection();
+        clearSelected();
         background.getChildren().remove(componentToDelete.goLoNode);
         updateIndicies();
     }
@@ -129,15 +138,18 @@ public class GoLoData implements AppDataComponent {
     public void replaceItem(GoLoComponentPrototype componentToEdit, GoLoComponentPrototype editedItem) {
         int pos = components.indexOf(componentToEdit);
         components.set(pos, editedItem);
-        selectItem(editedItem);
+        select(editedItem);
     }
 
     public void moveItem(GoLoComponentPrototype initItem, int mode) {
         int pos = components.indexOf(initItem);
         components.set(pos, components.get(pos + mode));
         components.set(pos + mode, initItem);
-        selectItem(initItem);
-
+        Node temp = initItem.goLoNode;
+        background.getChildren().remove(pos);
+        background.getChildren().add(pos + mode, temp);
+        select(initItem);
+        updateIndicies();
     }
 
     public GoLoComponentPrototype getSelectedItem() {
@@ -160,7 +172,7 @@ public class GoLoData implements AppDataComponent {
         background.getChildren().add(componentIndex, component.goLoNode);
         makeInteractable(component);
         updateIndicies();
-        nodeSelectionModel.selectComponent(component);
+        select(component);
     }
 
     public void moveItem(int oldIndex, int newIndex) {
@@ -173,7 +185,7 @@ public class GoLoData implements AppDataComponent {
         for (GoLoComponentPrototype component : componentsToRemove) {
             componentIndices.add(components.indexOf(component));
         }
-        nodeSelectionModel.clearSelection();
+        clearSelected();
         for (GoLoComponentPrototype componentToRemove : componentsToRemove) {
             components.remove(componentToRemove);
             background.getChildren().remove(componentToRemove.getGoLoNode());
@@ -187,8 +199,8 @@ public class GoLoData implements AppDataComponent {
             GoLoComponentPrototype componentToAdd = componentsToAdd.get(i);
             Integer location = addComponentLocations.get(i);
             components.add(location, componentToAdd);
-            background.getChildren().add(location + 1, componentToAdd.getGoLoNode());
-            nodeSelectionModel.selectComponent(componentToAdd);
+            background.getChildren().add(location, componentToAdd.getGoLoNode());
+            select(componentToAdd);
         }
         updateIndicies();
     }
@@ -205,12 +217,8 @@ public class GoLoData implements AppDataComponent {
         return components.size();
     }
 
-    public void selectItem(GoLoComponentPrototype componentToSelect) {
-        this.componentsSelectionModel.select(componentToSelect);
-    }
-
     public void clearSelected() {
-        this.componentsSelectionModel.clearSelection();
+        this.nodeSelectionModel.clearSelection();
     }
 
     public void sortItems(Comparator sortComparator) {
@@ -233,7 +241,7 @@ public class GoLoData implements AppDataComponent {
         TableView tableView = (TableView) gui.getGUINode(GLGL_ITEMS_TABLE_VIEW);
         components = tableView.getItems();
         components.clear();
-        nodeSelectionModel.clearSelection();
+        clearSelected();
         initBackground();
     }
 
@@ -249,19 +257,21 @@ public class GoLoData implements AppDataComponent {
 
     private void makeInteractable(GoLoComponentPrototype component) {
         component.goLoNode.setOnMouseClicked(e-> {
+            isNodeClicked = true;
             nodeSelectionModel.selectComponent(component);
             if (component.getType().equals("Text")) 
-                                if (e.getClickCount() == 2) {
+                if (e.getClickCount() == 2) {
                     nodeControl.processChangeText((Text) component.goLoNode);}
-            app.getFoolproofModule().updateAll();
         });
         component.goLoNode.setOnMousePressed(e -> {
             component.xDiff.set(e.getX() - component.getX());
             component.yDiff.set(e.getY() - component.getY());
             component.oldX.set(component.getX());
             component.oldY.set(component.getY());
+            
         });
         component.goLoNode.setOnMouseDragged(e -> {
+            isNodeDragged = true;
             component.setCoordinate(e.getX() - component.xDiff.get(), e.getY() - component.yDiff.get());
         });
         component.goLoNode.setOnMouseReleased(e -> {
@@ -285,5 +295,25 @@ public class GoLoData implements AppDataComponent {
     
     public Iterator<GoLoComponentPrototype> componentsIterator() {
         return this.components.iterator();
+    }
+    
+    public boolean isCanvasClicked() {
+        return isCanvasClicked;
+    }
+    
+    public void setCanvasClicked(boolean isClicked) {
+        isCanvasClicked = isClicked;
+    }
+    
+    public void select(GoLoComponentPrototype component) {        
+        nodeSelectionModel.selectComponent(component);
+    }
+    
+    public boolean isNodeDragged() {
+        return isNodeDragged;
+    }
+    
+    public void setIsNodeDragged(boolean dragged) {
+        isNodeDragged = dragged;
     }
 }

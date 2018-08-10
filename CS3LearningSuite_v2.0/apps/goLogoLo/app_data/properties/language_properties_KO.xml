@@ -9,28 +9,37 @@
         <!-- ENGLISH LANGUAGE SETTINGS FOR DESKTOP JAVA FRAMEWORK CONTROLS -->
 
         <!-- WELCOME DIALOG TEXT -->
-        <property name="WELCOME_DIALOG_TITLE"               value="To Do List Maker에 오신 것을 환영합니다."></property>
-        <property name="WELCOME_DIALOG_RECENT_WORK_LABEL"   value="최근 일"></property>
-        <property name="WELCOME_DIALOG_NEW_BUTTON_TEXT"  value="할 일 목록 새로 만들기"></property>
+        <property name="WELCOME_DIALOG_TITLE"               value="goLogoLo에 오신 것을 환영합니다."></property>
+        <property name="WELCOME_DIALOG_RECENT_WORK_LABEL"   value="최근 작업"></property>
+        <property name="WELCOME_DIALOG_NEW_BUTTON_TEXT"  value="로고 만들기"></property>
 
         <!-- GENERIC APP ERROR MESSAGES -->
         <property name="APP_ERROR_TITLE"            value="응용 프로그램 오류"></property>
-        <property name="APP_ERROR_CONTENT"          value="응용 프로그램에서 오류가 발생했습니다"></property>
+        <property name="APP_ERROR_CONTENT"          value="응용 프로그램에서 오류가 발생했습니다."></property>
 
         <!-- PROPERTIES ERROR MESSAGES -->
         <property name="PROPERTIES_ERROR_TITLE"     value="속성 파일 오류"></property>
-        <property name="PROPERTIES_ERROR_CONTENT"   value="속성 파일을로드하는 중 오류가 발생했습니다"></property>
+        <property name="PROPERTIES_ERROR_CONTENT"   value="속성 파일을로드하는 중 오류가 발생했습니다."></property>
 
         <!-- FILE TOOLBAR TOOLTIPS -->
-        <property name="NEW_BUTTON_TOOLTIP"         value="새로운 할 일 목록"></property>
-        <property name="LOAD_BUTTON_TOOLTIP"        value="로드 할 일 목록"></property>
-        <property name="CLOSE_BUTTON_TOOLTIP"       value="할일 목록 닫기"></property>
-        <property name="SAVE_BUTTON_TOOLTIP"        value="할 일 목록 저장"></property>
-        <property name="EXPORT_BUTTON_TOOLTIP"      value="할일 목록 내보내기"></property>
+        <property name="NEW_BUTTON_TOOLTIP"         value="새로운 로고"></property>
+        <property name="LOAD_BUTTON_TOOLTIP"        value="로고로드"></property>
+        <property name="CLOSE_BUTTON_TOOLTIP"       value="가까운 로고"></property>
+        <property name="SAVE_BUTTON_TOOLTIP"        value="로고 저장"></property>
+        <property name="EXPORT_BUTTON_TOOLTIP"      value="로고 내보내기"></property>
         <property name="EXIT_BUTTON_TOOLTIP"        value="출구"></property>
+        
+        <!-- ZOOM TOOLBAR TOOLTIPS -->
+        <property name="ZOOM_IN_BUTTON_TOOLTIP"         value="확대"></property>
+        <property name="ZOOM_OUT_BUTTON_TOOLTIP"        value="축소"></property>
+        <property name="RESIZE_BUTTON_TOOLTIP"          value="로고 크기 조정"></property>
+        <property name="RESET_VIEW_BUTTON_TOOLTIP"      value="관점을 다시 설정"></property>
+        <property name="SNAP_BOX_TOOLTIP"            value="스냅"></property>
+        <property name="SNAP_BUTTON_TEXT"            value="스냅"></property>
+
 
         <!-- CLIPBOARD TOOLBAR TOOLTIPS -->
-        <property name="CUT_BUTTON_TOOLTIP"         value="떼다"></property>
+        <property name="CUT_BUTTON_TOOLTIP"         value="절단"></property>
         <property name="COPY_BUTTON_TOOLTIP"        value="부"></property>
         <property name="PASTE_BUTTON_TOOLTIP"       value="풀"></property>
 
@@ -47,18 +56,14 @@
         <property name="NEW_SUCCESS_TITLE"      value="새로운 완료"></property>
         <property name="NEW_SUCCESS_CONTENT"	value="생성되었지만 아직 저장되지 않은 작업"></property>
         <property name="NEW_ERROR_TITLE"        value="경고 : 오류"></property>
-        <property name="NEW_ERROR_CONTENT"      value="새 목록을 만드는 동안 오류가 발생했습니다."></property>
+        <property name="NEW_ERROR_CONTENT"      value="새 작업을 만드는 동안 오류가 발생했습니다."></property>
 
         <!-- LOAD FEEDBACK DIALOGS -->
         <property name="LOAD_WORK_TITLE"        value="작업로드"></property>
         <property name="LOAD_SUCCESS_TITLE"     value="로드 완료"></property>
-        <property name="LOAD_SUCCESS_CONTENT"   value="파일이 성공적으로로드되었으며 이제 편집 할 수 있습니다."></property>
+        <property name="LOAD_SUCCESS_CONTENT"   value="파일이 성공적으로로드되었으며 이제 편집 할 수 있습니다.."></property>
         <property name="LOAD_ERROR_TITLE"       value="로딩 오류"></property>        
-        <property name="LOAD_ERROR_CONTENT"     value="로드가 실패했습니다. 파일 형식 문제가 있거나 파일이 누락 된 것 같습니다."></property>
-        
-        <!-- ERROR DIALOG -->
-        <property name="FIELD_EMPTY_ERROR"         value="카테고리 또는 설명을 비워 둘 수 없습니다! 다시 시도하거나 취소하십시오."></property>
-        <property name="DATE_ERROR"         value="시작일 전에 종료일을 가질 수 없습니다! 다시 시도하거나 취소하십시오."></property>
+        <property name="LOAD_ERROR_CONTENT"     value="로드가 실패했습니다. 파일 형식 문제가 있거나 파일이 누락 된 것 같습니다.."></property>
 
         <!-- SAVE FEEDBACK DIALOGS -->
         <property name="SAVE_WORK_TITLE"        value="작업 저장"></property>
@@ -68,55 +73,86 @@
         <property name="SAVE_ERROR_CONTENT"     value="저장하지 못했습니다. 파일 액세스 문제로 인한 것 같습니다."></property>
         <property name="SAVE_VERIFY_TITLE"	value="저장되지 않은 작업을 저장 하시겠습니까?"></property>
         <property name="SAVE_VERIFY_CONTENT"	value="저장되지 않은 작업을 먼저 저장 하시겠습니까?"></property>
+        
+        <!-- ERROR DIALOG -->
+        <property name="FIELD_EMPTY_ERROR"         value="빈 텍스트를 사용할 수 없습니다! 다시 시도하거나 취소하십시오.."></property>
+        <property name="FIELD_NEGETIVE_ERROR"         value="잘못된 입력! 다시 시도하거나 취소하십시오."></property>
+
 
         <!-- ABOUT DIALOG -->
-        <property name="ABOUT_TITLE"            value="TDLM 정보"></property>
-        <property name="ABOUT_CONTENT"          value="TDLM, To Do List Maker - 기업 디버깅 - © 2018"></property>
+        <property name="ABOUT_TITLE"            value="goLogoLo 정보"></property>
+        <property name="ABOUT_CONTENT"          value="goLogoLo, 로고 제작자 - Debugging Enterprises - © 2018"></property>
 
 
-        <!-- ENGLISH LANGUAGE SETTINGS SPECIFICALLY FOR TDLM CONTROLS -->
+        <!-- ENGLISH LANGUAGE SETTINGS SPECIFICALLY FOR GLGL CONTROLS -->
         
         <!-- LANGUAGE-DEPENDENT TEXT FOR WORKSPACE CONTROLS -->
-        <property name="TDLM_TO_DO_LIST_LABEL_TEXT"      value="@todo List"></property>
-        <property name="TDLM_NAME_LABEL_TEXT"            value="목록 이름 :"></property>
-        <property name="TDLM_OWNER_LABEL_TEXT"           value="목록 소유자 :"></property>
-        <property name="TDLM_ITEMS_LABEL_TEXT"           value="항목"></property>
-        <property name="TDLM_ADD_ITEM_BUTTON_TOOLTIP"    value="새 항목 추가"></property>
-        <property name="TDLM_REMOVE_ITEM_BUTTON_TOOLTIP" value="선택한 항목 제거"></property>
-        <property name="TDLM_EDIT_ITEM_BUTTON_TOOLTIP"   value="선택한 항목 편집"></property>
-        <property name="TDLM_MOVE_UP_BUTTON_TOOLTIP"     value="선택한 항목 위로 이동"></property>
-        <property name="TDLM_MOVE_DOWN_BUTTON_TOOLTIP"   value="선택한 항목 아래로 이동"></property>
-        <property name="TDLM_CATEGORY_COLUMN_TEXT"       value="범주"></property>
-        <property name="TDLM_DESCRIPTION_COLUMN_TEXT"    value="기술"></property>
-        <property name="TDLM_START_DATE_COLUMN_TEXT"     value="시작 날짜"></property>
-        <property name="TDLM_END_DATE_COLUMN_TEXT"       value="종료일"></property>
-        <property name="TDLM_ASSIGNED_TO_COLUMN_TEXT"    value="할당"></property>
-        <property name="TDLM_COMPLETED_COLUMN_TEXT"      value="완료 됨"></property>
+        <property name="GOLOGOLO_LABEL_TEXT"                            value="@goLogoLo"></property>
+        <property name="GLGL_ITEMS_LABEL_TEXT"                          value="항목"></property>
+        <property name="GLGL_ADD_TEXT_BUTTON_TOOLTIP"                   value="새 텍스트 추가"></property>
+        <property name="GLGL_ADD_IMAGE_BUTTON_TOOLTIP"                  value="새 이미지 추가"></property>
+        <property name="GLGL_ADD_RECTANGLE_BUTTON_TOOLTIP"              value="새 직사각형 추가"></property>
+        <property name="GLGL_ADD_CIRCLE_BUTTON_TOOLTIP"                 value="새 서클 추가"></property>
+        <property name="GLGL_ADD_TRIANGLE_BUTTON_TOOLTIP"               value="새 삼각형 추가"></property>
+        <property name="GLGL_REMOVE_BUTTON_TOOLTIP"                     value="선택한 요소 삭제"></property>
+        <property name="GLGL_EDIT_ITEM_BUTTON_TOOLTIP"                  value="선택한 요소 편집"></property>
+        <property name="GLGL_MOVE_ITEM_UP_BUTTON_TOOLTIP"               value="선택한 요소 위로 이동"></property>
+        <property name="GLGL_MOVE_ITEM_DOWN_BUTTON_TOOLTIP"             value="선택한 요소 아래로 이동"></property>
+        <property name="GLGL_BOLD_BUTTON_TOOLTIP"                       value="힘 있는"></property>
+        <property name="GLGL_ITALIC_BUTTON_TOOLTIP"                     value="이탤릭체"></property>
+        <property name="GLGL_INCREASE_FONT_SIZE_BUTTON_TOOLTIP"         value="글꼴 크기 늘리기"></property>
+        <property name="GLGL_DECREASE_FONT_SIZE_BUTTON_TOOLTIP"         value="글꼴 크기 줄이기"></property>
+        <property name="GLGL_UNDERLINE_BUTTON_TOOLTIP"                  value="밑줄"></property>
 
+
+        <property name="GLGL_ORDER_COLUMN_TEXT"                         value="주문"></property>
+        <property name="GLGL_NAME_COLUMN_TEXT"                          value="이름"></property>
+        <property name="GLGL_TYPE_COLUMN_TEXT"                          value="유형"></property>
+        <property name="GLGL_BORDER_THICKNESS_LABEL_TEXT"               value="테두리 두께 :"></property>
+        <property name="GLGL_BORDER_RADIUS_LABEL_TEXT"                  value="테두리 반경 :"></property>
+        <property name="GLGL_BORDER_COLOR_PICKER_LABEL_TEXT"            value="테두리 색상 : "></property>
+        <property name="GLGL_COLOR_GRADIENT_LABEL_TEXT"                 value="색상 그라디언트"></property>        
+        <property name="GLGL_FOCUS_ANGLE_LABEL_TEXT"                    value="초점 각:"></property>
+        <property name="GLGL_FOCUS_DISTANCE_LABEL_TEXT"                 value="초점 거리:"></property>
+        <property name="GLGL_CENTER_X_LABEL_TEXT"                       value="센터 X:"></property>
+        <property name="GLGL_CENTER_Y_LABEL_TEXT"                       value="센터 Y:"></property>
+        <property name="GLGL_GRADIENT_RADIUS_LABEL_TEXT"                value="반지름:"></property>
+        <property name="GLGL_CYCLE_METHOD_LABEL_TEXT"                   value="사이클 방법:"></property>
+        <property name="GLGL_STOP_0_COLOR_PICKER_LABEL_TEXT"            value="0 색 중지:"></property>
+        <property name="GLGL_STOP_1_COLOR_PICKER_LABEL_TEXT"            value="1 색 중지:"></property>
+        
+
+        
         <!-- LANGUAGE-DEPENDENT TEXT FOR ITEM DIALOG CONTROLS -->
-        <property name="TDLM_ITEM_DIALOG_HEADER_TEXT"               value="항목 추가 / 편집"></property>
-        <property name="TDLM_ITEM_DIALOG_ADD_HEADER_TEXT"           value="아이템 추가"></property>
-        <property name="TDLM_ITEM_DIALOG_EDIT_HEADER_TEXT"          value="항목 편집"></property>
-        <property name="TDLM_ITEM_DIALOG_CATEGORY_PROMPT_TEXT"      value="범주:"></property>
-        <property name="TDLM_ITEM_DIALOG_DESCRIPTION_PROMPT_TEXT"   value="기술:"></property>
-        <property name="TDLM_ITEM_DIALOG_START_DATE_PROMPT_TEXT"    value="시작 날짜:"></property>
-        <property name="TDLM_ITEM_DIALOG_END_DATE_PROMPT_TEXT"      value="종료일:"></property>
-        <property name="TDLM_ITEM_DIALOG_ASSIGNED_TO_PROMPT_TEXT"   value="할당:"></property>
-        <property name="TDLM_ITEM_DIALOG_COMPLETED_PROMPT_TEXT"     value="완료 됨:"></property>
-        <property name="TDLM_ITEM_DIALOG_OK_BUTTON_TEXT"            value="승인"></property>
-        <property name="TDLM_ITEM_DIALOG_CANCEL_BUTTON_TEXT"        value="취소"></property>       
+            <property name="GLGL_ITEM_DIALOG_TITLE_LABEL_TEXT"          value="goLogoLo"></property>
+        <property name="GLGL_ITEM_DIALOG_RESIZE_HEADER_TEXT"            value="로고 치수 변경"></property>
+        <property name="GLGL_ITEM_DIALOG_RENAME_HEADER_TEXT"            value="레이어 이름 바꾸기"></property>
+
+
+        <property name="GLGL_ITEM_DIALOG_HEADER_LABEL_TEXT"               value="항목 편집"></property>
+        <property name="GLGL_ITEM_DIALOG_RENAME_LABEL_TEXT"               value="레이어 이름 :"></property>
+
+        <property name="GLGL_TEXT_DIALOG_ADD_HEADER_TEXT"               value="텍스트 추가"></property>
+        <property name="GLGL_TEXT_DIALOG_EDIT_HEADER_TEXT"              value="텍스트 편집"></property>
+
+        <property name="GLGL_TEXT_DIALOG_TEXT_LABEL_TEXT"               value="여기에 텍스트를 입력하십시오 :"></property>
+
+        <property name="GLGL_ITEM_DIALOG_HEIGHT_LABEL_TEXT"         value="신장:"></property>
+        <property name="GLGL_ITEM_DIALOG_WIDTH_LABEL_TEXT"          value="폭:"></property>
+        <property name="GLGL_ITEM_DIALOG_OK_BUTTON_TEXT"            value="승인"></property>
+        <property name="GLGL_ITEM_DIALOG_CANCEL_BUTTON_TEXT"        value="취소"></property>       
        
         <!-- TO SWITCH BACK TO ANOTHER LANGUAGE -->
-        <property name="LANGUAGE_DIALOG_TITLE"          value="응용 프로그램 언어 선택"></property>
+        <property name="LANGUAGE_DIALOG_TITLE"          value="앱 언어 선택"></property>
         <property name="LANGUAGE_DIALOG_HEADER_TEXT"    value="언어 선택"></property>
-        <property name="LANGUAGE_DIALOG_CONTENT_TEXT"   value="사용자 인터페이스의 언어 선택."></property>
+        <property name="LANGUAGE_DIALOG_CONTENT_TEXT"   value="사용자 인터페이스의 언어를 선택하십시오."></property>
 
-        <property name="WORK_FILE_EXT"          value="tdlm"></property>
-	<property name="WORK_FILE_EXT_DESC"     value="목록 작성기 파일을 수행하려면"></property>
+        <property name="WORK_FILE_EXT"          value="glg"></property>
+	<property name="WORK_FILE_EXT_DESC"     value="goLogoLo Files"></property>
 
     </property_list>
     
-    <!-- TDLM COMBO BOX CHOICES -->
+    <!-- GLGL COMBO BOX CHOICES -->
     <property_options_list>
         <property_options name="LANGUAGE_OPTIONS">
             <option>English</option>

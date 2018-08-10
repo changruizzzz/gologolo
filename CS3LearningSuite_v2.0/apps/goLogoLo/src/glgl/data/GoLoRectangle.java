@@ -24,15 +24,11 @@ public class GoLoRectangle extends GoLoComponentPrototype {
         ((Rectangle)goLoNode).setFill(Color.ALICEBLUE);
         type = new SimpleStringProperty("Rectangle"); 
         name = new SimpleStringProperty("Default Rectangle");        
-        goLoNode.setUserData(this);
-
     }
     public GoLoRectangle(double x, double y, double width, double height, Paint fill) {
         goLoNode = new Rectangle(x, y, width, height);
         ((Rectangle)goLoNode).setFill(fill);
         type = new SimpleStringProperty("Rectangle"); 
-        goLoNode.setUserData(this);
-
     }
     
     @Override
@@ -46,15 +42,18 @@ public class GoLoRectangle extends GoLoComponentPrototype {
         return jsonNode;
     }
 
+    @Override
     public void setCoordinate(double x, double y) {
         ((Rectangle)goLoNode).setX(x);
         ((Rectangle)goLoNode).setY(y);
     }
     
+    @Override
     public double getX() {
         return ((Rectangle)goLoNode).getX();
     }
     
+    @Override
     public double getY() {
         return ((Rectangle)goLoNode).getY();
     }

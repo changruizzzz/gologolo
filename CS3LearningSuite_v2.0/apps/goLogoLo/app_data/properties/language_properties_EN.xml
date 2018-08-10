@@ -75,13 +75,13 @@
         <property name="SAVE_VERIFY_CONTENT"	value="Would you like to save your unsaved work first?"></property>
         
         <!-- ERROR DIALOG -->
-        <property name="FIELD_EMPTY_ERROR"         value="Can not have the Catagory or the Description empty!Please try again or cancel."></property>
-        <property name="DATE_ERROR"         value="Can not have the End Date before the Start Date!Please try again or cancel."></property>
+        <property name="FIELD_EMPTY_ERROR"         value="Can not have an empty text!Please try again or cancel."></property>
+        <property name="FIELD_NEGETIVE_ERROR"         value="Invalid input! Please try again or cancel."></property>
 
 
         <!-- ABOUT DIALOG -->
-        <property name="ABOUT_TITLE"            value="About GLGL"></property>
-        <property name="ABOUT_CONTENT"          value="GLGL, the To Do List Maker - Debugging Enterprises - © 2017"></property>
+        <property name="ABOUT_TITLE"            value="About goLogoLo"></property>
+        <property name="ABOUT_CONTENT"          value="goLogoLo, the logo maker - Debugging Enterprises - © 2018"></property>
 
 
         <!-- ENGLISH LANGUAGE SETTINGS SPECIFICALLY FOR GLGL CONTROLS -->
@@ -96,8 +96,8 @@
         <property name="GLGL_ADD_TRIANGLE_BUTTON_TOOLTIP"               value="Add New Triangle"></property>
         <property name="GLGL_REMOVE_BUTTON_TOOLTIP"                     value="Delete Selected Elements"></property>
         <property name="GLGL_EDIT_ITEM_BUTTON_TOOLTIP"                  value="Edit Selected Element"></property>
-        <property name="GLGL_MOVE_ITEM_UP_BUTTON_TOOLTIP"               value="Move Selected Element Up"></property>
-        <property name="GLGL_MOVE_ITEM_DOWN_BUTTON_TOOLTIP"             value="Move Selected Element Down"></property>
+        <property name="GLGL_MOVE_ITEM_UP_BUTTON_TOOLTIP"               value="Move To Upper Layer"></property>
+        <property name="GLGL_MOVE_ITEM_DOWN_BUTTON_TOOLTIP"             value="Move To Lower Layer"></property>
         <property name="GLGL_BOLD_BUTTON_TOOLTIP"                       value="Bold"></property>
         <property name="GLGL_ITALIC_BUTTON_TOOLTIP"                     value="Italic"></property>
         <property name="GLGL_INCREASE_FONT_SIZE_BUTTON_TOOLTIP"         value="Increase Font Size"></property>
@@ -108,12 +108,12 @@
         <property name="GLGL_ORDER_COLUMN_TEXT"                         value="Order"></property>
         <property name="GLGL_NAME_COLUMN_TEXT"                          value="Name"></property>
         <property name="GLGL_TYPE_COLUMN_TEXT"                          value="Type"></property>
-        <property name="GLGL_BORDER_THICKNESS_LABEL_TEXT"               value="Boder Thickness:"></property>
-        <property name="GLGL_BORDER_RADIUS_LABEL_TEXT"                  value="Boder Radius:"></property>
-        <property name="GLGL_BORDER_COLOR_PICKER_LABEL_TEXT"            value="Boder Color:"></property>
+        <property name="GLGL_BORDER_THICKNESS_LABEL_TEXT"               value="Border Thickness:"></property>
+        <property name="GLGL_BORDER_RADIUS_LABEL_TEXT"                  value="Border Radius:"></property>
+        <property name="GLGL_BORDER_COLOR_PICKER_LABEL_TEXT"            value="Border Color:"></property>
         <property name="GLGL_COLOR_GRADIENT_LABEL_TEXT"                 value="Color Gradient"></property>        
         <property name="GLGL_FOCUS_ANGLE_LABEL_TEXT"                    value="Focus Angle:"></property>
-        <property name="GLGL_FOCUS_DISTANCE_LABEL_TEXT"                       value="Focus Distance:"></property>
+        <property name="GLGL_FOCUS_DISTANCE_LABEL_TEXT"                 value="Focus Distance:"></property>
         <property name="GLGL_CENTER_X_LABEL_TEXT"                       value="Center X:"></property>
         <property name="GLGL_CENTER_Y_LABEL_TEXT"                       value="Center Y:"></property>
         <property name="GLGL_GRADIENT_RADIUS_LABEL_TEXT"                value="Radius:"></property>
@@ -124,21 +124,21 @@
 
         
         <!-- LANGUAGE-DEPENDENT TEXT FOR ITEM DIALOG CONTROLS -->
-        <property name="GLGL_ITEM_DIALOG_TITLE_LABEL_TEXT"          value="goLogoLo"></property>
-        <property name="GLGL_ITEM_DIALOG_RESIZE_HEADER_TEXT"         value="Change Logo Dimensions"></property>
-        <property name="GLGL_ITEM_DIALOG_RENAME_HEADER_TEXT"         value="Rename Layer"></property>
+            <property name="GLGL_ITEM_DIALOG_TITLE_LABEL_TEXT"          value="goLogoLo"></property>
+        <property name="GLGL_ITEM_DIALOG_RESIZE_HEADER_TEXT"            value="Change Logo Dimensions"></property>
+        <property name="GLGL_ITEM_DIALOG_RENAME_HEADER_TEXT"            value="Rename Layer"></property>
 
 
         <property name="GLGL_ITEM_DIALOG_HEADER_LABEL_TEXT"               value="Edit Item"></property>
         <property name="GLGL_ITEM_DIALOG_RENAME_LABEL_TEXT"               value="Layer's Name:"></property>
 
-        <property name="GLGL_TEXT_DIALOG_ADD_HEADER_TEXT"           value="Add Text"></property>
-        <property name="GLGL_TEXT_DIALOG_EDIT_HEADER_TEXT"           value="Edit Text"></property>
+        <property name="GLGL_TEXT_DIALOG_ADD_HEADER_TEXT"               value="Add Text"></property>
+        <property name="GLGL_TEXT_DIALOG_EDIT_HEADER_TEXT"              value="Edit Text"></property>
 
-        <property name="GLGL_TEXT_DIALOG_TEXT_LABEL_TEXT"           value="Enter Text Here:"></property>
+        <property name="GLGL_TEXT_DIALOG_TEXT_LABEL_TEXT"               value="Enter Text Here:"></property>
 
-        <property name="GLGL_ITEM_DIALOG_HEIGHT_LABEL_TEXT"        value="Height:"></property>
-        <property name="GLGL_ITEM_DIALOG_WIDTH_LABEL_TEXT"         value="Width:"></property>
+        <property name="GLGL_ITEM_DIALOG_HEIGHT_LABEL_TEXT"         value="Height:"></property>
+        <property name="GLGL_ITEM_DIALOG_WIDTH_LABEL_TEXT"          value="Width:"></property>
         <property name="GLGL_ITEM_DIALOG_OK_BUTTON_TEXT"            value="OK"></property>
         <property name="GLGL_ITEM_DIALOG_CANCEL_BUTTON_TEXT"        value="Cancel"></property>       
        

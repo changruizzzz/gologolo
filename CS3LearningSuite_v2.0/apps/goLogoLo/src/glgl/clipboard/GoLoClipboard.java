@@ -68,39 +68,16 @@ public class GoLoClipboard implements AppClipboardComponent {
     @Override
     public void paste() {
         GoLoData data = (GoLoData)app.getDataComponent();
-        if (data.isItemSelected()) {
-            int selectedIndex = data.getItemIndex(data.getSelectedItem());  
-            ArrayList<GoLoComponentPrototype> pasteComponents = clipboardCutComponents;
-            if ((clipboardCutComponents != null)
-                    && (!clipboardCutComponents.isEmpty())) {
-                PasteComponents_Transaction transaction = new PasteComponents_Transaction((GoLogoLoApp)app, clipboardCutComponents, selectedIndex);
-                app.processTransaction(transaction);
-                
-                // NOW WE HAVE TO RE-COPY THE CUT ITEMS TO MAKE
-                // SURE IF WE PASTE THEM AGAIN THEY ARE BRAND NEW OBJECTS
-                copyToCutClipboard(clipboardCutComponents);
-            }
-            else if ((clipboardCopiedComponents != null)
-                    && (!clipboardCopiedComponents.isEmpty())) {
-                PasteComponents_Transaction transaction = new PasteComponents_Transaction((GoLogoLoApp)app, clipboardCopiedComponents, selectedIndex);
-                app.processTransaction(transaction);
-            
-                // NOW WE HAVE TO RE-COPY THE COPIED ITEMS TO MAKE
-                // SURE IF WE PASTE THEM AGAIN THEY ARE BRAND NEW OBJECTS
-                copyToCopiedClipboard(clipboardCopiedComponents);
-            }
-        } else {
-                if ((clipboardCutComponents != null)
-                    && (!clipboardCutComponents.isEmpty())) {
+        if ((clipboardCutComponents != null)
+            && (!clipboardCutComponents.isEmpty())) {
                 PasteComponents_Transaction transaction = new PasteComponents_Transaction((GoLogoLoApp)app, clipboardCutComponents);
                 app.processTransaction(transaction);
                 
                 // NOW WE HAVE TO RE-COPY THE CUT ITEMS TO MAKE
                 // SURE IF WE PASTE THEM AGAIN THEY ARE BRAND NEW OBJECTS
                 copyToCutClipboard(clipboardCutComponents);
-            }
-            else if ((clipboardCopiedComponents != null)
-                    && (!clipboardCopiedComponents.isEmpty())) {
+        } else if ((clipboardCopiedComponents != null) 
+                && (!clipboardCopiedComponents.isEmpty())) {
                 PasteComponents_Transaction transaction = new PasteComponents_Transaction((GoLogoLoApp)app, clipboardCopiedComponents);
                 app.processTransaction(transaction);
             
@@ -108,7 +85,6 @@ public class GoLoClipboard implements AppClipboardComponent {
                 // SURE IF WE PASTE THEM AGAIN THEY ARE BRAND NEW OBJECTS
                 copyToCopiedClipboard(clipboardCopiedComponents);
             }
-        }
     }    
 
 

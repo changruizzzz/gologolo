@@ -9,25 +9,34 @@
         <!-- ENGLISH LANGUAGE SETTINGS FOR DESKTOP JAVA FRAMEWORK CONTROLS -->
 
         <!-- WELCOME DIALOG TEXT -->
-        <property name="WELCOME_DIALOG_TITLE"               value="Bienvenida a la To Do List Maker"></property>
+        <property name="WELCOME_DIALOG_TITLE"               value="Bienvenido a goLogoLo"></property>
         <property name="WELCOME_DIALOG_RECENT_WORK_LABEL"   value="Trabajo reciente"></property>
-        <property name="WELCOME_DIALOG_NEW_BUTTON_TEXT"  value="Crear una nueva lista de tareas pendientes"></property>
+        <property name="WELCOME_DIALOG_NEW_BUTTON_TEXT"  value="Crear un logo"></property>
 
         <!-- GENERIC APP ERROR MESSAGES -->
         <property name="APP_ERROR_TITLE"            value="Error de la aplicación"></property>
-        <property name="APP_ERROR_CONTENT"          value="Ocurrió un error en la aplicación"></property>
+        <property name="APP_ERROR_CONTENT"          value="Un error ocurrido en la aplicación"></property>
 
         <!-- PROPERTIES ERROR MESSAGES -->
         <property name="PROPERTIES_ERROR_TITLE"     value="Error de archivo de propiedades"></property>
         <property name="PROPERTIES_ERROR_CONTENT"   value="Hubo un error al cargar un archivo de propiedades"></property>
 
         <!-- FILE TOOLBAR TOOLTIPS -->
-        <property name="NEW_BUTTON_TOOLTIP"         value="Nueva lista de tareas pendientes"></property>
-        <property name="LOAD_BUTTON_TOOLTIP"        value="Cargar para hacer la lista"></property>
-        <property name="CLOSE_BUTTON_TOOLTIP"       value="Close To Do List"></property>
-        <property name="SAVE_BUTTON_TOOLTIP"        value="Guardar para hacer la lista"></property>
-        <property name="EXPORT_BUTTON_TOOLTIP"      value="Exportar a la lista de tareas"></property>
+        <property name="NEW_BUTTON_TOOLTIP"         value="Nuevo logo"></property>
+        <property name="LOAD_BUTTON_TOOLTIP"        value="Cargar logo"></property>
+        <property name="CLOSE_BUTTON_TOOLTIP"       value="Logotipo cerrado"></property>
+        <property name="SAVE_BUTTON_TOOLTIP"        value="Guardar logotipo"></property>
+        <property name="EXPORT_BUTTON_TOOLTIP"      value="Logotipo de exportación"></property>
         <property name="EXIT_BUTTON_TOOLTIP"        value="Salida"></property>
+        
+        <!-- ZOOM TOOLBAR TOOLTIPS -->
+        <property name="ZOOM_IN_BUTTON_TOOLTIP"         value="Acercarse"></property>
+        <property name="ZOOM_OUT_BUTTON_TOOLTIP"        value="Disminuir el zoom"></property>
+        <property name="RESIZE_BUTTON_TOOLTIP"          value="Cambiar el tamaño del logotipo"></property>
+        <property name="RESET_VIEW_BUTTON_TOOLTIP"      value="Reestablecer vista"></property>
+        <property name="SNAP_BOX_TOOLTIP"               value="Chasquido"></property>
+        <property name="SNAP_BUTTON_TEXT"               value="Chasquido"></property>
+
 
         <!-- CLIPBOARD TOOLBAR TOOLTIPS -->
         <property name="CUT_BUTTON_TOOLTIP"         value="Cortar"></property>
@@ -58,66 +67,92 @@
 
         <!-- SAVE FEEDBACK DIALOGS -->
         <property name="SAVE_WORK_TITLE"        value="Ahorre trabajo"></property>
-        <property name="SAVE_SUCCESS_TITLE"     value="Sguardar completo"></property>
-        <property name="SAVE_SUCCESS_CONTENT"   value="El archivo está guardado."></property>
+        <property name="SAVE_SUCCESS_TITLE"     value="Guardar completo"></property>
+        <property name="SAVE_SUCCESS_CONTENT"   value="El archivo está guardado"></property>
         <property name="SAVE_ERROR_TITLE"       value="Guardar error"></property>
         <property name="SAVE_ERROR_CONTENT"     value="El ahorro ha fallado. Probablemente debido a un problema de acceso a archivos."></property>
         <property name="SAVE_VERIFY_TITLE"	value="¿Guardar trabajo no guardado?"></property>
         <property name="SAVE_VERIFY_CONTENT"	value="¿Le gustaría guardar su trabajo no guardado primero?"></property>
         
         <!-- ERROR DIALOG -->
-        <property name="FIELD_EMPTY_ERROR"         value="¡Las categorías o descripciones no se pueden dejar en blanco! Inténtalo de nuevo o cancela."></property>
-        <property name="DATE_ERROR"         value="No puede tener la fecha de finalización anterior a la fecha de inicio. Inténtelo de nuevo o cancele."></property>
+        <property name="FIELD_EMPTY_ERROR"         value="No se puede tener un texto en blanco. Inténtalo de nuevo o cancela."></property>
+        <property name="FIELD_NEGETIVE_ERROR"         value="¡Entrada inválida! Por favor intente de nuevo o cancele."></property>
+
 
         <!-- ABOUT DIALOG -->
-        <property name="ABOUT_TITLE"            value="Acerca de TDLM"></property>
-        <property name="ABOUT_CONTENT"          value="TDLM, el creador de listas de tareas - Empresas de depuración - © 2018"></property>
+        <property name="ABOUT_TITLE"            value="Acerca de goLogoLo"></property>
+        <property name="ABOUT_CONTENT"          value="goLogoLo, el creador de logotipos - Debugging Enterprises - © 2018"></property>
 
 
-
-        <!-- ENGLISH LANGUAGE SETTINGS SPECIFICALLY FOR TDLM CONTROLS -->
+        <!-- ENGLISH LANGUAGE SETTINGS SPECIFICALLY FOR GLGL CONTROLS -->
         
         <!-- LANGUAGE-DEPENDENT TEXT FOR WORKSPACE CONTROLS -->
-        <property name="TDLM_TO_DO_LIST_LABEL_TEXT"      value="@lista de quehaceres"></property>
-        <property name="TDLM_NAME_LABEL_TEXT"            value="Nombres:"></property>
-        <property name="TDLM_OWNER_LABEL_TEXT"           value="Propietario:"></property>
-        <property name="TDLM_ITEMS_LABEL_TEXT"           value="Artículos"></property>
-        <property name="TDLM_ADD_ITEM_BUTTON_TOOLTIP"    value="Agregar ítem nuevo"></property>
-        <property name="TDLM_REMOVE_ITEM_BUTTON_TOOLTIP" value="Remover item seleccionado"></property>
-        <property name="TDLM_EDIT_ITEM_BUTTON_TOOLTIP"   value="Editar elemento seleccionado"></property>
-        <property name="TDLM_MOVE_UP_BUTTON_TOOLTIP"     value="Mueva el elemento seleccionado hacia arriba"></property>
-        <property name="TDLM_MOVE_DOWN_BUTTON_TOOLTIP"   value="Mover el elemento seleccionado hacia abajo"></property>
-        <property name="TDLM_CATEGORY_COLUMN_TEXT"       value="Categoría"></property>
-        <property name="TDLM_DESCRIPTION_COLUMN_TEXT"    value="Descripción"></property>
-        <property name="TDLM_START_DATE_COLUMN_TEXT"     value="Fecha de inicio"></property>
-        <property name="TDLM_END_DATE_COLUMN_TEXT"       value="Fecha final"></property>
-        <property name="TDLM_ASSIGNED_TO_COLUMN_TEXT"    value="Asignado a"></property>
-        <property name="TDLM_COMPLETED_COLUMN_TEXT"      value="Terminado"></property>
+        <property name="GOLOGOLO_LABEL_TEXT"                            value="@goLogoLo"></property>
+        <property name="GLGL_ITEMS_LABEL_TEXT"                          value="Artículos"></property>
+        <property name="GLGL_ADD_TEXT_BUTTON_TOOLTIP"                   value="Agregar nuevo texto"></property>
+        <property name="GLGL_ADD_IMAGE_BUTTON_TOOLTIP"                  value="Agregar nueva imagen"></property>
+        <property name="GLGL_ADD_RECTANGLE_BUTTON_TOOLTIP"              value="Agregar nuevo rectángulo"></property>
+        <property name="GLGL_ADD_CIRCLE_BUTTON_TOOLTIP"                 value="Agregar nuevo círculo"></property>
+        <property name="GLGL_ADD_TRIANGLE_BUTTON_TOOLTIP"               value="Agregar nuevo triángulo"></property>
+            <property name="GLGL_REMOVE_BUTTON_TOOLTIP"                 value="Eliminar elementos seleccionados"></property>
+        <property name="GLGL_EDIT_ITEM_BUTTON_TOOLTIP"                  value="Editar elemento seleccionado"></property>
+        <property name="GLGL_MOVE_ITEM_UP_BUTTON_TOOLTIP"               value="Mover el elemento seleccionado hacia arriba"></property>
+        <property name="GLGL_MOVE_ITEM_DOWN_BUTTON_TOOLTIP"             value="Mover el elemento seleccionado hacia abajo"></property>
+        <property name="GLGL_BOLD_BUTTON_TOOLTIP"                       value="Negrita"></property>
+        <property name="GLGL_ITALIC_BUTTON_TOOLTIP"                     value="Itálico"></property>
+        <property name="GLGL_INCREASE_FONT_SIZE_BUTTON_TOOLTIP"         value="Aumenta el tamaño de la fuente"></property>
+        <property name="GLGL_DECREASE_FONT_SIZE_BUTTON_TOOLTIP"         value="Disminuir tamaño de fuente"></property>
+        <property name="GLGL_UNDERLINE_BUTTON_TOOLTIP"                  value="Subrayar"></property>
 
+
+        <property name="GLGL_ORDER_COLUMN_TEXT"                         value="Orden"></property>
+        <property name="GLGL_NAME_COLUMN_TEXT"                          value="Nombre"></property>
+        <property name="GLGL_TYPE_COLUMN_TEXT"                          value="Tipo"></property>
+        <property name="GLGL_BORDER_THICKNESS_LABEL_TEXT"               value="Grosor del borde:"></property>
+        <property name="GLGL_BORDER_RADIUS_LABEL_TEXT"                  value="Radio de la frontera:"></property>
+        <property name="GLGL_BORDER_COLOR_PICKER_LABEL_TEXT"            value="Color del borde:"></property>
+        <property name="GLGL_COLOR_GRADIENT_LABEL_TEXT"                 value="Gradiente de color"></property>        
+        <property name="GLGL_FOCUS_ANGLE_LABEL_TEXT"                    value="Ángulo de enfoque:"></property>
+        <property name="GLGL_FOCUS_DISTANCE_LABEL_TEXT"                       value="Distancia de enfoque:"></property>
+        <property name="GLGL_CENTER_X_LABEL_TEXT"                       value="centrar X:"></property>
+        <property name="GLGL_CENTER_Y_LABEL_TEXT"                       value="centrar Y:"></property>
+        <property name="GLGL_GRADIENT_RADIUS_LABEL_TEXT"                value="Radio:"></property>
+        <property name="GLGL_CYCLE_METHOD_LABEL_TEXT"                   value="Método de ciclo:"></property>
+        <property name="GLGL_STOP_0_COLOR_PICKER_LABEL_TEXT"            value="Detener 0 Color:"></property>
+        <property name="GLGL_STOP_1_COLOR_PICKER_LABEL_TEXT"            value="Detener 1 Color:"></property>
+        
+
+        
         <!-- LANGUAGE-DEPENDENT TEXT FOR ITEM DIALOG CONTROLS -->
-        <property name="TDLM_ITEM_DIALOG_HEADER_TEXT"               value="Agregar / Editar elementos"></property>
-        <property name="TDLM_ITEM_DIALOG_ADD_HEADER_TEXT"           value="Añadir artículo"></property>
-        <property name="TDLM_ITEM_DIALOG_EDIT_HEADER_TEXT"          value="Editar elemento"></property>
-        <property name="TDLM_ITEM_DIALOG_CATEGORY_PROMPT_TEXT"      value="Categoría:"></property>
-        <property name="TDLM_ITEM_DIALOG_DESCRIPTION_PROMPT_TEXT"   value="Descripción:"></property>
-        <property name="TDLM_ITEM_DIALOG_START_DATE_PROMPT_TEXT"    value="Fecha de inicio:"></property>
-        <property name="TDLM_ITEM_DIALOG_END_DATE_PROMPT_TEXT"      value="Fecha final:"></property>
-        <property name="TDLM_ITEM_DIALOG_ASSIGNED_TO_PROMPT_TEXT"   value="Asignado a:"></property>
-        <property name="TDLM_ITEM_DIALOG_COMPLETED_PROMPT_TEXT"     value="Terminado:"></property>
-        <property name="TDLM_ITEM_DIALOG_OK_BUTTON_TEXT"            value="DE ACUERDO"></property>
-        <property name="TDLM_ITEM_DIALOG_CANCEL_BUTTON_TEXT"        value="Cancelar"></property>       
+        <property name="GLGL_ITEM_DIALOG_TITLE_LABEL_TEXT"          value="goLogoLo"></property>
+        <property name="GLGL_ITEM_DIALOG_RESIZE_HEADER_TEXT"         value="Cambiar las dimensiones del logotipo"></property>
+        <property name="GLGL_ITEM_DIALOG_RENAME_HEADER_TEXT"         value="Cambiar el nombre de la capa"></property>
+
+
+        <property name="GLGL_ITEM_DIALOG_HEADER_LABEL_TEXT"               value="Editar elemento"></property>
+        <property name="GLGL_ITEM_DIALOG_RENAME_LABEL_TEXT"               value="Nombre de la capa:"></property>
+
+        <property name="GLGL_TEXT_DIALOG_ADD_HEADER_TEXT"           value="Añadir texto"></property>
+        <property name="GLGL_TEXT_DIALOG_EDIT_HEADER_TEXT"           value="Editar texto"></property>
+
+        <property name="GLGL_TEXT_DIALOG_TEXT_LABEL_TEXT"           value="Introducir texto aquí:"></property>
+
+        <property name="GLGL_ITEM_DIALOG_HEIGHT_LABEL_TEXT"        value="Altura:"></property>
+        <property name="GLGL_ITEM_DIALOG_WIDTH_LABEL_TEXT"         value="Anchura:"></property>
+        <property name="GLGL_ITEM_DIALOG_OK_BUTTON_TEXT"            value="DE ACUERDO"></property>
+        <property name="GLGL_ITEM_DIALOG_CANCEL_BUTTON_TEXT"        value="Cancelar"></property>       
        
         <!-- TO SWITCH BACK TO ANOTHER LANGUAGE -->
         <property name="LANGUAGE_DIALOG_TITLE"          value="Selección del idioma de la aplicación"></property>
         <property name="LANGUAGE_DIALOG_HEADER_TEXT"    value="Elija un idioma"></property>
         <property name="LANGUAGE_DIALOG_CONTENT_TEXT"   value="Seleccione un idioma para la interfaz de usuario."></property>
 
-        <property name="WORK_FILE_EXT"          value="tdlm"></property>
-	<property name="WORK_FILE_EXT_DESC"     value="Para hacer archivos List Maker"></property>
+        <property name="WORK_FILE_EXT"          value="glg"></property>
+	<property name="WORK_FILE_EXT_DESC"     value="goLogoLo Files"></property>
 
     </property_list>
     
-    <!-- TDLM COMBO BOX CHOICES -->
+    <!-- GLGL COMBO BOX CHOICES -->
     <property_options_list>
         <property_options name="LANGUAGE_OPTIONS">
             <option>English</option>

@@ -95,8 +95,8 @@
         
 
         <!-- GLGL FONT OPTIONS -->       
-        <property name="GLGL_DEFAULT_FONT"                       value="Helvetica Light"></property> 
-        <property name="GLGL_DEFAULT_FONT_SIZE"                  value="12"></property> 
+<!--        <property name="GLGL_DEFAULT_FONT"                       value="Helvetica Light"></property> -->
+<!--        <property name="GLGL_DEFAULT_FONT_SIZE"                  value="12"></property> -->
         
         <property name="GLGL_DEFAULT_CYCLE_METHOD"                  value="NO_CYCLE"></property> 
 
@@ -104,7 +104,7 @@
 
 
         <!-- THIS IS THE FILE WE'LL USE TO MAKE OUR EXPORTED WEB FILE -->
-        <property name="GLGL_EXPORT_TEMPLATE_FILE_NAME"  value="ToDoTemplate.html"></property>     
+        <property name="GLGL_EXPORT_TEMPLATE_FILE_NAME"  value="GoLoTemplate.html"></property>     
 
         <!-- ENGLISH IS THE DEFAULT -->
         <property name="DEFAULT_LANGUAGE"               value="English"></property>
@@ -125,14 +125,14 @@
             <option>Spanish</option>
         </property_options>
         
-        <property_options name="GLGL_FONT_OPTIONS">
+<!--        <property_options name="GLGL_FONT_OPTIONS">
             <option>Helvetica Light</option>
             <option>Times New Roman</option>
             <option>Arial</option>
             <option>Calibri</option>
-        </property_options>
+        </property_options>-->
         
-        <property_options name="GLGL_FONT_SIZE_OPTIONS">
+<!--        <property_options name="GLGL_FONT_SIZE_OPTIONS">
             <option>6</option>
             
             <option>8</option>
@@ -142,7 +142,7 @@
             <option>16</option>
             <option>18</option>
             <option>20</option>
-        </property_options>
+        </property_options>-->
         
         <property_options name="GLGL_CYCLE_METHOD_OPTIONS">
             <option>NO_CYCLE</option>

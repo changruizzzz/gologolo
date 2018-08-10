@@ -5,6 +5,7 @@
  */
 package glgl.data;
 
+import glgl.GoLogoLoApp;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.TableView.TableViewSelectionModel;
@@ -17,22 +18,20 @@ import javafx.scene.paint.Color;
  */
 public class GoLoNodeSelectionModel {
     
+    GoLogoLoApp app;
     ObservableList<Node> nodes;
     TableViewSelectionModel componentsSelectionModel;
-    int markedIndex = 0;
+    int markedIndex = -1;
     
-    public GoLoNodeSelectionModel(ObservableList<Node> nodes, TableViewSelectionModel componentsSelectionModel) {
-        this.nodes = nodes;
-        this.componentsSelectionModel = componentsSelectionModel;
-    }
-
-    GoLoNodeSelectionModel() {
+    GoLoNodeSelectionModel(GoLogoLoApp initApp) {
+        app = initApp;
     }
     
     public void selectComponent(GoLoComponentPrototype component) {
         clearSelection();
         componentsSelectionModel.select(component);
         markNodesSelected(component);
+        app.getFoolproofModule().updateAll();
     }
     
     public void setNodesList(ObservableList<Node> nodes) {
@@ -56,10 +55,11 @@ public class GoLoNodeSelectionModel {
     
     public void clearSelection() {
         componentsSelectionModel.clearSelection();
-        if(markedIndex > 0) {
+        if(markedIndex >= 0) {
             nodes.get(markedIndex).setEffect(null);
         }
-        markedIndex = 0;
+        markedIndex = -1;
+        app.getFoolproofModule().updateAll();
     }
     
 }

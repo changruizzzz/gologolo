@@ -2,6 +2,7 @@ package glgl.files;
 
 import djf.components.AppDataComponent;
 import djf.components.AppFileComponent;
+import glgl.data.GoLoCircle;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -176,6 +177,8 @@ public class GoLoFiles implements AppFileComponent {
             return loadRectangle(node ,name);
         else if(type.equals("Text"))
             return loadText(node, name);
+        else if(type.equals("Circle"))
+            return loadCircle(node, name);
         return null;
         
     }
@@ -204,6 +207,16 @@ public class GoLoFiles implements AppFileComponent {
         FontSmoothingType fontSmoothingType =  FontSmoothingType.valueOf(jsonItem.getString("fontSmoothingType"));
         Color fill = Color.valueOf(jsonItem.getString("fill"));
         GoLoText returnMe = new GoLoText(x, y, text, alignment, origin, boundsType, font, fontSmoothingType, fill);
+        returnMe.setName(name);
+        return returnMe;
+    }
+    
+    private GoLoCircle loadCircle(JsonObject jsonItem, String name) {
+        double x = getDataAsDouble(jsonItem, "x");
+        double y = getDataAsDouble(jsonItem, "y");
+        double radius = getDataAsDouble(jsonItem, "radius");
+        Color fill = Color.valueOf(jsonItem.getString("fill"));
+        GoLoCircle returnMe = new GoLoCircle(x, y, radius, fill);
         returnMe.setName(name);
         return returnMe;
     }
@@ -317,4 +330,6 @@ public class GoLoFiles implements AppFileComponent {
 	JsonNumber number = (JsonNumber)value;
 	return number.bigDecimalValue().doubleValue();	
     }
+
+
 }

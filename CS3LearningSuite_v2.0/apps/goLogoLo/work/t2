@@ -5,7 +5,7 @@
     "items":[
         {
             "type":"Rectangle",
-            "name":"Default Rectangle",
+            "name":"BlueBackGround",
             "node":{
                 "x":198.0,
                 "y":51.0,
@@ -16,7 +16,7 @@
         },
         {
             "type":"Text",
-            "name":"Default Text",
+            "name":"TextGoesHere2",
             "node":{
                 "x":259.0,
                 "y":78.0,
@@ -32,7 +32,7 @@
         },
         {
             "type":"Text",
-            "name":"Default Text",
+            "name":"TextGoesHere1",
             "node":{
                 "x":260.0,
                 "y":115.0,
@@ -48,7 +48,7 @@
         },
         {
             "type":"Text",
-            "name":"Default Text",
+            "name":"Brand New",
             "node":{
                 "x":272.0,
                 "y":150.0,
@@ -60,6 +60,16 @@
                 "fontSize":22.0,
                 "fontSmoothingType":"GRAY",
                 "fill":"0x000000ff"
+            }
+        },
+        {
+            "type":"Circle",
+            "name":"Default Circle",
+            "node":{
+                "x":559.0,
+                "y":112.0,
+                "radius":50.0,
+                "fill":"0xff7f50ff"
             }
         }
     ]

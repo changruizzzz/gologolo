@@ -127,6 +127,8 @@ public class TextDialog extends Stage {
         if(text.length() > 0 ) {
             newText = new GoLoText(text);
             finish = true;
+        } else {
+            showErrorDialog();
         }
         if(finish) 
             this.hide();
@@ -170,12 +172,8 @@ public class TextDialog extends Stage {
     }
     
 
-    private void showErrorDialog(int errorType) {
-        if(errorType == 0)
-            djf.ui.dialogs.AppDialogsFacade.showMessageDialog(app.getGUIModule().getWindow(), "NEW_ERROR_TITLE", "FIELD_EMPTY_ERROR");
-        else
-            djf.ui.dialogs.AppDialogsFacade.showMessageDialog(app.getGUIModule().getWindow(), "NEW_ERROR_TITLE", "DATE_ERROR");
-
+    private void showErrorDialog() {
+        djf.ui.dialogs.AppDialogsFacade.showMessageDialog(app.getGUIModule().getWindow(), "NEW_ERROR_TITLE", "FIELD_EMPTY_ERROR");
     }
     
     public String getString() {

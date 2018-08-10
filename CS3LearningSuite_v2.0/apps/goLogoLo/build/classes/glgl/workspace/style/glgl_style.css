@@ -160,16 +160,16 @@
 
 
 .glgl_body {
-    -fx-background-color: -swatch-complement;
+/*    -fx-background-color: -swatch-complement;*/
     -fx-border-width:0 2 0 2;
-    -fx-min-width: 800;
+    -fx-pref-width: 2000;
 /*    -fx-border-color: black;*/
     
 }
 .glgl_rectangle_back {
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 
-/*    -fx-background-color:white;*/
+    -fx-background-color:white;
 }
 .glgl_big_header, .glgl_small_header, .glgl_prompt, .glgl_text_field {
     -fx-font-weight: bold;
@@ -198,12 +198,17 @@
     -fx-spacing: 8;
 
     -fx-min-width: 330;
+    -fx-max-width: 330;
+    -fx-pref-width: 330;
 }
 .glgl_table {
     -fx-background-radius: 0 0 8 8;
     -fx-border-radius: 0 0 8 8;
     -fx-font-size: 10pt;
-    -fx-pref-width: 330;
+    -fx-min-width: 310;
+    -fx-max-width: 310;
+
+    -fx-pref-width: 320;
     -fx-pref-height: 2000;
 }
 .column-header {
@@ -230,6 +235,7 @@
     -fx-padding: 8;
     -fx-background-radius: 8;
     -fx-border-radius: 8;
+    
 }
 
 .glgl_combo {

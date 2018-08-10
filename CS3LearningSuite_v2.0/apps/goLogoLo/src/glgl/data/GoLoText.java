@@ -7,6 +7,7 @@ package glgl.data;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.VPos;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontSmoothingType;
@@ -22,13 +23,16 @@ import javax.json.JsonObjectBuilder;
  */
 public class GoLoText extends GoLoComponentPrototype {
     
+    boolean isBold = false;
+    boolean isItalic = false;
+    boolean isUnderline = false;
+    
     public GoLoText(String text) {
         goLoNode = new Text(text);
         type = new SimpleStringProperty("Text");
         ((Text)goLoNode).setFont(new Font("Helvetica Light", 22));
         ((Text)goLoNode).setTextOrigin(VPos.TOP);
         name = new SimpleStringProperty("Default Text");
-        goLoNode.setUserData(this);
     }
     
     public GoLoText(double x, double y, String text, TextAlignment alignment, VPos origin, 
@@ -41,7 +45,6 @@ public class GoLoText extends GoLoComponentPrototype {
         ((Text)goLoNode).setFont(font);
         ((Text)goLoNode).setFontSmoothingType(fontSmoothingType);
         ((Text)goLoNode).setFill(fill);   
-        goLoNode.setUserData(this);
 
     }
     
@@ -93,5 +96,30 @@ public class GoLoText extends GoLoComponentPrototype {
         GoLoText cloned = new GoLoText(x, y, text, alignment, origin, boundsType, font, fontSmoothingType, fill);
         cloned.setName(this.getName());
         return cloned;
+    }
+    
+    public boolean isBold() {
+        return isBold;
+    }
+    
+    public boolean isItalic() {
+        return isItalic;
+        
+    }    
+    
+    public boolean isUnderline() {
+        return isUnderline;
+    }
+    
+    public void setIsBold(Boolean b) {
+        isBold = b;
+    }
+    
+    public void setIsItalic(Boolean b) {
+        isItalic = b;
+    }
+    
+    public void setIsUnderline(Boolean b) {
+        isUnderline = b;
     }
 }

@@ -18,30 +18,18 @@ import jtps.jTPS_Transaction;
 public class PasteComponents_Transaction implements jTPS_Transaction {
     GoLogoLoApp app;
     ArrayList<GoLoComponentPrototype> itemsToPaste;
-    int pasteIndex;
-    
-    public PasteComponents_Transaction(  GoLogoLoApp initApp, 
-                                    ArrayList<GoLoComponentPrototype> initItemsToPaste,
-                                    int initPasteIndex) {
-        app = initApp;
-        itemsToPaste = initItemsToPaste;
-        pasteIndex = initPasteIndex;
-    }
+
     public PasteComponents_Transaction(  GoLogoLoApp initApp, 
                                     ArrayList<GoLoComponentPrototype> initItemsToPaste) {
         app = initApp;
         itemsToPaste = initItemsToPaste;
-        GoLoData data = (GoLoData)app.getDataComponent();        
-        pasteIndex = data.getNumItems() - 1;
     }
 
     @Override
     public void doTransaction() {
         GoLoData data = (GoLoData)app.getDataComponent();
-        int index = pasteIndex+1;
         for (GoLoComponentPrototype itemToPaste : itemsToPaste) {
-            data.addItemAt(itemToPaste, index);
-            index++;
+            data.addComponent(itemToPaste);
         }
     }
 

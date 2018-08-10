@@ -5,7 +5,6 @@
  */
 package glgl.data;
 
-import glgl.workspace.controllers.GoLoNodeController;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -86,5 +85,9 @@ public abstract class GoLoComponentPrototype implements Cloneable{
     public abstract void setCoordinate(double x, double y);
     
     public abstract JsonObjectBuilder getJsonNode();
+
+    public boolean isText() {
+        return type.getValue().equals("Text");
+    }
     
 }
