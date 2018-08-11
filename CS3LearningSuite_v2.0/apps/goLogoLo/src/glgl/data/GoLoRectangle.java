@@ -5,10 +5,13 @@
  */
 package glgl.data;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
 
@@ -18,12 +21,17 @@ import javax.json.JsonObjectBuilder;
  */
 public class GoLoRectangle extends GoLoComponentPrototype {
 
+    DoubleProperty oldWidth = new SimpleDoubleProperty();
+    DoubleProperty oldHeight = new SimpleDoubleProperty();
     
     public GoLoRectangle() {
         goLoNode = new Rectangle(300,150);
         ((Rectangle)goLoNode).setFill(Color.ALICEBLUE);
         type = new SimpleStringProperty("Rectangle"); 
-        name = new SimpleStringProperty("Default Rectangle");        
+        name = new SimpleStringProperty("Default Rectangle");  
+        ((Rectangle)goLoNode).setStroke(Color.BLACK);
+        ((Rectangle)goLoNode).setStrokeWidth(0);
+        ((Rectangle)goLoNode).setStrokeType(StrokeType.INSIDE);
     }
     public GoLoRectangle(double x, double y, double width, double height, Paint fill) {
         goLoNode = new Rectangle(x, y, width, height);
@@ -58,6 +66,14 @@ public class GoLoRectangle extends GoLoComponentPrototype {
         return ((Rectangle)goLoNode).getY();
     }
     
+    public double getOldWidth() {
+        return oldWidth.get();
+    }
+    
+    public double getOldHeight() {
+        return oldHeight.get();
+    }
+    
     @Override
     public Object clone() {
         double x = ((Rectangle)goLoNode).getX();
@@ -73,3 +89,4 @@ public class GoLoRectangle extends GoLoComponentPrototype {
     }
     
 }
+

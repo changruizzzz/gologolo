@@ -7,8 +7,11 @@ package glgl.workspace.controllers;
 
 import glgl.GoLogoLoApp;
 import glgl.data.GoLoComponentPrototype;
+import glgl.data.GoLoNodeSelectionModel;
+import glgl.data.GoLoRectangle;
 import glgl.transactions.ChangeTextContent_Transaction;
 import glgl.transactions.Moving_Transaction;
+import glgl.transactions.ResizeRectangle_Transaction;
 import glgl.workspace.dialogs.TextDialog;
 import javafx.scene.text.Text;
 
@@ -37,4 +40,11 @@ public class GoLoNodeController {
             app.processTransaction(ctt);
         }
     }
+
+    public void processResizeRectangle(GoLoRectangle rec) {
+        ResizeRectangle_Transaction rrt= new ResizeRectangle_Transaction(rec);
+        app.processTransaction(rrt);
+    }
+    
+    
 }

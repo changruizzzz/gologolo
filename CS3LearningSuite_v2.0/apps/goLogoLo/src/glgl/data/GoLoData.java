@@ -36,7 +36,7 @@ public class GoLoData implements AppDataComponent {
     TableViewSelectionModel componentsSelectionModel;
     Pane background;
     Rectangle clipper;
-    Pane workspacePane;
+    StackPane workspacePane;
     GoLoNodeController nodeControl;
     GoLoNodeSelectionModel nodeSelectionModel;
     boolean isNodeClicked = false;
@@ -53,7 +53,6 @@ public class GoLoData implements AppDataComponent {
         workspacePane = (StackPane)((ScrollPane) ((BorderPane) ((BorderPane) app.getWorkspaceComponent().getWorkspace()).getCenter()).getCenter()).getContent();
         nodeControl = new GoLoNodeController(app);
         nodeSelectionModel = new GoLoNodeSelectionModel(app);
-        nodeSelectionModel.setTable(componentsSelectionModel);
     }
 
     public void initBackground() {
@@ -75,9 +74,7 @@ public class GoLoData implements AppDataComponent {
         double width = Double.parseDouble(props.getProperty(GLGL_DEFAULT_WIDTH));
         double height = Double.parseDouble(props.getProperty(GLGL_DEFAULT_HEIGHT));
         resize(width, height);
-        background.setClip(clipper);
-        nodeSelectionModel.setNodesList(background.getChildren());
-        
+        background.setClip(clipper);        
     }
 
     public boolean isItemSelected() {
@@ -273,6 +270,8 @@ public class GoLoData implements AppDataComponent {
         component.goLoNode.setOnMouseDragged(e -> {
             isNodeDragged = true;
             component.setCoordinate(e.getX() - component.xDiff.get(), e.getY() - component.yDiff.get());
+            if(component.isRectangle())
+                nodeSelectionModel.updateAnchors((GoLoRectangle)component);
         });
         component.goLoNode.setOnMouseReleased(e -> {
             if (component.isMoved()) {
@@ -292,6 +291,7 @@ public class GoLoData implements AppDataComponent {
     public GoLoNodeSelectionModel getNodeSelectionModel() {
         return nodeSelectionModel;
     }
+    
     
     public Iterator<GoLoComponentPrototype> componentsIterator() {
         return this.components.iterator();
@@ -315,5 +315,13 @@ public class GoLoData implements AppDataComponent {
     
     public void setIsNodeDragged(boolean dragged) {
         isNodeDragged = dragged;
+    }
+    
+    public StackPane getWorkSpacePane() {
+        return workspacePane;
+    }
+    
+    public void setIsNodeClicked(boolean b) {
+        isNodeClicked = b;
     }
 }

@@ -15,6 +15,7 @@ import glgl.transactions.ResizeBackground_Transaction;
 import glgl.workspace.dialogs.EditDialog;
 import glgl.workspace.dialogs.TextDialog;
 import java.util.ArrayList;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 /**
@@ -117,8 +118,14 @@ public class ComponentController {
         GoLoComponentPrototype selected = data.getSelectedItem();
         System.out.println(get);
         System.out.println(selected.getGoLoNode().toString());
-        ((Shape)selected.getGoLoNode()).setStrokeWidth(get);
-//        selected.getGoLoNode().getStyleClass().add("-fx-border-color: black;");
-//        selected.getGoLoNode().getStyleClass().add("-fx-border-width:" + get + ";");
+        ((Shape)selected.getGoLoNode()).setStrokeWidth(get);        
+
+    }
+
+    public void changeRadius(double get) {
+        GoLoData data = (GoLoData)app.getDataComponent();
+        GoLoComponentPrototype selected = data.getSelectedItem();
+        ((Rectangle)selected.getGoLoNode()).setArcHeight(get);
+        ((Rectangle)selected.getGoLoNode()).setArcWidth(get);
     }
 }

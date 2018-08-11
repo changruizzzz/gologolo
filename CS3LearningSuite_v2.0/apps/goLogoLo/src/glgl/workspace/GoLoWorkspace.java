@@ -377,7 +377,8 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
         thicknessSlider.valueProperty().addListener(e->{
             componentsController.changeBorderWidth(thicknessSlider.valueProperty().get());
         });
-        
+        radiusSlider.valueProperty().addListener(e->{
+            componentsController.changeRadius(radiusSlider.valueProperty().get());});
         
         
         

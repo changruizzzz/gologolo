@@ -12,6 +12,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.paint.Color;
 import javax.json.JsonObjectBuilder;
 
 /**
@@ -90,4 +92,20 @@ public abstract class GoLoComponentPrototype implements Cloneable{
         return type.getValue().equals("Text");
     }
     
+    public void markNode() {
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setRadius(5.0);
+        dropShadow.setOffsetX(3.0);
+        dropShadow.setOffsetY(3.0);
+        dropShadow.setColor(Color.color(0.4, 0.5, 0.5));
+        goLoNode.setEffect(dropShadow);
+    }
+    
+    public void clearNode() {
+        goLoNode.setEffect(null);
+    }
+
+    public boolean isRectangle() {
+        return type.getValue().equals("Rectangle");
+    }
 }

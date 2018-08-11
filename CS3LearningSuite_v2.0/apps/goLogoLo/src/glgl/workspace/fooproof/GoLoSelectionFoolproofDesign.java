@@ -21,6 +21,7 @@ import static glgl.GoLoPropertyType.GLGL_UNDERLINE_BUTTON;
 import glgl.GoLogoLoApp;
 import glgl.data.GoLoComponentPrototype;
 import glgl.data.GoLoData;
+import glgl.data.GoLoRectangle;
 
 /**
  *
@@ -44,11 +45,16 @@ public class GoLoSelectionFoolproofDesign implements FoolproofDesign {
         boolean itemUpMovable = data.isUpMovable();
         boolean itemDownMovable = data.isDownMovable();
         boolean isText = false;
+        boolean isRectangle = false;
         boolean isImage;
         boolean isCircle;
         if(itemIsSelected){
             GoLoComponentPrototype temp = data.getSelectedItem();
             isText = temp.isText();
+            isRectangle = temp.isRectangle();
+            if(isRectangle){
+                data.getNodeSelectionModel().updateAnchors((GoLoRectangle)temp);
+            }
         }            
         gui.getGUINode(GLGL_REMOVE_BUTTON).setDisable(!(itemIsSelected));
         gui.getGUINode(GLGL_EDIT_ITEM_BUTTON).setDisable(!itemIsSelected);
@@ -63,6 +69,7 @@ public class GoLoSelectionFoolproofDesign implements FoolproofDesign {
         gui.getGUINode(GLGL_INCREASE_FONT_SIZE_BUTTON).setDisable(!isText);
         gui.getGUINode(GLGL_DECREASE_FONT_SIZE_BUTTON).setDisable(!isText);
         gui.getGUINode(GLGL_UNDERLINE_BUTTON).setDisable(!isText);
-
+        
+        
     }
 }
