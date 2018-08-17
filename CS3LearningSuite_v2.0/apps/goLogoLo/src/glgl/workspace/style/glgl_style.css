@@ -241,10 +241,14 @@
 .glgl_combo {
     -fx-min-width: 65;
 }
+.glgl_font_combo {
+    -fx-min-width: 105;
+}
 
 .glgl_color_picker {
     -fx-pref-width: 200;
 }
+
 
 /* FOR DIALOGS */
 .glgl_dialog_grid {

@@ -1,0 +1,58 @@
+
+{
+    "width":"700.0",
+    "height":"300.0",
+    "items":[
+        {
+            "type":"Text",
+            "name":"Default Text",
+            "node":{
+                "x":207.0,
+                "y":44.0,
+                "text":"Helvetica False False Black",
+                "alignment":"LEFT",
+                "origin":"TOP",
+                "boundsType":"LOGICAL",
+                "fontFamily":"Helvetica",
+                "fontSize":24.0,
+                "bold":false,
+                "italic":false,
+                "fill":"0x000000ff"
+            }
+        },
+        {
+            "type":"Text",
+            "name":"Default Text",
+            "node":{
+                "x":178.0,
+                "y":79.0,
+                "text":"Times True False Orange",
+                "alignment":"LEFT",
+                "origin":"TOP",
+                "boundsType":"LOGICAL",
+                "fontFamily":"Times New Roman",
+                "fontSize":34.0,
+                "bold":true,
+                "italic":false,
+                "fill":"0xff9966ff"
+            }
+        },
+        {
+            "type":"Text",
+            "name":"Default Text",
+            "node":{
+                "x":225.0,
+                "y":125.0,
+                "text":"Arial True True Red",
+                "alignment":"LEFT",
+                "origin":"TOP",
+                "boundsType":"LOGICAL",
+                "fontFamily":"Arial",
+                "fontSize":28.0,
+                "bold":true,
+                "italic":true,
+                "fill":"0xcc333359"
+            }
+        }
+    ]
+}

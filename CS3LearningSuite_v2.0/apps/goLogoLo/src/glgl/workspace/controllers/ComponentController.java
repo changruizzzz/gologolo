@@ -7,7 +7,10 @@ import glgl.data.GoLoData;
 import glgl.data.GoLoRectangle;
 import glgl.data.GoLoText;
 import glgl.transactions.AddComponent_Transaction;
+import glgl.transactions.ChangeBorderColor_Transaction;
+import glgl.transactions.ChangeBorderWidth_Transaction;
 import glgl.transactions.ChangeFont_Transaction;
+import glgl.transactions.ChangeTextColor_Transaction;
 import glgl.transactions.MoveComponent_Transaction;
 import glgl.transactions.RemoveComponents_Transaction;
 import glgl.transactions.Rename_Transaction;
@@ -15,8 +18,11 @@ import glgl.transactions.ResizeBackground_Transaction;
 import glgl.workspace.dialogs.EditDialog;
 import glgl.workspace.dialogs.TextDialog;
 import java.util.ArrayList;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Text;
 
 /**
  *
@@ -33,7 +39,7 @@ public class ComponentController {
         textDialog = new TextDialog(app);
     }
     
-    public void processResize() {
+    public void processResizeBackground() {
         editDialog.showResizeDialog();
         double width = editDialog.getBackgroundWidth();
         double height = editDialog.getBackgroundHeight();
@@ -52,18 +58,6 @@ public class ComponentController {
             RemoveComponents_Transaction transaction = new RemoveComponents_Transaction(data, itemsToRemove);
             app.processTransaction(transaction);
         }
-    }
-    
-    public void processEditItem() {
-//        ToDoData data = (ToDoData)app.getDataComponent();
-//        ToDoItemPrototype initEdit = data.getSelectedItem();
-//        itemDialog.showEditDialog(initEdit);
-//        ToDoItemPrototype editItem = itemDialog.getEditItem();
-//        if (editItem != null) {
-//            EditItem_Transaction transaction = new EditItem_Transaction(data, initEdit, editItem);
-//            app.processTransaction(transaction);
-//            itemDialog.reset();
-//        }
     }
     
     public void processAddRectangle() {
@@ -106,26 +100,54 @@ public class ComponentController {
         app.processTransaction(add);    
     }
 
-    public void processChangeFont(String family, double size, boolean changeWeight, boolean changePosture, boolean changeUnderline) {
+    public void processChangeFont(String family, double size, boolean changeWeight, boolean changePosture) {
         GoLoData data = (GoLoData)app.getDataComponent();
         GoLoText selected = (GoLoText)data.getSelectedItem();    
-        ChangeFont_Transaction ct = new ChangeFont_Transaction(selected, family, size, changeWeight, changePosture, changeUnderline);
+        ChangeFont_Transaction ct = new ChangeFont_Transaction(selected, family, size, changeWeight, changePosture);
         app.processTransaction(ct);
     }
 
     public void changeBorderWidth(double get) {
         GoLoData data = (GoLoData)app.getDataComponent();
         GoLoComponentPrototype selected = data.getSelectedItem();
-        System.out.println(get);
-        System.out.println(selected.getGoLoNode().toString());
         ((Shape)selected.getGoLoNode()).setStrokeWidth(get);        
 
     }
 
-    public void changeRadius(double get) {
+    public void changeRectangleRadius(double get) {
         GoLoData data = (GoLoData)app.getDataComponent();
         GoLoComponentPrototype selected = data.getSelectedItem();
         ((Rectangle)selected.getGoLoNode()).setArcHeight(get);
         ((Rectangle)selected.getGoLoNode()).setArcWidth(get);
+    }
+
+    public void processTextColor(Color value) {
+        GoLoData data = (GoLoData)app.getDataComponent();
+        GoLoComponentPrototype selected = data.getSelectedItem();
+        Paint oldColor = ((Text)selected.getGoLoNode()).getFill();
+        if(!oldColor.equals(value)) {
+            ChangeTextColor_Transaction ctct = new ChangeTextColor_Transaction(selected, value);
+            app.processTransaction(ctct);
+        }
+    }
+
+    public void processBorderColor(Color value) {
+        GoLoData data = (GoLoData)app.getDataComponent();
+        GoLoComponentPrototype selected = data.getSelectedItem();
+        ChangeBorderColor_Transaction cbct = new ChangeBorderColor_Transaction(selected, value);
+        app.processTransaction(cbct);
+    }
+
+    public void setOldBorderWidth(double get) {
+        GoLoData data = (GoLoData)app.getDataComponent();
+        GoLoComponentPrototype selected = data.getSelectedItem();
+        selected.setOldStrokeWidth(get);
+    }
+
+    public void processBorderWidth() {
+        GoLoData data = (GoLoData)app.getDataComponent();
+        GoLoComponentPrototype selected = data.getSelectedItem();
+        ChangeBorderWidth_Transaction cbwt = new ChangeBorderWidth_Transaction(selected);
+        app.processTransaction(cbwt);    
     }
 }

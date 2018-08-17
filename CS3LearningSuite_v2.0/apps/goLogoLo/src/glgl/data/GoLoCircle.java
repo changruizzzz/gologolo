@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javax.json.Json;
+import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 /**
@@ -23,7 +24,6 @@ public class GoLoCircle extends GoLoComponentPrototype{
         type = new SimpleStringProperty("Circle");
         goLoNode = new Circle(50, 50, 50);
         ((Circle)goLoNode).setFill(Color.CORAL);
-        System.out.print(goLoNode.toString());
     }
 
     public GoLoCircle(double x, double y, double radius, Paint fill) {
@@ -61,6 +61,23 @@ public class GoLoCircle extends GoLoComponentPrototype{
                 .add("radius", ((Circle)goLoNode).getRadius())
                 .add("fill", ((Circle)goLoNode).getFill().toString());
         return jsonNode;
+    }
+
+    @Override
+    public Object clone() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void loadFromJson(JsonObject jsonItem, String name) {
+        double x = getDataAsDouble(jsonItem, "x");
+        double y = getDataAsDouble(jsonItem, "y");
+        double radius = getDataAsDouble(jsonItem, "radius");
+        Color fill = Color.valueOf(jsonItem.getString("fill"));
+        type = new SimpleStringProperty("Circle");
+        goLoNode = new Circle(x, y , radius);
+        ((Circle)goLoNode).setFill(fill);   
+        setName(name);
     }
     
 }

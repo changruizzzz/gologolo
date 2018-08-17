@@ -14,7 +14,10 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
+import javax.json.JsonNumber;
+import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.json.JsonValue;
 
 /**
  *
@@ -30,7 +33,8 @@ public abstract class GoLoComponentPrototype implements Cloneable{
     protected final DoubleProperty yDiff = new SimpleDoubleProperty();
     protected final DoubleProperty oldX = new SimpleDoubleProperty();
     protected final DoubleProperty oldY = new SimpleDoubleProperty();
-
+    protected final DoubleProperty oldStrokeWidth = new SimpleDoubleProperty();
+    
     public GoLoComponentPrototype() {
         order = new SimpleIntegerProperty(0);
     }
@@ -67,9 +71,8 @@ public abstract class GoLoComponentPrototype implements Cloneable{
     public int getOrder() {
         return order.get();
     }
-    public Object clone() {
-        return null;
-    }
+    public abstract Object clone();
+    
     public double getOldX() {
         return oldX.get();
     }
@@ -87,7 +90,7 @@ public abstract class GoLoComponentPrototype implements Cloneable{
     public abstract void setCoordinate(double x, double y);
     
     public abstract JsonObjectBuilder getJsonNode();
-
+    
     public boolean isText() {
         return type.getValue().equals("Text");
     }
@@ -107,5 +110,28 @@ public abstract class GoLoComponentPrototype implements Cloneable{
 
     public boolean isRectangle() {
         return type.getValue().equals("Rectangle");
+    }
+    
+    public abstract void loadFromJson(JsonObject jsonItem, String name);
+    public double getDataAsDouble(JsonObject json, String dataName) {
+	JsonValue value = json.get(dataName);
+	JsonNumber number = (JsonNumber)value;
+	return number.bigDecimalValue().doubleValue();	
+    }
+
+    public boolean isCircle() {
+        return type.getValue().equals("Circle");
+    }
+    
+    public boolean isIamge() {
+        return type.getValue().equals("Image");
+    }
+
+    public void setOldStrokeWidth(double get) {
+        oldStrokeWidth.set(get);
+    }
+    
+    public double getOldStrokeWidth() {
+        return oldStrokeWidth.get();
     }
 }

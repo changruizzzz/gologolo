@@ -13,6 +13,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import javax.json.Json;
+import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 /**
@@ -33,6 +34,7 @@ public class GoLoRectangle extends GoLoComponentPrototype {
         ((Rectangle)goLoNode).setStrokeWidth(0);
         ((Rectangle)goLoNode).setStrokeType(StrokeType.INSIDE);
     }
+    
     public GoLoRectangle(double x, double y, double width, double height, Paint fill) {
         goLoNode = new Rectangle(x, y, width, height);
         ((Rectangle)goLoNode).setFill(fill);
@@ -49,7 +51,8 @@ public class GoLoRectangle extends GoLoComponentPrototype {
                 .add("fill", ((Rectangle)goLoNode).getFill().toString());
         return jsonNode;
     }
-
+    
+    
     @Override
     public void setCoordinate(double x, double y) {
         ((Rectangle)goLoNode).setX(x);
@@ -86,6 +89,19 @@ public class GoLoRectangle extends GoLoComponentPrototype {
         return cloned;
 
         
+    }
+
+    @Override
+    public void loadFromJson(JsonObject jsonItem, String name) {
+        double x = getDataAsDouble(jsonItem, "x");
+        double y = getDataAsDouble(jsonItem, "y");
+        double width = getDataAsDouble(jsonItem, "width");
+        double height = getDataAsDouble(jsonItem, "height");
+        Color fill = Color.valueOf(jsonItem.getString("fill"));
+        goLoNode = new Rectangle(x, y, width, height);
+        ((Rectangle)goLoNode).setFill(fill);
+        type = new SimpleStringProperty("Rectangle"); 
+        setName(name);
     }
     
 }

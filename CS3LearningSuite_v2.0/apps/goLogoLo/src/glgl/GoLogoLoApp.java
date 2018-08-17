@@ -36,21 +36,6 @@ public class GoLogoLoApp extends AppTemplate {
 	launch(args);
     }
 
-//    @Override
-//    public AppClipboardComponent buildClipboardComponent(AppTemplate app) {
-//        return new GoLoClipboard(this);
-//    }
-//
-//    @Override
-//    public AppDataComponent buildDataComponent(AppTemplate app) {
-//        return new GoLoData(this);
-//    }
-//
-//    @Override
-//    public AppFileComponent buildFileComponent() {
-//        return new GoLoFiles();
-//    }
-
     @Override
     public AppWorkspaceComponent buildWorkspaceComponent(AppTemplate app) {
         return new GoLoWorkspace(this);        

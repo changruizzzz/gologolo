@@ -118,5 +118,6 @@ public enum GoLoPropertyType {
     
     //
     GLGL_DEFAULT_WIDTH,
-    GLGL_DEFAULT_HEIGHT
+    GLGL_DEFAULT_HEIGHT,
+    GLGL_TEXT_COLOR_PICKER
 }

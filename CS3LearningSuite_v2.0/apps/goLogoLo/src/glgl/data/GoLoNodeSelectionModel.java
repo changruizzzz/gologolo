@@ -5,16 +5,24 @@
  */
 package glgl.data;
 
+import static glgl.GoLoPropertyType.GLGL_FONT_COMBO;
+import static glgl.GoLoPropertyType.GLGL_FONT_SIZE_COMBO;
 import static glgl.GoLoPropertyType.GLGL_ITEMS_TABLE_VIEW;
+import static glgl.GoLoPropertyType.GLGL_TEXT_COLOR_PICKER;
 import glgl.GoLogoLoApp;
 import glgl.workspace.controllers.GoLoNodeController;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 /**
  *
@@ -52,8 +60,9 @@ public class GoLoNodeSelectionModel {
     private void markNodesSelected(GoLoComponentPrototype component) {
         markedNode = component.goLoNode;
         component.markNode();
-        if(component.isRectangle())
+        if(component.isRectangle()) {
             addAnchors((GoLoRectangle)component);
+        }
     }
     
     public void clearSelection() {
@@ -97,6 +106,8 @@ public class GoLoNodeSelectionModel {
     
     private void initAnchors(GoLoRectangle rec) {
         Rectangle recNode = (Rectangle)rec.goLoNode;
+        DoubleProperty width = new SimpleDoubleProperty();
+        DoubleProperty height = new SimpleDoubleProperty();
         //Setup anchor at top left
         topLeft.setOnMousePressed(e->{
             ((GoLoData)app.getDataComponent()).setIsNodeClicked(true);
@@ -107,11 +118,15 @@ public class GoLoNodeSelectionModel {
         });
         topLeft.setOnMouseDragged(e->{
             ((GoLoData)app.getDataComponent()).setIsNodeDragged(true);
-            recNode.setX(e.getX());
-            recNode.setY(e.getY());
-            recNode.setWidth(rec.oldWidth.get() - (e.getX() - rec.oldX.get()));
-            recNode.setHeight(rec.oldHeight.get() - (e.getY() - rec.oldY.get()));
-            updateAnchors(rec);
+            width.set(rec.oldWidth.get() - (e.getX() - rec.oldX.get()));
+            height.set(rec.oldHeight.get() - (e.getY() - rec.oldY.get()));
+            if(width.get() >= 0 && height.get() >= 0) {
+                recNode.setX(e.getX());
+                recNode.setY(e.getY());
+                recNode.setWidth(width.get());
+                recNode.setHeight(height.get());
+                updateAnchors(rec);
+            }
         });
         topLeft.setOnMouseReleased(e->{
             nodeControl.processResizeRectangle(rec);
@@ -127,10 +142,14 @@ public class GoLoNodeSelectionModel {
         });
         topRight.setOnMouseDragged(e->{
             ((GoLoData)app.getDataComponent()).setIsNodeDragged(true);
-            recNode.setY(e.getY());
-            recNode.setWidth(e.getX() - rec.oldX.get());
-            recNode.setHeight(rec.oldHeight.get() - (e.getY() - rec.oldY.get()));
-            updateAnchors(rec);
+            height.set(rec.oldHeight.get() - (e.getY() - rec.oldY.get()));
+            if(width.get() >= 0 && height.get() >= 0) {
+                recNode.setY(e.getY());
+                width.set(e.getX() - rec.oldX.get());
+                recNode.setWidth(width.get());
+                recNode.setHeight(height.get());
+                updateAnchors(rec);
+            }
         });
         topRight.setOnMouseReleased(e->{
             nodeControl.processResizeRectangle(rec);
@@ -146,10 +165,14 @@ public class GoLoNodeSelectionModel {
         });
         bottomLeft.setOnMouseDragged(e->{
             ((GoLoData)app.getDataComponent()).setIsNodeDragged(true);
-            recNode.setX(e.getX());
-            recNode.setWidth(rec.oldWidth.get() - (e.getX() - rec.oldX.get()));
-            recNode.setHeight(e.getY() - rec.oldY.get());
-            updateAnchors(rec);
+            width.set(rec.oldWidth.get() - (e.getX() - rec.oldX.get()));
+            height.set(e.getY() - rec.oldY.get());
+            if(width.get() >= 0 && height.get() >= 0) {
+                recNode.setX(e.getX());
+                recNode.setWidth(width.get());
+                recNode.setHeight(height.get());
+                updateAnchors(rec);
+            }
         });
         bottomLeft.setOnMouseReleased(e->{
             nodeControl.processResizeRectangle(rec);
@@ -165,9 +188,13 @@ public class GoLoNodeSelectionModel {
         });
         bottomRight.setOnMouseDragged(e->{
             ((GoLoData)app.getDataComponent()).setIsNodeDragged(true);
-            recNode.setWidth(e.getX() - rec.oldX.get());
-            recNode.setHeight(e.getY() - rec.oldY.get());
-            updateAnchors(rec);
+            width.set(e.getX() - rec.oldX.get());
+            height.set(e.getY() - rec.oldY.get());
+            if(width.get() >= 0 && height.get() >= 0) {
+                recNode.setWidth(width.get());
+                recNode.setHeight(height.get());
+                updateAnchors(rec);
+            }
         });
         bottomRight.setOnMouseReleased(e->{
             nodeControl.processResizeRectangle(rec);

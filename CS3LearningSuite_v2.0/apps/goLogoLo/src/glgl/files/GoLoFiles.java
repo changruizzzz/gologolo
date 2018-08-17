@@ -173,53 +173,25 @@ public class GoLoFiles implements AppFileComponent {
         String name = jsonItem.getString(JSON_NAME);
         String type = jsonItem.getString(JSON_TYPE);
         JsonObject node = jsonItem.getJsonObject(JSON_NODE);
-        if(type.equals("Rectangle"))
-            return loadRectangle(node ,name);
-        else if(type.equals("Text"))
-            return loadText(node, name);
-        else if(type.equals("Circle"))
-            return loadCircle(node, name);
-        return null;
+        GoLoComponentPrototype temp;
+        if(type.equals("Rectangle")) {
+            temp = new GoLoRectangle();
+            temp.loadFromJson(node, name);
+        }
+        else if(type.equals("Text")) {
+            temp = new GoLoText("");
+            temp.loadFromJson(node, name);
+        }
+        else if(type.equals("Circle")) {
+            temp = new GoLoCircle();
+            temp.loadFromJson(node, name);
+        } else {
+            temp = new GoLoRectangle();
+        }
+        return temp;
         
     }
-    
-    private GoLoRectangle loadRectangle(JsonObject jsonItem, String name) {
-        double x = getDataAsDouble(jsonItem, "x");
-        double y = getDataAsDouble(jsonItem, "y");
-        double width = getDataAsDouble(jsonItem, "width");
-        double height = getDataAsDouble(jsonItem, "height");
-        Color fill = Color.valueOf(jsonItem.getString("fill"));
-        GoLoRectangle returnMe = new GoLoRectangle(x, y, width, height, fill);
-        returnMe.setName(name);
-        return returnMe;
-    }
-    
-    private GoLoText loadText(JsonObject jsonItem, String name) {
-        String text = jsonItem.getString("text");
-        double x = getDataAsDouble(jsonItem, "x");
-        double y = getDataAsDouble(jsonItem, "y");
-        TextAlignment alignment = TextAlignment.valueOf(jsonItem.getString("alignment"));
-        VPos origin = VPos.valueOf(jsonItem.getString("origin"));
-        TextBoundsType boundsType = TextBoundsType.valueOf(jsonItem.getString("boundsType"));
-        String fontName = jsonItem.getString("fontName");
-        double fontSize = getDataAsDouble(jsonItem, "fontSize");
-        Font font = new Font(fontName, fontSize);
-        FontSmoothingType fontSmoothingType =  FontSmoothingType.valueOf(jsonItem.getString("fontSmoothingType"));
-        Color fill = Color.valueOf(jsonItem.getString("fill"));
-        GoLoText returnMe = new GoLoText(x, y, text, alignment, origin, boundsType, font, fontSmoothingType, fill);
-        returnMe.setName(name);
-        return returnMe;
-    }
-    
-    private GoLoCircle loadCircle(JsonObject jsonItem, String name) {
-        double x = getDataAsDouble(jsonItem, "x");
-        double y = getDataAsDouble(jsonItem, "y");
-        double radius = getDataAsDouble(jsonItem, "radius");
-        Color fill = Color.valueOf(jsonItem.getString("fill"));
-        GoLoCircle returnMe = new GoLoCircle(x, y, radius, fill);
-        returnMe.setName(name);
-        return returnMe;
-    }
+
     // HELPER METHOD FOR LOADING DATA FROM A JSON FORMAT
     private JsonObject loadJSONFile(String jsonFilePath) throws IOException {
 	InputStream is = new FileInputStream(jsonFilePath);

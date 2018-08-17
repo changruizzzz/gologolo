@@ -95,8 +95,7 @@
         
 
         <!-- GLGL FONT OPTIONS -->       
-<!--        <property name="GLGL_DEFAULT_FONT"                       value="Helvetica Light"></property> -->
-<!--        <property name="GLGL_DEFAULT_FONT_SIZE"                  value="12"></property> -->
+        <property name="GLGL_DEFAULT_FONT"                       value="Helvetica"></property> 
         
         <property name="GLGL_DEFAULT_CYCLE_METHOD"                  value="NO_CYCLE"></property> 
 
@@ -125,24 +124,13 @@
             <option>Spanish</option>
         </property_options>
         
-<!--        <property_options name="GLGL_FONT_OPTIONS">
-            <option>Helvetica Light</option>
+        <property_options name="GLGL_FONT_OPTIONS">
+            <option>Helvetica</option>
             <option>Times New Roman</option>
             <option>Arial</option>
             <option>Calibri</option>
-        </property_options>-->
+        </property_options>
         
-<!--        <property_options name="GLGL_FONT_SIZE_OPTIONS">
-            <option>6</option>
-            
-            <option>8</option>
-            <option>10</option>
-            <option>12</option>
-            <option>14</option>
-            <option>16</option>
-            <option>18</option>
-            <option>20</option>
-        </property_options>-->
         
         <property_options name="GLGL_CYCLE_METHOD_OPTIONS">
             <option>NO_CYCLE</option>

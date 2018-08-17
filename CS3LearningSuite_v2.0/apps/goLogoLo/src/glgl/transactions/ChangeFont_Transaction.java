@@ -21,14 +21,12 @@ public class ChangeFont_Transaction implements jTPS_Transaction{
     Font oldFont;
     Font newFont;
     GoLoText goLoText;
-    boolean ifChangeUnderline;
     boolean ifChangeWeight;
     boolean ifChangePosture;
     
-    public ChangeFont_Transaction(GoLoText initText, String family, double size, boolean changeWeight, boolean changePosture, boolean changeUnderline) {
+    public ChangeFont_Transaction(GoLoText initText, String family, double size, boolean changeWeight, boolean changePosture) {
         goLoText = initText;
         oldFont = ((Text)initText.getGoLoNode()).getFont();
-        ifChangeUnderline = changeUnderline;
         ifChangeWeight = changeWeight;
         ifChangePosture = changePosture;
         FontWeight tempWeight;
@@ -60,29 +58,19 @@ public class ChangeFont_Transaction implements jTPS_Transaction{
     
     @Override
     public void doTransaction() {
-        if(ifChangeUnderline) {
-            ((Text)goLoText.getGoLoNode()).setUnderline(!((Text)goLoText.getGoLoNode()).underlineProperty().get());
-            goLoText.setIsUnderline(!goLoText.isUnderline());
-        } else {
-            ((Text)goLoText.getGoLoNode()).setFont(newFont);
-            if(ifChangeWeight)
-                goLoText.setIsBold(!goLoText.isBold());            
-            if(ifChangePosture)
-                goLoText.setIsItalic(!goLoText.isItalic());
-        }
+        ((Text)goLoText.getGoLoNode()).setFont(newFont);
+        if(ifChangeWeight)
+            goLoText.setIsBold(!goLoText.isBold());            
+        if(ifChangePosture)
+            goLoText.setIsItalic(!goLoText.isItalic());
     }
 
     @Override
     public void undoTransaction() {
-        if(ifChangeUnderline) {
-            ((Text)goLoText.getGoLoNode()).setUnderline(!((Text)goLoText.getGoLoNode()).underlineProperty().get());
-            goLoText.setIsUnderline(!goLoText.isUnderline());
-        } else {
-            ((Text)goLoText.getGoLoNode()).setFont(oldFont);
-            if(ifChangeWeight)
-                goLoText.setIsBold(!goLoText.isBold());            
-            if(ifChangePosture)
-                goLoText.setIsItalic(!goLoText.isItalic());
-        }
+        ((Text)goLoText.getGoLoNode()).setFont(oldFont);
+        if(ifChangeWeight)
+            goLoText.setIsBold(!goLoText.isBold());            
+        if(ifChangePosture)
+            goLoText.setIsItalic(!goLoText.isItalic());
     }
 }

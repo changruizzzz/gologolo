@@ -42,6 +42,7 @@ public class GoLoData implements AppDataComponent {
     boolean isNodeClicked = false;
     boolean isCanvasClicked =false;
     boolean isNodeDragged = false;
+    boolean blockValueListener = false;
     
     public GoLoData(GoLogoLoApp initApp) {
         app = initApp;
@@ -256,7 +257,7 @@ public class GoLoData implements AppDataComponent {
         component.goLoNode.setOnMouseClicked(e-> {
             isNodeClicked = true;
             nodeSelectionModel.selectComponent(component);
-            if (component.getType().equals("Text")) 
+            if (component.isText()) 
                 if (e.getClickCount() == 2) {
                     nodeControl.processChangeText((Text) component.goLoNode);}
         });
@@ -278,14 +279,6 @@ public class GoLoData implements AppDataComponent {
                 nodeControl.processMove(component);
             }
         });
-//        if (component.getType().equals("Text")) {
-//            component.goLoNode.setOnMouseClicked(e -> {
-//                                    nodeSelectionModel.selectComponent(component);
-//
-//                if (e.getClickCount() == 2) {
-//                    nodeControl.processChangeText((Text) component.goLoNode);}
-//            });
-//        }
     }
     
     public GoLoNodeSelectionModel getNodeSelectionModel() {
@@ -324,4 +317,12 @@ public class GoLoData implements AppDataComponent {
     public void setIsNodeClicked(boolean b) {
         isNodeClicked = b;
     }
+    
+    public boolean getBlockValueListener() {
+        return blockValueListener;
+    }
+    
+    public void setBlockValueListener(boolean b) {
+        blockValueListener = b;
+    } 
 }

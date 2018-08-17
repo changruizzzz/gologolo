@@ -35,7 +35,9 @@ public class GLGLStyle {
     public static final String CLASS_GLGL_COLUMN        = "glgl_column";
     public static final String CLASS_GLGL_SLIDER        = "glgl_slider";
     public static final String CLASS_GLGL_COLOR_PICKER  = "glgl_color_picker";
+    public static final String CLASS_GLGL_TEXT_COLOR_PICKER  = "glgl_text_color_picker";
     public static final String CLASS_GLGL_COMBO         = "glgl_combo";
+    public static final String CLASS_GLGL_FONT_COMBO         = "glgl_font_combo";
 
 
     

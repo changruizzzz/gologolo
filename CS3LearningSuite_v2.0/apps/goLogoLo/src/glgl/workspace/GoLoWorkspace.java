@@ -7,8 +7,6 @@ package glgl.workspace;
 
 import static djf.AppPropertyType.RESET_VIEW_BUTTON;
 import static djf.AppPropertyType.RESIZE_BUTTON;
-import static djf.AppPropertyType.SNAP_BOX;
-import static djf.AppPropertyType.SNAP_BUTTON;
 import static djf.AppPropertyType.ZOOM_IN_BUTTON;
 import static djf.AppPropertyType.ZOOM_OUT_BUTTON;
 import djf.components.AppWorkspaceComponent;
@@ -20,12 +18,10 @@ import static djf.modules.AppGUIModule.HAS_KEY_HANDLER;
 import djf.ui.AppNodesBuilder;
 import static djf.ui.style.DJFStyle.CLASS_DJF_ICON_BUTTON;
 import static djf.ui.style.DJFStyle.CLASS_DJF_TOOLBAR_PANE;
-import static djf.ui.style.DJFStyle.CLASS_DJF_TOOLBAR_TEXT;
 import static glgl.GoLoPropertyType.GLGL_ADD_CIRCLE_BUTTON;
 import static glgl.GoLoPropertyType.GLGL_ADD_IMAGE_BUTTON;
 import static glgl.GoLoPropertyType.GLGL_ADD_RECTANGLE_BUTTON;
 import static glgl.GoLoPropertyType.GLGL_ADD_TEXT_BUTTON;
-import static glgl.GoLoPropertyType.GLGL_ADD_TRIANGLE_BUTTON;
 import static glgl.GoLoPropertyType.GLGL_BOLD_BUTTON;
 import static glgl.GoLoPropertyType.GLGL_BORDER_BOX;
 import static glgl.GoLoPropertyType.GLGL_BORDER_COLOR_PICKER;
@@ -83,9 +79,9 @@ import static glgl.GoLoPropertyType.GLGL_STOP_0_COLOR_PICKER;
 import static glgl.GoLoPropertyType.GLGL_STOP_0_COLOR_PICKER_LABEL;
 import static glgl.GoLoPropertyType.GLGL_STOP_1_COLOR_PICKER;
 import static glgl.GoLoPropertyType.GLGL_STOP_1_COLOR_PICKER_LABEL;
+import static glgl.GoLoPropertyType.GLGL_TEXT_COLOR_PICKER;
 import static glgl.GoLoPropertyType.GLGL_THICKNESS_SLIDER;
 import static glgl.GoLoPropertyType.GLGL_TYPE_COLUMN;
-import static glgl.GoLoPropertyType.GLGL_UNDERLINE_BUTTON;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_BOX;
 
 
@@ -100,6 +96,7 @@ import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_BODY;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_COLOR_PICKER;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_COLUMN;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_COMBO;
+import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_FONT_COMBO;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_FUNCTION_PANE;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_ICON_BUTTON;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_ITEM_PANE;
@@ -107,12 +104,10 @@ import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_PROMPT;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_SLIDER;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_SMALL_HEADER;
 import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_TABLE;
-import java.util.LinkedList;
 import java.util.List;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -166,10 +161,10 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
         Button zoomOutButton = glglNodesBuilder.buildIconButton(ZOOM_OUT_BUTTON, null, zoomToolBar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         Button resizeButton = glglNodesBuilder.buildIconButton(RESIZE_BUTTON, null, zoomToolBar, CLASS_DJF_ICON_BUTTON, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         resizeButton.setOnAction(e -> {
-            componentsController.processResize();
+            componentsController.processResizeBackground();
         }); 
-        CheckBox snapBox = glglNodesBuilder.buildCheckBox(SNAP_BOX, null, zoomToolBar, null, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        Label snapLabel = glglNodesBuilder.buildLabel(SNAP_BUTTON, null, zoomToolBar, CLASS_DJF_TOOLBAR_TEXT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+//        CheckBox snapBox = glglNodesBuilder.buildCheckBox(SNAP_BOX, null, zoomToolBar, null, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+//        Label snapLabel = glglNodesBuilder.buildLabel(SNAP_BUTTON, null, zoomToolBar, CLASS_DJF_TOOLBAR_TEXT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         app.getGUIModule().getTopToolbarPane().getChildren().add(3, zoomToolBar);
                 
                 
@@ -297,7 +292,7 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
         Button addImageButton           = glglNodesBuilder.buildIconButton(GLGL_ADD_IMAGE_BUTTON,        elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
         Button addRectangleButton       = glglNodesBuilder.buildIconButton(GLGL_ADD_RECTANGLE_BUTTON,    elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
         Button addCircleButton          = glglNodesBuilder.buildIconButton(GLGL_ADD_CIRCLE_BUTTON,       elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
-        Button addTriangleButton        = glglNodesBuilder.buildIconButton(GLGL_ADD_TRIANGLE_BUTTON,     elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
+//        Button addTriangleButton        = glglNodesBuilder.buildIconButton(GLGL_ADD_TRIANGLE_BUTTON,     elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
         Button RemoveButton             = glglNodesBuilder.buildIconButton(GLGL_REMOVE_BUTTON,           elementsBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
 	addRectangleButton.setOnAction(e->{
             componentsController.processAddRectangle();});
@@ -315,14 +310,20 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
         
         VBox fontSettingBox             = glglNodesBuilder.buildVBox(GLGL_FONT_SETTING_BOX,            functionPane,   null,   CLASS_GLGL_BOX, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
         HBox fontSettingCombo           = glglNodesBuilder.buildHBox(GLGL_FONT_SETTING_COMBO,                  fontSettingBox,   null,   CLASS_GLGL_BOX, HAS_KEY_HANDLER,     FOCUS_TRAVERSABLE,  ENABLED);
-        ComboBox fontCombo              = glglNodesBuilder.buildComboBox(GLGL_FONT_COMBO, GLGL_FONT_OPTIONS, GLGL_DEFAULT_FONT, fontSettingCombo, null, CLASS_GLGL_COMBO, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        ComboBox fontCombo              = glglNodesBuilder.buildComboBox(GLGL_FONT_COMBO, GLGL_FONT_OPTIONS, GLGL_DEFAULT_FONT, fontSettingCombo, null, CLASS_GLGL_FONT_COMBO, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         ComboBox fontSizeCombo          = glglNodesBuilder.buildComboBox(GLGL_FONT_SIZE_COMBO, GLGL_FONT_SIZE_OPTIONS, GLGL_DEFAULT_FONT_SIZE, fontSettingCombo, null, CLASS_GLGL_COMBO, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        ColorPicker textColorPicker =glglNodesBuilder.buildColorPicker(GLGL_TEXT_COLOR_PICKER, fontSettingCombo, null, CLASS_GLGL_COLOR_PICKER, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        textColorPicker.getStyleClass().add("button");
         List<String> l = Font.getFamilies();
-        ObservableList<String> ol = fontCombo.getItems();
-        l.forEach((fontFamily) -> {
-            ol.add(fontFamily);
+        textColorPicker.setOnAction(e->{
+            componentsController.processTextColor(textColorPicker.getValue());
         });
-        fontCombo.getSelectionModel().select("Helvetica");
+        
+//        ObservableList<String> ol = fontCombo.getItems();
+//        l.forEach((fontFamily) -> {
+//            ol.add(fontFamily);
+//        });
+//        fontCombo.getSelectionModel().select("Helvetica");
         ObservableList<Integer> ol2 = fontSizeCombo.getItems();
         for(int i = 8; i <= 36; i+=2) {
             ol2.add(i);
@@ -334,15 +335,18 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
         Button italicButton               = glglNodesBuilder.buildIconButton(GLGL_ITALIC_BUTTON,         fontStyleBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
         Button increaseFontSizeButton               = glglNodesBuilder.buildIconButton(GLGL_INCREASE_FONT_SIZE_BUTTON,         fontStyleBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
         Button decreaseFontSizeButton               = glglNodesBuilder.buildIconButton(GLGL_DECREASE_FONT_SIZE_BUTTON,         fontStyleBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
-        Button underlineButton               = glglNodesBuilder.buildIconButton(GLGL_UNDERLINE_BUTTON,         fontStyleBox,    null,   CLASS_GLGL_ICON_BUTTON, HAS_KEY_HANDLER,   FOCUS_TRAVERSABLE,  ENABLED);
-        
+  
         fontCombo.getSelectionModel().selectedItemProperty().addListener(e->{
-            componentsController.processChangeFont((String)fontCombo.getSelectionModel().getSelectedItem(), 
-                    (Integer)fontSizeCombo.getSelectionModel().getSelectedItem(), false, false, false);
+            if(!((GoLoData)app.getDataComponent()).getBlockValueListener()) {
+                componentsController.processChangeFont((String)fontCombo.getSelectionModel().getSelectedItem(), 
+                        (Integer)fontSizeCombo.getSelectionModel().getSelectedItem(), false, false);
+            }
         });        
         fontSizeCombo.getSelectionModel().selectedItemProperty().addListener(e->{
-            componentsController.processChangeFont((String)fontCombo.getSelectionModel().getSelectedItem(), 
-                    (Integer)fontSizeCombo.getSelectionModel().getSelectedItem(), false, false, false);
+            if(!((GoLoData)app.getDataComponent()).getBlockValueListener()) {
+                componentsController.processChangeFont((String)fontCombo.getSelectionModel().getSelectedItem(), 
+                        (Integer)fontSizeCombo.getSelectionModel().getSelectedItem(), false, false);
+            }
         });
         increaseFontSizeButton.setOnAction(e->{
             int newInt = (Integer)fontSizeCombo.getSelectionModel().getSelectedItem() + 2;
@@ -352,16 +356,16 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
             fontSizeCombo.getSelectionModel().select(new Integer(newInt));});
         boldButton.setOnAction(e->{
             componentsController.processChangeFont((String)fontCombo.getSelectionModel().getSelectedItem(), 
-                    (Integer)fontSizeCombo.getSelectionModel().getSelectedItem(), true, false, false);
+                    (Integer)fontSizeCombo.getSelectionModel().getSelectedItem(), true, false);
         });        
         italicButton.setOnAction(e->{
             componentsController.processChangeFont((String)fontCombo.getSelectionModel().getSelectedItem(), 
-                    (Integer)fontSizeCombo.getSelectionModel().getSelectedItem(), false, true, false);
+                    (Integer)fontSizeCombo.getSelectionModel().getSelectedItem(), false, true);
         });        
-        underlineButton.setOnAction(e->{
-            componentsController.processChangeFont((String)fontCombo.getSelectionModel().getSelectedItem(), 
-                    (Integer)fontSizeCombo.getSelectionModel().getSelectedItem(), false, false, true);
-        });
+//        textColorButton.setOnAction(e->{
+//            componentsController.processChangeFont((String)fontCombo.getSelectionModel().getSelectedItem(), 
+//                    (Integer)fontSizeCombo.getSelectionModel().getSelectedItem(), false, false, true);
+//        });
         
         
         
@@ -374,12 +378,34 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
         Label borderColorPickerLable      = glglNodesBuilder.buildLabel(GLGL_BORDER_COLOR_PICKER_LABEL, borderBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         ColorPicker borderColorPicker =glglNodesBuilder.buildColorPicker(GLGL_BORDER_COLOR_PICKER, borderBox, null, CLASS_GLGL_COLOR_PICKER, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         
-        thicknessSlider.valueProperty().addListener(e->{
-            componentsController.changeBorderWidth(thicknessSlider.valueProperty().get());
+        thicknessSlider.setOnMousePressed(e->{
+            componentsController.setOldBorderWidth(thicknessSlider.valueProperty().get());
         });
-        radiusSlider.valueProperty().addListener(e->{
-            componentsController.changeRadius(radiusSlider.valueProperty().get());});
+        thicknessSlider.valueProperty().addListener(e->{
+            if(!((GoLoData)app.getDataComponent()).getBlockValueListener()) {
+                componentsController.changeBorderWidth(thicknessSlider.valueProperty().get());
+            }            
+        });
+        thicknessSlider.setOnMouseReleased(e->{
+            componentsController.processBorderWidth();
+        });
         
+        
+        
+        
+        
+        
+        
+        radiusSlider.valueProperty().addListener(e->{
+            if(!((GoLoData)app.getDataComponent()).getBlockValueListener()) {
+                componentsController.changeRectangleRadius(radiusSlider.valueProperty().get());
+            }
+        });
+        
+        
+        borderColorPicker.setOnAction(e->{
+            componentsController.processBorderColor(borderColorPicker.getValue());
+        });
         
         
         
@@ -402,7 +428,7 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
         Label gradientRadiusliderLable      = glglNodesBuilder.buildLabel(GLGL_GRADIENT_RADIUS_LABEL, gradientBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         Slider gradientRadiusSlider          = glglNodesBuilder.buildSlider(GLGL_CGRADIENT_RADIUS_SLIDER, gradientBox, null, CLASS_GLGL_SLIDER, 0, 100, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         Label cycleMethodLable      = glglNodesBuilder.buildLabel(GLGL_CYCLE_METHOD_LABEL, gradientBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
-        ComboBox cycleMehodCombo              = glglNodesBuilder.buildComboBox(GLGL_CYCLE_METHOD_COMBO, GLGL_CYCLE_METHOD_OPTIONS, GLGL_DEFAULT_CYCLE_METHOD, gradientBox, null, CLASS_GLGL_COMBO, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        ComboBox cycleMethodCombo              = glglNodesBuilder.buildComboBox(GLGL_CYCLE_METHOD_COMBO, GLGL_CYCLE_METHOD_OPTIONS, GLGL_DEFAULT_CYCLE_METHOD, gradientBox, null, CLASS_GLGL_COMBO, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
 
 
 

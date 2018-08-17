@@ -5,17 +5,18 @@
     "items":[
         {
             "type":"Text",
-            "name":"Layer 0",
+            "name":"Default Text",
             "node":{
-                "x":258.0,
-                "y":106.0,
-                "text":"Hello, World!",
+                "x":444.0,
+                "y":128.0,
+                "text":"111",
                 "alignment":"LEFT",
                 "origin":"TOP",
                 "boundsType":"LOGICAL",
-                "fontName":"Helvetica Light",
-                "fontSize":22.0,
-                "fontSmoothingType":"GRAY",
+                "fontFamily":"Times New Roman",
+                "fontSize":10.0,
+                "bold":true,
+                "italic":false,
                 "fill":"0x000000ff"
             }
         }
