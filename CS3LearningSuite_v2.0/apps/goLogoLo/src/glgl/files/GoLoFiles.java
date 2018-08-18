@@ -24,24 +24,16 @@ import javax.json.JsonValue;
 import javax.json.JsonWriter;
 import javax.json.JsonWriterFactory;
 import javax.json.stream.JsonGenerator;
-import javax.swing.text.html.HTML;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import glgl.data.GoLoData;
 import glgl.data.GoLoComponentPrototype;
+import glgl.data.GoLoImage;
 import glgl.data.GoLoRectangle;
 import glgl.data.GoLoText;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.image.WritableImage;
+import javafx.scene.paint.RadialGradient;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -57,6 +49,7 @@ public class GoLoFiles implements AppFileComponent {
     static final String JSON_TYPE = "type";
     static final String JSON_NAME = "name";
     static final String JSON_NODE = "node";
+    static final String JSON_FILL = "fill";
 
     
     // FOR EXPORTING TO HTML
@@ -103,6 +96,7 @@ public class GoLoFiles implements AppFileComponent {
 	JsonObject goLoDataJSO = Json.createObjectBuilder()
                 .add(JSON_WIDTH, width)
                 .add(JSON_HEIGHT, height)
+                .add(JSON_FILL, goLoData.getFill().toString())
 		.add(JSON_ITEMS, itemsArray)
 		.build();
 	
@@ -151,7 +145,9 @@ public class GoLoFiles implements AppFileComponent {
 	// LOAD LIST NAME AND OWNER
 	double width = Double.parseDouble(json.getString(JSON_WIDTH));
         double height = Double.parseDouble(json.getString(JSON_HEIGHT));
-        goLoData.resize(width, height);	
+        RadialGradient rg = RadialGradient.valueOf(json.getString(JSON_FILL));
+        goLoData.resize(width, height);
+        goLoData.setFill(rg);
 	// AND NOW LOAD ALL THE ITEMS
 	JsonArray jsonItemArray = json.getJsonArray(JSON_ITEMS);
 	for (int i = 0; i < jsonItemArray.size(); i++) {
@@ -180,7 +176,8 @@ public class GoLoFiles implements AppFileComponent {
             temp = new GoLoCircle();
             temp.loadFromJson(node, name);
         } else {
-            temp = new GoLoRectangle();
+            temp = new GoLoImage();
+            temp.loadFromJson(node, name);
         }
         return temp;
         
@@ -202,99 +199,36 @@ public class GoLoFiles implements AppFileComponent {
      */
     @Override
     public void exportData(AppDataComponent data, String savedFileName) throws IOException {
-//        String toDoListName = savedFileName.substring(0, savedFileName.indexOf("."));
-//        String fileToExport = toDoListName + ".html";
-//        try {
-//            // GET THE ACTUAL DATA
-//            ToDoData toDoData = (ToDoData)data;
-//            PropertiesManager props = PropertiesManager.getPropertiesManager();
-//            String exportDirPath = props.getProperty(APP_PATH_EXPORT) + toDoListName + "/";
-//            File exportDir = new File(exportDirPath);
-//            if (!exportDir.exists()) {
-//                exportDir.mkdir();
-//            }
-//
-//            // NOW LOAD THE TEMPLATE DOCUMENT
-//            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-//            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-//            String htmlTemplatePath = props.getPropertiesDataPath() + props.getProperty(TDLM_EXPORT_TEMPLATE_FILE_NAME);
-//            File file = new File(htmlTemplatePath);
-//            System.out.println(file.getPath() + " exists? " + file.exists());
-//            URL templateURL = file.toURI().toURL();
-//            Document exportDoc = docBuilder.parse(templateURL.getPath());
-//
-//            // SET THE WEB PAGE TITLE
-//            Node titleNode = exportDoc.getElementsByTagName(TITLE_TAG).item(0);
-//            titleNode.setTextContent("No Name List");
-//
-//            // SET THE OWNER
-//            Node ownerNode = getNodeWithId(exportDoc, HTML.Tag.TD.toString(), OWNER_TAG);
-//            ownerNode.setTextContent(toDoData.getOwner());
-//            
-//            // ADD ALL THE ITEMS
-//            Node tDataNode = getNodeWithId(exportDoc, "tdata", TABLE_DATA_TAG);
-//            Iterator<ToDoItemPrototype> itemsIt = toDoData.itemsIterator();
-//            while (itemsIt.hasNext()) {
-//                ToDoItemPrototype item = itemsIt.next();
-//                Element trElement = exportDoc.createElement(HTML.Tag.TR.toString());
-//                tDataNode.appendChild(trElement);
-//                addCellToRow(exportDoc, trElement, item.getCategory());
-//                addCellToRow(exportDoc, trElement, item.getDescription());
-//                addCellToRow(exportDoc, trElement, item.getStartDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
-//                addCellToRow(exportDoc, trElement, "" + item.isCompleted());
-//            }
-//            
-//            // CORRECT THE APP EXPORT PAGE
-//            props.addProperty(APP_EXPORT_PAGE, exportDirPath + fileToExport);
-//
-//            // EXPORT THE WEB PAGE
-//            saveDocument(exportDoc, props.getProperty(APP_EXPORT_PAGE));
-//        }
-//        catch(SAXException | ParserConfigurationException
-//                | TransformerException exc) {
-//            throw new IOException("Error loading " + fileToExport);
-//        }
-    }
-    private void addCellToRow(Document doc, Node rowNode, String text) {
-        Element tdElement = doc.createElement(HTML.Tag.TD.toString());
-        tdElement.setTextContent(text);
-        rowNode.appendChild(tdElement);
-    }
-    private Node getNodeWithId(Document doc, String tagType, String searchID) {
-        NodeList testNodes = doc.getElementsByTagName(tagType);
-        for (int i = 0; i < testNodes.getLength(); i++) {
-            Node testNode = testNodes.item(i);
-            Node testAttr = testNode.getAttributes().getNamedItem(HTML.Attribute.ID.toString());
-            if ((testAttr != null) && testAttr.getNodeValue().equals(searchID)) {
-                return testNode;
-            }
+//        String logoName = savedFileName.substring(0, savedFileName.indexOf("."));
+        String logoName = savedFileName;
+        String fileToExport = logoName + ".png";
+        try {
+            // GET THE ACTUAL DATA
+            GoLoData goLoData = (GoLoData)data;
+            goLoData.clearSelected();
+            WritableImage snapShot = goLoData.getBackground().snapshot(new SnapshotParameters(), null);
+            File file = new File(fileToExport);
+            ImageIO.write(SwingFXUtils.fromFXImage(snapShot, null), "png", file);        
         }
-        return null;
-    }
-    private void saveDocument(Document doc, String outputFilePath)
-            throws TransformerException, TransformerConfigurationException {
-        TransformerFactory factory = TransformerFactory.newInstance();
-        Transformer transformer = factory.newTransformer();
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-        Result result = new StreamResult(new File(outputFilePath));
-        Source source = new DOMSource(doc);
-        transformer.transform(source, result);
+        catch(Exception e) {
+            throw new IOException("Error loading " + fileToExport);
+        }
     }
 
     /**
      * This method is provided to satisfy the compiler, but it
      * is not used by this application.
      */
-    @Override
-    public void importData(AppDataComponent data, String filePath) throws IOException {
-        
-    }
     
     public double getDataAsDouble(JsonObject json, String dataName) {
 	JsonValue value = json.get(dataName);
 	JsonNumber number = (JsonNumber)value;
 	return number.bigDecimalValue().doubleValue();	
+    }
+
+    @Override
+    public void importData(AppDataComponent data, String filePath) throws IOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 

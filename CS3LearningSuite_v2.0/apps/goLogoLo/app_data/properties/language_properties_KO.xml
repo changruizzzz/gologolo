@@ -73,7 +73,9 @@
         <property name="SAVE_ERROR_CONTENT"     value="저장하지 못했습니다. 파일 액세스 문제로 인한 것 같습니다."></property>
         <property name="SAVE_VERIFY_TITLE"	value="저장되지 않은 작업을 저장 하시겠습니까?"></property>
         <property name="SAVE_VERIFY_CONTENT"	value="저장되지 않은 작업을 먼저 저장 하시겠습니까?"></property>
-        
+        <property name="EXPORT_WORK_TITLE"        value="수출 업무"></property>
+        <property name="EXPORT_SUCCESS_CONTENT"        value="내보내기 성공! 이미지가 \ GoLogoLo \"></property>
+
         <!-- ERROR DIALOG -->
         <property name="FIELD_EMPTY_ERROR"         value="빈 텍스트를 사용할 수 없습니다! 다시 시도하거나 취소하십시오.."></property>
         <property name="FIELD_NEGETIVE_ERROR"         value="잘못된 입력! 다시 시도하거나 취소하십시오."></property>

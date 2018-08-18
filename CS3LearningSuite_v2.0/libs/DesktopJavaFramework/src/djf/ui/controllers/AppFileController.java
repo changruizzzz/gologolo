@@ -131,7 +131,7 @@ public class AppFileController {
         String workFileName = fileSettings.getWorkFile().getName();
         try {
             app.getFileComponent().exportData(app.getDataComponent(), workFileName);
-            AppDialogsFacade.showExportDialog(app);
+            AppDialogsFacade.showMessageDialog(app.getGUIModule().getWindow(), EXPORT_WORK_TITLE, EXPORT_SUCCESS_CONTENT);
         }
         catch(IOException ioe) {
             AppDialogsFacade.showMessageDialog(app.getGUIModule().getWindow(), EXPORT_ERROR_TITLE, EXPORT_ERROR_CONTENT);

@@ -1,11 +1,13 @@
 package glgl.workspace.controllers;
 
+import glgl.transactions.CanvasRadient_Transaction;
 import glgl.transactions.ColorGradient_Transaction;
 import glgl.transactions.ChangeArc_Transaction;
 import glgl.GoLogoLoApp;
 import glgl.data.GoLoCircle;
 import glgl.data.GoLoComponentPrototype;
 import glgl.data.GoLoData;
+import glgl.data.GoLoImage;
 import glgl.data.GoLoRectangle;
 import glgl.data.GoLoText;
 import glgl.transactions.AddComponent_Transaction;
@@ -19,13 +21,21 @@ import glgl.transactions.Rename_Transaction;
 import glgl.transactions.ResizeBackground_Transaction;
 import glgl.workspace.dialogs.EditDialog;
 import glgl.workspace.dialogs.TextDialog;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -62,7 +72,32 @@ public class ComponentController {
             app.processTransaction(transaction);
         }
     }
-    
+    public void processAddImage() {
+            GoLoData data = (GoLoData)app.getDataComponent();
+            FileChooser fileChooser = new FileChooser();
+            ImageView iv = new ImageView();
+            //Set extension filter
+            FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+            FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
+            fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
+              
+            //Show open file dialog
+            File file = fileChooser.showOpenDialog(null);
+            if(file != null) {           
+                try {
+                    BufferedImage bufferedImage = ImageIO.read(file);
+                    Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+                    iv.setImage(image);
+                    GoLoImage component = new GoLoImage(iv, file.getName(), file.getPath());
+                    AddComponent_Transaction add = new AddComponent_Transaction(data, component);
+                    app.processTransaction(add);
+                } catch (IOException ex) {
+                    System.out.print("WRONG");
+                }
+            }
+ 
+    }    
+
     public void processAddRectangle() {
         GoLoData data = (GoLoData)app.getDataComponent();
         GoLoRectangle component = new GoLoRectangle();
@@ -163,6 +198,9 @@ public class ComponentController {
             GoLoComponentPrototype selected = data.getSelectedItem();
             ColorGradient_Transaction cgt = new ColorGradient_Transaction(selected);
             app.processTransaction(cgt);
+        } else {
+            CanvasRadient_Transaction crt = new CanvasRadient_Transaction(data);
+            app.processTransaction(crt);
         }
     }
 
@@ -171,6 +209,10 @@ public class ComponentController {
         if(data.isItemSelected()) {
             GoLoComponentPrototype selected = data.getSelectedItem();
             ((Shape)selected.getGoLoNode()).setFill(rg);
+        } else {
+           data.changeFill(rg);
         }
     }
+
+
 }

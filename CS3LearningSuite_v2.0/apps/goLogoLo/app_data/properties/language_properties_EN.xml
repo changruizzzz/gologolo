@@ -74,6 +74,14 @@
         <property name="SAVE_VERIFY_TITLE"	value="Save unsaved work?"></property>
         <property name="SAVE_VERIFY_CONTENT"	value="Would you like to save your unsaved work first?"></property>
         
+        
+        <property name="EXPORT_WORK_TITLE"        value="Export Work"></property>
+        <property name="EXPORT_SUCCESS_CONTENT"        value="Export Succeed! Image is saved in \GoLogoLo\"></property>
+
+        
+        
+        
+        
         <!-- ERROR DIALOG -->
         <property name="FIELD_EMPTY_ERROR"         value="Can not have an empty text!Please try again or cancel."></property>
         <property name="FIELD_NEGETIVE_ERROR"         value="Invalid input! Please try again or cancel."></property>

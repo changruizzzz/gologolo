@@ -111,13 +111,13 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -209,7 +209,7 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
         
         
         //This IS THE MAIN WORKING AREA IN THE MIDDLE
-        ScrollPane bodyPane = new ScrollPane();
+        Pane bodyPane = new Pane();
         bodyPane.getStyleClass().add(CLASS_GLGL_BODY);
         glglPane.setCenter(bodyPane);
         glglPane.setLeft(itemsPane);
@@ -231,8 +231,7 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
         workArea.prefHeightProperty().bind(bodyPane.heightProperty());
 
 
-//        bodyPane.getChildren().add(workArea);
-        bodyPane.setContent(workArea);
+        bodyPane.getChildren().add(workArea);
 //        workArea.setManaged(false);
         
         zoomInButton.setOnAction(e -> {
@@ -256,20 +255,25 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
             workArea.setTranslateY(0);
         }); 
         
-        DoubleProperty scroll = new SimpleDoubleProperty();        
         workArea.setOnScroll(e->{
-            if(e.getDeltaY() != 0) {
-                if(e.getDeltaY() > 0)
-                    scroll.set(e.getDeltaY() / 12);
-                else
-                    scroll.set((-12 / e.getDeltaY()));
+            if(!((GoLoData)app.getDataComponent()).getIsCircleScrolled()){
+                if(e.getDeltaY() != 0) {
+                    if(e.getDeltaY() < 0) {
+                        workArea.setScaleX(workArea.getScaleX() * 1.1);
+                        workArea.setScaleY(workArea.getScaleY() * 1.1);
+                    }
+                    else {
+                        workArea.setScaleX(workArea.getScaleX() / 1.1);
+                        workArea.setScaleY(workArea.getScaleY() / 1.1);
+                    }
 
-                workArea.setScaleX(workArea.getScaleX() * scroll.get());
-                workArea.setScaleY(workArea.getScaleY() * scroll.get());
-                if(workArea.getScaleX() <= 1) {
-                    workArea.setTranslateX(0);
-                    workArea.setTranslateY(0);                
+                    if(workArea.getScaleX() <= 1) {
+                        workArea.setTranslateX(0);
+                        workArea.setTranslateY(0);                
+                    }
                 }
+            } else {
+                ((GoLoData)app.getDataComponent()).setIsCircleScrolled(false);
             }
         });
         DoubleProperty xOffSet = new SimpleDoubleProperty();
@@ -303,8 +307,11 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
 	addTextButton.setOnAction(e->{
             componentsController.processAddText();});
         addCircleButton.setOnAction(e->{
-            componentsController.processAddCircle();});
-
+            componentsController.processAddCircle();
+        });
+        addImageButton.setOnAction(e->{
+            componentsController.processAddImage();
+        });
         RemoveButton.setOnAction(e -> {
             componentsController.processRemoveItems();});
 
@@ -329,7 +336,7 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
 //        });
 //        fontCombo.getSelectionModel().select("Helvetica");
         ObservableList<Integer> ol2 = fontSizeCombo.getItems();
-        for(int i = 8; i <= 36; i+=2) {
+        for(int i = 0; i <= 100; i+=2) {
             ol2.add(i);
         }
         fontSizeCombo.getSelectionModel().select(new Integer(22));

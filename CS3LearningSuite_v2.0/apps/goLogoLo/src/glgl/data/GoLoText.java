@@ -42,6 +42,14 @@ public class GoLoText extends GoLoComponentPrototype {
     
     public GoLoText(double x, double y, String text, TextAlignment alignment, VPos origin, 
             TextBoundsType boundsType, Font font, Paint fill) {
+        goLoNode = new Text(x, y, text);
+        ((Text)goLoNode).setTextAlignment(alignment);
+        ((Text)goLoNode).setTextOrigin(origin);
+        ((Text)goLoNode).setBoundsType(boundsType);
+        ((Text)goLoNode).setFont(font);
+        ((Text)goLoNode).setFill(fill);
+        type = new SimpleStringProperty("Text");
+        name = new SimpleStringProperty("Default Text");
 
     }
     
@@ -60,6 +68,35 @@ public class GoLoText extends GoLoComponentPrototype {
                 .add("italic", isItalic)
                 .add("fill", ((Text)goLoNode).getFill().toString());
         return jsonNode;
+    }
+    
+    @Override
+    public Object clone() {
+        double x = ((Text)goLoNode).getX();
+        double y = ((Text)goLoNode).getY();
+        String text = ((Text)goLoNode).getText();
+        TextAlignment alignment = ((Text)goLoNode).getTextAlignment();
+        VPos origin = ((Text)goLoNode).getTextOrigin();
+        TextBoundsType boundsType = ((Text)goLoNode).getBoundsType();
+        String fontFamily = ((Text)goLoNode).getFont().getFamily();
+        double size = ((Text)goLoNode).getFont().getSize();
+        FontWeight tempW;
+        FontPosture tempP;
+        if(isBold)
+            tempW = BOLD;
+        else
+            tempW =NORMAL;
+        if(isItalic)
+            tempP = ITALIC;
+        else
+            tempP =REGULAR;
+        Font font = Font.font(fontFamily, tempW, tempP, size);
+        Paint color = ((Text)goLoNode).getFill();
+        GoLoText cloned = new GoLoText(x, y, text, alignment, origin, boundsType, font, color);
+        cloned.setIsBold(isBold);
+        cloned.setIsItalic(isItalic);
+        cloned.setName(this.getName());
+        return cloned;
     }
     
     @Override
@@ -83,14 +120,14 @@ public class GoLoText extends GoLoComponentPrototype {
         if(isItalic)
             posture = ITALIC;
         Font font = Font.font(fontFamily, weight, posture, fontSize);
-        Color fill = Color.valueOf(jsonItem.getString("fill"));
+        Color color = Color.valueOf(jsonItem.getString("fill"));
         goLoNode = new Text(x, y, text);
         type = new SimpleStringProperty("Text");
         ((Text)goLoNode).setTextAlignment(alignment);
         ((Text)goLoNode).setTextOrigin(origin);
         ((Text)goLoNode).setBoundsType(boundsType);
         ((Text)goLoNode).setFont(font);
-        ((Text)goLoNode).setFill(fill); 
+        ((Text)goLoNode).setFill(color); 
         setName(name);
     }
     
@@ -108,23 +145,6 @@ public class GoLoText extends GoLoComponentPrototype {
     @Override
     public double getY() {
         return ((Text)goLoNode).getY();
-    }
-    
-    @Override
-    public Object clone() {
-        double x = ((Text)goLoNode).getX();
-        double y = ((Text)goLoNode).getY();
-        String text = ((Text)goLoNode).getText();
-        TextAlignment alignment = ((Text)goLoNode).getTextAlignment();
-        VPos origin = ((Text)goLoNode).getTextOrigin();
-        TextBoundsType boundsType = ((Text)goLoNode).getBoundsType();
-        String fontName = ((Text)goLoNode).getFont().getName();
-        double size = ((Text)goLoNode).getFont().getSize();
-        Font font = new Font(fontName, size);
-        Paint fill = ((Text)goLoNode).getFill();
-        GoLoText cloned = new GoLoText(x, y, text, alignment, origin, boundsType, font, fill);
-        cloned.setName(this.getName());
-        return cloned;
     }
     
     public boolean isBold() {

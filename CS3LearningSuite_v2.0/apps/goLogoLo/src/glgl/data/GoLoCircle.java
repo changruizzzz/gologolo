@@ -5,6 +5,8 @@
  */
 package glgl.data;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -21,6 +23,7 @@ import javax.json.JsonObjectBuilder;
  */
 public class GoLoCircle extends GoLoComponentPrototype{
     
+    DoubleProperty oldRadius = new SimpleDoubleProperty();
     public GoLoCircle() {
         name = new SimpleStringProperty("Default Circle");
         type = new SimpleStringProperty("Circle");
@@ -29,6 +32,7 @@ public class GoLoCircle extends GoLoComponentPrototype{
         ((Circle)goLoNode).setStrokeWidth(0);
         ((Circle)goLoNode).setStrokeType(StrokeType.INSIDE);
         ((Circle)goLoNode).setFill(fill);
+        oldRadius.setValue(50);
     }
 
     public GoLoCircle(double x, double y, double radius, Paint fill) {
@@ -36,12 +40,8 @@ public class GoLoCircle extends GoLoComponentPrototype{
         goLoNode = new Circle(x, y , radius);
         ((Circle)goLoNode).setStrokeType(StrokeType.INSIDE);
         ((Circle)goLoNode).setFill(fill);    
+        oldRadius.setValue(radius);
     }
-    
-    
-    
-    
-    
 
     @Override
     public double getX() {
@@ -73,7 +73,18 @@ public class GoLoCircle extends GoLoComponentPrototype{
 
     @Override
     public Object clone() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        double x = ((Circle)goLoNode).getCenterX();
+        double y = ((Circle)goLoNode).getCenterY();
+        double r = ((Circle)goLoNode).getRadius();
+        Paint rg = ((Circle)goLoNode).getFill();
+        GoLoCircle cloned = new GoLoCircle(x, y, r, rg);
+        Circle rc = (Circle)cloned.getGoLoNode();
+        rc.setStroke(((Circle)goLoNode).getStroke());
+        rc.setStrokeWidth(oldStrokeWidth.get());
+        cloned.setOldStrokeWidth(oldStrokeWidth.get());
+        cloned.setName(this.getName());
+        cloned.setFill(fill);
+        return cloned;
     }
 
     @Override
@@ -95,4 +106,10 @@ public class GoLoCircle extends GoLoComponentPrototype{
         setName(name);
     }
     
+    public void setOldRadius(double r) {
+        oldRadius.set(r);
+    }
+    public double getOldRadius() {
+        return oldRadius.get();
+    }
 }

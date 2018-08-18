@@ -129,6 +129,11 @@
             <option>Times New Roman</option>
             <option>Arial</option>
             <option>Calibri</option>
+            <option>Georgia</option>
+            <option>Palatino</option>
+            <option>Gadget</option>
+            <option>Tahoma</option>
+            <option>Courier</option>
         </property_options>
         
         

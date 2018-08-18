@@ -90,12 +90,13 @@ public class GoLoSelectionFoolproofDesign implements FoolproofDesign {
                 enableBorderControls(false, gui);
                 enableGradientControls(false, gui);
             }
-            updateControlValue(temp, data);
+
         } else {
-                enableTextControls(false, gui);
-                enableBorderControls(false, gui);
-                enableGradientControls(true, gui);
-        }            
+            enableTextControls(false, gui);
+            enableBorderControls(false, gui);
+            enableGradientControls(true, gui);
+        }
+        updateControlValue(data);
         gui.getGUINode(GLGL_REMOVE_BUTTON).setDisable(!(itemIsSelected));
         gui.getGUINode(GLGL_EDIT_ITEM_BUTTON).setDisable(!itemIsSelected);
         gui.getGUINode(GLGL_MOVE_ITEM_UP_BUTTON).setDisable(!itemUpMovable);
@@ -137,18 +138,36 @@ public class GoLoSelectionFoolproofDesign implements FoolproofDesign {
         gui.getGUINode(GLGL_THICKNESS_SLIDER).setDisable(!enable);   
         gui.getGUINode(GLGL_BORDER_COLOR_PICKER).setDisable(!enable);       }
    
-    private void updateControlValue(GoLoComponentPrototype component, GoLoData data) {
+    private void updateControlValue(GoLoData data) {
         data.setBlockValueListener(true);
-        if(component.isText()) {
-            ((ComboBox)app.getGUIModule().getGUINode(GLGL_FONT_COMBO)).getSelectionModel().select(((Text)component.getGoLoNode()).getFont().getFamily());
-            ((ComboBox)app.getGUIModule().getGUINode(GLGL_FONT_SIZE_COMBO)).getSelectionModel().select(new Integer((int)((Text)component.getGoLoNode()).getFont().getSize()));
-            ((ColorPicker)app.getGUIModule().getGUINode(GLGL_TEXT_COLOR_PICKER)).setValue((Color)((Text)component.getGoLoNode()).getFill());
-        } 
-        if(component.isRectangle() || component.isCircle()) {
-            ((Slider)app.getGUIModule().getGUINode(GLGL_THICKNESS_SLIDER)).adjustValue(component.getOldStrokeWidth());   
-            ((ColorPicker)app.getGUIModule().getGUINode(GLGL_BORDER_COLOR_PICKER)).setValue((Color)((Shape)component.getGoLoNode()).getStroke());
-            RadialGradient rg = component.getFill();
+        if(data.isItemSelected()) {
+            GoLoComponentPrototype component = data.getSelectedItem();
+            if(component.isText()) {
+                ((ComboBox)app.getGUIModule().getGUINode(GLGL_FONT_COMBO)).getSelectionModel().select(((Text)component.getGoLoNode()).getFont().getFamily());
+                ((ComboBox)app.getGUIModule().getGUINode(GLGL_FONT_SIZE_COMBO)).getSelectionModel().select(new Integer((int)((Text)component.getGoLoNode()).getFont().getSize()));
+                ((ColorPicker)app.getGUIModule().getGUINode(GLGL_TEXT_COLOR_PICKER)).setValue((Color)((Text)component.getGoLoNode()).getFill());
+            } 
+            if(component.isRectangle() || component.isCircle()) {
+                ((Slider)app.getGUIModule().getGUINode(GLGL_THICKNESS_SLIDER)).adjustValue(component.getOldStrokeWidth());   
+                ((ColorPicker)app.getGUIModule().getGUINode(GLGL_BORDER_COLOR_PICKER)).setValue((Color)((Shape)component.getGoLoNode()).getStroke());
+                RadialGradient rg = component.getFill();
+                AppGUIModule gui = app.getGUIModule();
+                ((Slider)gui.getGUINode(GLGL_FOCUS_ANGLE_SLIDER)).adjustValue(rg.getFocusAngle() / 3.6);  
+                ((Slider)gui.getGUINode(GLGL_FOCUS_DISTANCE_SLIDER)).adjustValue(rg.getFocusDistance() * 100);  
+                ((Slider)gui.getGUINode(GLGL_CENTER_X_SLIDER)).adjustValue(rg.getCenterX() * 100);  
+                ((Slider)gui.getGUINode(GLGL_CENTER_Y_SLIDER)).adjustValue(rg.getCenterY() * 100);  
+                ((Slider)gui.getGUINode(GLGL_CGRADIENT_RADIUS_SLIDER)).adjustValue(rg.getRadius() * 100);  
+                ((ComboBox)gui.getGUINode(GLGL_CYCLE_METHOD_COMBO)).getSelectionModel().select(rg.getCycleMethod().toString());
+                ((ColorPicker)gui.getGUINode(GLGL_STOP_0_COLOR_PICKER)).setValue(rg.getStops().get(0).getColor());
+                ((ColorPicker)gui.getGUINode(GLGL_STOP_1_COLOR_PICKER)).setValue(rg.getStops().get(1).getColor());           
+            }
+            if(component.isRectangle()) {
+                ((Slider)app.getGUIModule().getGUINode(GLGL_RADIUS_SLIDER)).adjustValue(((GoLoRectangle)component).getOldArc());   
+            }
+            
+        } else {
             AppGUIModule gui = app.getGUIModule();
+            RadialGradient rg = data.getFill();
             ((Slider)gui.getGUINode(GLGL_FOCUS_ANGLE_SLIDER)).adjustValue(rg.getFocusAngle() / 3.6);  
             ((Slider)gui.getGUINode(GLGL_FOCUS_DISTANCE_SLIDER)).adjustValue(rg.getFocusDistance() * 100);  
             ((Slider)gui.getGUINode(GLGL_CENTER_X_SLIDER)).adjustValue(rg.getCenterX() * 100);  
@@ -156,10 +175,7 @@ public class GoLoSelectionFoolproofDesign implements FoolproofDesign {
             ((Slider)gui.getGUINode(GLGL_CGRADIENT_RADIUS_SLIDER)).adjustValue(rg.getRadius() * 100);  
             ((ComboBox)gui.getGUINode(GLGL_CYCLE_METHOD_COMBO)).getSelectionModel().select(rg.getCycleMethod().toString());
             ((ColorPicker)gui.getGUINode(GLGL_STOP_0_COLOR_PICKER)).setValue(rg.getStops().get(0).getColor());
-            ((ColorPicker)gui.getGUINode(GLGL_STOP_1_COLOR_PICKER)).setValue(rg.getStops().get(1).getColor());           
-        }
-        if(component.isRectangle()) {
-            ((Slider)app.getGUIModule().getGUINode(GLGL_RADIUS_SLIDER)).adjustValue(((GoLoRectangle)component).getOldArc());   
+            ((ColorPicker)gui.getGUINode(GLGL_STOP_1_COLOR_PICKER)).setValue(rg.getStops().get(1).getColor());             
         }
         data.setBlockValueListener(false);
     }

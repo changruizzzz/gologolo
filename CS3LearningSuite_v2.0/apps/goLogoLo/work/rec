@@ -2,45 +2,67 @@
 {
     "width":"700.0",
     "height":"300.0",
+    "fill":"radial-gradient(focus-angle 176.4deg, focus-distance 0.0% , center 27.0% 0.0%, radius 100.0%, 0xcc8099ff 0.0%, 0xffffffff 100.0%)",
     "items":[
         {
-            "type":"Rectangle",
-            "name":"Default Rectangle",
+            "type":"Text",
+            "name":"Default Text",
             "node":{
-                "x":25.0,
-                "y":13.0,
-                "width":300.0,
-                "height":150.0,
-                "fill":"radial-gradient(focus-angle 219.6deg, focus-distance 0.0% , center 49.0% 47.0%, radius 48.0%, 0x9980e6ff 0.0%, 0x8066ccff 100.0%)",
-                "strokeColor":"0x000000ff",
-                "arc":38.0,
-                "strokeWidth":10.0
-            }
-        },
-        {
-            "type":"Rectangle",
-            "name":"Default Rectangle",
-            "node":{
-                "x":420.0,
-                "y":26.0,
-                "width":192.0,
-                "height":119.0,
-                "fill":"radial-gradient(focus-angle 0.0deg, focus-distance 16.0% , center 19.0% 36.0%, radius 60.0%, 0xffe6b3ff 0.0%, 0xffcc66ff 100.0%)",
-                "strokeColor":"0xffcc80ff",
-                "arc":30.0,
-                "strokeWidth":2.0
+                "x":51.0,
+                "y":38.0,
+                "text":"Text Goes Here",
+                "alignment":"LEFT",
+                "origin":"TOP",
+                "boundsType":"LOGICAL",
+                "fontFamily":"Arial",
+                "fontSize":22.0,
+                "bold":true,
+                "italic":false,
+                "fill":"0xffffffff"
             }
         },
         {
             "type":"Circle",
             "name":"Default Circle",
             "node":{
-                "x":446.0,
-                "y":210.0,
+                "x":545.0,
+                "y":71.0,
                 "radius":50.0,
-                "fill":"radial-gradient(focus-angle 0.0deg, focus-distance 15.0% , center 53.0% 53.0%, radius 79.0%, 0xffff4dff 0.0%, 0x999900ff 100.0%)",
-                "strokeColor":"0xcccc33ff",
-                "strokeWidth":4.0
+                "fill":"radial-gradient(focus-angle 0.0deg, focus-distance 100.0% , center 53.0% 10.0%, radius 100.0%, 0xffccffff 0.0%, 0xf2f2f2ff 100.0%)",
+                "strokeColor":"0xffffffff",
+                "strokeWidth":0.0
+            }
+        },
+        {
+            "type":"Rectangle",
+            "name":"Default Rectangle",
+            "node":{
+                "x":392.0,
+                "y":142.0,
+                "width":300.0,
+                "height":150.0,
+                "fill":"radial-gradient(focus-angle 0.0deg, focus-distance 0.0% , center 0.0% 42.0%, radius 100.0%, 0xffe6ccff 0.0%, 0xf0f8ffff 100.0%)",
+                "strokeColor":"0xffffffff",
+                "arc":79.0,
+                "strokeWidth":0.0
+            }
+        },
+        {
+            "type":"Image",
+            "name":"AddCircle.png",
+            "node":{
+                "x":506.0,
+                "y":46.0,
+                "url":"/Users/changruizhou/goLogoLo/CS3LearningSuite_v2.0/apps/goLogoLo/images/icons/AddCircle.png"
+            }
+        },
+        {
+            "type":"Image",
+            "name":"AddCircle.png",
+            "node":{
+                "x":553.0,
+                "y":43.0,
+                "url":"/Users/changruizhou/goLogoLo/CS3LearningSuite_v2.0/apps/goLogoLo/images/icons/AddCircle.png"
             }
         }
     ]

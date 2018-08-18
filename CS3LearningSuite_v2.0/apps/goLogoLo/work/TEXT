@@ -41,14 +41,14 @@
             "type":"Text",
             "name":"Default Text",
             "node":{
-                "x":225.0,
-                "y":125.0,
+                "x":180.0,
+                "y":138.0,
                 "text":"Arial True True Red",
                 "alignment":"LEFT",
                 "origin":"TOP",
                 "boundsType":"LOGICAL",
-                "fontFamily":"Arial",
-                "fontSize":28.0,
+                "fontFamily":"Helvetica",
+                "fontSize":36.0,
                 "bold":true,
                 "italic":true,
                 "fill":"0xcc333359"

@@ -7,27 +7,34 @@ import static glgl.GoLoPropertyType.GLGL_DEFAULT_WIDTH;
 import static glgl.GoLoPropertyType.GLGL_ITEMS_TABLE_VIEW;
 import glgl.GoLogoLoApp;
 import glgl.workspace.controllers.GoLoNodeController;
-import static glgl.workspace.style.GLGLStyle.CLASS_GLGL_RECTANGLE_BACK;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import properties_manager.PropertiesManager;
 
 /**
  *
- * @author McKillaGorilla, ChangruiZhou
+ * @author ChangruiZhou
  */
 public class GoLoData implements AppDataComponent {
 
@@ -43,7 +50,8 @@ public class GoLoData implements AppDataComponent {
     boolean isCanvasClicked =false;
     boolean isNodeDragged = false;
     boolean blockValueListener = false;
-    
+    boolean isCircleScrolled = false;
+    RadialGradient rg = new RadialGradient(0, 0, 0, 0, 0, true, CycleMethod.NO_CYCLE, new Stop[]{new Stop(0, Color.WHITE), new Stop(1, Color.WHITE)});;
     public GoLoData(GoLogoLoApp initApp) {
         app = initApp;
         // GET ALL THE THINGS WE'LL NEED TO MANIUPLATE THE TABLE
@@ -51,14 +59,14 @@ public class GoLoData implements AppDataComponent {
         components = tableView.getItems();
         componentsSelectionModel = tableView.getSelectionModel();
         componentsSelectionModel.setSelectionMode(SelectionMode.MULTIPLE);
-        workspacePane = (StackPane)((ScrollPane) ((BorderPane) ((BorderPane) app.getWorkspaceComponent().getWorkspace()).getCenter()).getCenter()).getContent();
+        workspacePane = (StackPane)((Pane) ((BorderPane) ((BorderPane) app.getWorkspaceComponent().getWorkspace()).getCenter()).getCenter()).getChildren().get(0);
         nodeControl = new GoLoNodeController(app);
         nodeSelectionModel = new GoLoNodeSelectionModel(app);
     }
 
     public void initBackground() {
         background = new Pane();
-        clipper = new Rectangle();;
+        clipper = new Rectangle();
         background.setOnMouseClicked(e->{
             isCanvasClicked = true;
             if(isItemSelected() && !isNodeClicked) {
@@ -70,11 +78,13 @@ public class GoLoData implements AppDataComponent {
 
         workspacePane.getChildren().clear();
         workspacePane.getChildren().add(background);
-        background.getStyleClass().add(CLASS_GLGL_RECTANGLE_BACK);
+//        background.getStyleClass().add(CLASS_GLGL_RECTANGLE_BACK);
+        
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         double width = Double.parseDouble(props.getProperty(GLGL_DEFAULT_WIDTH));
         double height = Double.parseDouble(props.getProperty(GLGL_DEFAULT_HEIGHT));
         resize(width, height);
+        setFill(rg);
         background.setClip(clipper);        
     }
 
@@ -240,6 +250,7 @@ public class GoLoData implements AppDataComponent {
         components = tableView.getItems();
         components.clear();
         clearSelected();
+        rg = new RadialGradient(0, 0, 0, 0, 0, true, CycleMethod.NO_CYCLE, new Stop[]{new Stop(0, Color.WHITE), new Stop(1, Color.WHITE)});
         initBackground();
     }
 
@@ -279,6 +290,19 @@ public class GoLoData implements AppDataComponent {
                 nodeControl.processMove(component);
             }
         });
+        if(component.isCircle()) {
+            component.goLoNode.setOnScroll(e->{
+                isCircleScrolled = true;
+                if(e.getDeltaY() < 0)
+                    ((Circle)component.goLoNode).setRadius(((Circle)component.goLoNode).getRadius()*1.1);
+                else
+                    ((Circle)component.goLoNode).setRadius(((Circle)component.goLoNode).getRadius()/1.1);
+
+            });
+            component.goLoNode.setOnScrollFinished(e->{
+                nodeControl.processCircleResize((GoLoCircle)component);
+            });
+        }
     }
     
     public GoLoNodeSelectionModel getNodeSelectionModel() {
@@ -325,4 +349,26 @@ public class GoLoData implements AppDataComponent {
     public void setBlockValueListener(boolean b) {
         blockValueListener = b;
     } 
+    
+    public boolean getIsCircleScrolled() {
+        return isCircleScrolled;
+    }
+    
+    public void setIsCircleScrolled(boolean b) {
+        isCircleScrolled = b;
+    }
+    
+    public void changeFill(RadialGradient gradient) {
+        BackgroundFill bf = new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY);
+        background.setBackground(new Background(bf));
+    }
+    public void setFill(RadialGradient gradient) {
+        BackgroundFill bf = new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY);
+        background.setBackground(new Background(bf));
+        rg = gradient;
+    }
+    
+    public RadialGradient getFill() {
+        return rg;
+    }
 }

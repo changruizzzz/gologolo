@@ -74,6 +74,9 @@
         <property name="SAVE_VERIFY_TITLE"	value="¿Guardar trabajo no guardado?"></property>
         <property name="SAVE_VERIFY_CONTENT"	value="¿Le gustaría guardar su trabajo no guardado primero?"></property>
         
+        
+        <property name="EXPORT_WORK_TITLE"        value="Trabajo de exportación"></property>
+        <property name="EXPORT_SUCCESS_CONTENT"        value="Exportar triunfo! La imagen se guarda en \ GoLogoLo \"></property>
         <!-- ERROR DIALOG -->
         <property name="FIELD_EMPTY_ERROR"         value="No se puede tener un texto en blanco. Inténtalo de nuevo o cancela."></property>
         <property name="FIELD_NEGETIVE_ERROR"         value="¡Entrada inválida! Por favor intente de nuevo o cancele."></property>

@@ -42,7 +42,9 @@ public class GoLoRectangle extends GoLoComponentPrototype {
         goLoNode = new Rectangle(x, y, width, height);
         ((Rectangle)goLoNode).setFill(fill);
         ((Rectangle)goLoNode).setStrokeType(StrokeType.INSIDE);
-        type = new SimpleStringProperty("Rectangle"); 
+        type = new SimpleStringProperty("Rectangle");
+        name = new SimpleStringProperty("Default Rectangle");  
+
     }
     
     @Override
@@ -89,12 +91,18 @@ public class GoLoRectangle extends GoLoComponentPrototype {
         double y = ((Rectangle)goLoNode).getY();
         double width = ((Rectangle)goLoNode).getWidth();
         double height = ((Rectangle)goLoNode).getHeight();
-        Paint fill = ((Rectangle)goLoNode).getFill();
-        GoLoRectangle cloned = new GoLoRectangle(x, y, width, height, fill);
+        Paint rg = ((Rectangle)goLoNode).getFill();
+        GoLoRectangle cloned = new GoLoRectangle(x, y, width, height, rg);
+        Rectangle rc = (Rectangle)cloned.getGoLoNode();
+        rc.setArcHeight(oldArc.get());
+        rc.setArcWidth(oldArc.get());
+        rc.setStroke(((Rectangle)goLoNode).getStroke());
+        rc.setStrokeWidth(oldStrokeWidth.get());
+        cloned.setOldArc(oldArc.get());
+        cloned.setOldStrokeWidth(oldStrokeWidth.get());
         cloned.setName(this.getName());
+        cloned.setFill(fill);
         return cloned;
-
-        
     }
     
     
