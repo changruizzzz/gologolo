@@ -42,12 +42,6 @@ import glgl.data.GoLoData;
 import glgl.data.GoLoComponentPrototype;
 import glgl.data.GoLoRectangle;
 import glgl.data.GoLoText;
-import javafx.geometry.VPos;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontSmoothingType;
-import javafx.scene.text.TextAlignment;
-import javafx.scene.text.TextBoundsType;
 
 /**
  *

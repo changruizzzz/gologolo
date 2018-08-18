@@ -14,6 +14,9 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
 import javax.json.JsonNumber;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
@@ -34,7 +37,8 @@ public abstract class GoLoComponentPrototype implements Cloneable{
     protected final DoubleProperty oldX = new SimpleDoubleProperty();
     protected final DoubleProperty oldY = new SimpleDoubleProperty();
     protected final DoubleProperty oldStrokeWidth = new SimpleDoubleProperty();
-    
+    protected RadialGradient fill = new RadialGradient(0, 0 , 0 , 0, 0, true, CycleMethod.NO_CYCLE, new Stop[]{new Stop(0, Color.ALICEBLUE), new Stop(1, Color.ALICEBLUE)});
+            
     public GoLoComponentPrototype() {
         order = new SimpleIntegerProperty(0);
     }
@@ -134,4 +138,12 @@ public abstract class GoLoComponentPrototype implements Cloneable{
     public double getOldStrokeWidth() {
         return oldStrokeWidth.get();
     }
-}
+    
+    public void setFill(RadialGradient rg) {
+        fill = rg;
+    }
+    
+    public RadialGradient getFill(){
+        return fill;
+    }
+ }

@@ -134,6 +134,8 @@
         
         <property_options name="GLGL_CYCLE_METHOD_OPTIONS">
             <option>NO_CYCLE</option>
+            <option>REFLECT</option>
+            <option>REPEAT</option>
         </property_options>
     </property_options_list>
 </properties>

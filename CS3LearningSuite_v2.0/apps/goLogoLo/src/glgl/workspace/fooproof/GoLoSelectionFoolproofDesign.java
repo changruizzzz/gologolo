@@ -36,7 +36,10 @@ import glgl.data.GoLoRectangle;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -141,6 +144,23 @@ public class GoLoSelectionFoolproofDesign implements FoolproofDesign {
             ((ComboBox)app.getGUIModule().getGUINode(GLGL_FONT_SIZE_COMBO)).getSelectionModel().select(new Integer((int)((Text)component.getGoLoNode()).getFont().getSize()));
             ((ColorPicker)app.getGUIModule().getGUINode(GLGL_TEXT_COLOR_PICKER)).setValue((Color)((Text)component.getGoLoNode()).getFill());
         } 
+        if(component.isRectangle() || component.isCircle()) {
+            ((Slider)app.getGUIModule().getGUINode(GLGL_THICKNESS_SLIDER)).adjustValue(component.getOldStrokeWidth());   
+            ((ColorPicker)app.getGUIModule().getGUINode(GLGL_BORDER_COLOR_PICKER)).setValue((Color)((Shape)component.getGoLoNode()).getStroke());
+            RadialGradient rg = component.getFill();
+            AppGUIModule gui = app.getGUIModule();
+            ((Slider)gui.getGUINode(GLGL_FOCUS_ANGLE_SLIDER)).adjustValue(rg.getFocusAngle() / 3.6);  
+            ((Slider)gui.getGUINode(GLGL_FOCUS_DISTANCE_SLIDER)).adjustValue(rg.getFocusDistance() * 100);  
+            ((Slider)gui.getGUINode(GLGL_CENTER_X_SLIDER)).adjustValue(rg.getCenterX() * 100);  
+            ((Slider)gui.getGUINode(GLGL_CENTER_Y_SLIDER)).adjustValue(rg.getCenterY() * 100);  
+            ((Slider)gui.getGUINode(GLGL_CGRADIENT_RADIUS_SLIDER)).adjustValue(rg.getRadius() * 100);  
+            ((ComboBox)gui.getGUINode(GLGL_CYCLE_METHOD_COMBO)).getSelectionModel().select(rg.getCycleMethod().toString());
+            ((ColorPicker)gui.getGUINode(GLGL_STOP_0_COLOR_PICKER)).setValue(rg.getStops().get(0).getColor());
+            ((ColorPicker)gui.getGUINode(GLGL_STOP_1_COLOR_PICKER)).setValue(rg.getStops().get(1).getColor());           
+        }
+        if(component.isRectangle()) {
+            ((Slider)app.getGUIModule().getGUINode(GLGL_RADIUS_SLIDER)).adjustValue(((GoLoRectangle)component).getOldArc());   
+        }
         data.setBlockValueListener(false);
     }
 }

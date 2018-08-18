@@ -1,5 +1,7 @@
 package glgl.workspace.controllers;
 
+import glgl.transactions.ColorGradient_Transaction;
+import glgl.transactions.ChangeArc_Transaction;
 import glgl.GoLogoLoApp;
 import glgl.data.GoLoCircle;
 import glgl.data.GoLoComponentPrototype;
@@ -20,6 +22,7 @@ import glgl.workspace.dialogs.TextDialog;
 import java.util.ArrayList;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.paint.RadialGradient;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
@@ -114,7 +117,7 @@ public class ComponentController {
 
     }
 
-    public void changeRectangleRadius(double get) {
+    public void changeArc(double get) {
         GoLoData data = (GoLoData)app.getDataComponent();
         GoLoComponentPrototype selected = data.getSelectedItem();
         ((Rectangle)selected.getGoLoNode()).setArcHeight(get);
@@ -138,16 +141,36 @@ public class ComponentController {
         app.processTransaction(cbct);
     }
 
-    public void setOldBorderWidth(double get) {
-        GoLoData data = (GoLoData)app.getDataComponent();
-        GoLoComponentPrototype selected = data.getSelectedItem();
-        selected.setOldStrokeWidth(get);
-    }
-
     public void processBorderWidth() {
         GoLoData data = (GoLoData)app.getDataComponent();
         GoLoComponentPrototype selected = data.getSelectedItem();
         ChangeBorderWidth_Transaction cbwt = new ChangeBorderWidth_Transaction(selected);
         app.processTransaction(cbwt);    
+    }
+
+    public void processArc() {
+        GoLoData data = (GoLoData)app.getDataComponent();
+        GoLoRectangle selected = (GoLoRectangle)data.getSelectedItem();
+        if(selected.getOldArc() != ((Rectangle)selected.getGoLoNode()).getArcHeight()) {
+            ChangeArc_Transaction cat = new ChangeArc_Transaction(selected);
+            app.processTransaction(cat);
+        }
+    }
+
+    public void processColorGradient() {
+        GoLoData data = (GoLoData)app.getDataComponent();
+        if(data.isItemSelected()) {
+            GoLoComponentPrototype selected = data.getSelectedItem();
+            ColorGradient_Transaction cgt = new ColorGradient_Transaction(selected);
+            app.processTransaction(cgt);
+        }
+    }
+
+    public void changeColorGradient(RadialGradient rg) {
+        GoLoData data = (GoLoData)app.getDataComponent();
+        if(data.isItemSelected()) {
+            GoLoComponentPrototype selected = data.getSelectedItem();
+            ((Shape)selected.getGoLoNode()).setFill(rg);
+        }
     }
 }

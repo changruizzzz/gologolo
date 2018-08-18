@@ -1,0 +1,47 @@
+
+{
+    "width":"700.0",
+    "height":"300.0",
+    "items":[
+        {
+            "type":"Rectangle",
+            "name":"Default Rectangle",
+            "node":{
+                "x":25.0,
+                "y":13.0,
+                "width":300.0,
+                "height":150.0,
+                "fill":"radial-gradient(focus-angle 219.6deg, focus-distance 0.0% , center 49.0% 47.0%, radius 48.0%, 0x9980e6ff 0.0%, 0x8066ccff 100.0%)",
+                "strokeColor":"0x000000ff",
+                "arc":38.0,
+                "strokeWidth":10.0
+            }
+        },
+        {
+            "type":"Rectangle",
+            "name":"Default Rectangle",
+            "node":{
+                "x":420.0,
+                "y":26.0,
+                "width":192.0,
+                "height":119.0,
+                "fill":"radial-gradient(focus-angle 0.0deg, focus-distance 16.0% , center 19.0% 36.0%, radius 60.0%, 0xffe6b3ff 0.0%, 0xffcc66ff 100.0%)",
+                "strokeColor":"0xffcc80ff",
+                "arc":30.0,
+                "strokeWidth":2.0
+            }
+        },
+        {
+            "type":"Circle",
+            "name":"Default Circle",
+            "node":{
+                "x":446.0,
+                "y":210.0,
+                "radius":50.0,
+                "fill":"radial-gradient(focus-angle 0.0deg, focus-distance 15.0% , center 53.0% 53.0%, radius 79.0%, 0xffff4dff 0.0%, 0x999900ff 100.0%)",
+                "strokeColor":"0xcccc33ff",
+                "strokeWidth":4.0
+            }
+        }
+    ]
+}

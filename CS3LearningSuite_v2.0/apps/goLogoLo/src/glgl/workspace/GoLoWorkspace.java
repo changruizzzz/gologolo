@@ -119,6 +119,10 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -378,9 +382,6 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
         Label borderColorPickerLable      = glglNodesBuilder.buildLabel(GLGL_BORDER_COLOR_PICKER_LABEL, borderBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         ColorPicker borderColorPicker =glglNodesBuilder.buildColorPicker(GLGL_BORDER_COLOR_PICKER, borderBox, null, CLASS_GLGL_COLOR_PICKER, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         
-        thicknessSlider.setOnMousePressed(e->{
-            componentsController.setOldBorderWidth(thicknessSlider.valueProperty().get());
-        });
         thicknessSlider.valueProperty().addListener(e->{
             if(!((GoLoData)app.getDataComponent()).getBlockValueListener()) {
                 componentsController.changeBorderWidth(thicknessSlider.valueProperty().get());
@@ -390,28 +391,18 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
             componentsController.processBorderWidth();
         });
         
-        
-        
-        
-        
-        
-        
         radiusSlider.valueProperty().addListener(e->{
             if(!((GoLoData)app.getDataComponent()).getBlockValueListener()) {
-                componentsController.changeRectangleRadius(radiusSlider.valueProperty().get());
-            }
+                componentsController.changeArc(radiusSlider.valueProperty().get());
+            }            
         });
-        
-        
+        radiusSlider.setOnMouseReleased(e->{
+            componentsController.processArc();
+        }); 
+     
         borderColorPicker.setOnAction(e->{
             componentsController.processBorderColor(borderColorPicker.getValue());
         });
-        
-        
-        
-        
-        
-        
         
         
         //COLOR GRADIENT CONTROL
@@ -436,9 +427,78 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
         ColorPicker stop0ColorPicker =glglNodesBuilder.buildColorPicker(GLGL_STOP_0_COLOR_PICKER, gradientBox, null, CLASS_GLGL_COLOR_PICKER, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         Label stop1ColorPickerLable      = glglNodesBuilder.buildLabel(GLGL_STOP_1_COLOR_PICKER_LABEL, gradientBox, null, CLASS_GLGL_PROMPT, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
         ColorPicker stop1ColorPicker =glglNodesBuilder.buildColorPicker(GLGL_STOP_1_COLOR_PICKER, gradientBox, null, CLASS_GLGL_COLOR_PICKER, HAS_KEY_HANDLER, FOCUS_TRAVERSABLE, ENABLED);
+        
+//        focusDistanceSlider.setMax(1);
+//        centerXSlider.setMax(1);
+//        centerYSlider.setMax(1);
+//        gradientRadiusSlider.setMax(1);
+//        System.out.println(gradientRadiusSlider.getMax());
+        focusAngleSlider.valueProperty().addListener(e->{
+            if(!((GoLoData)app.getDataComponent()).getBlockValueListener()) {
+                componentsController.changeColorGradient(fetchColorGradientSettings());
+            }            
+        });
+        focusAngleSlider.setOnMouseReleased(e->{
+            componentsController.processColorGradient();
+        });      
+        
+        focusDistanceSlider.valueProperty().addListener(e->{
+            if(!((GoLoData)app.getDataComponent()).getBlockValueListener()) {
+                componentsController.changeColorGradient(fetchColorGradientSettings());
+            }            
+        });
+        focusDistanceSlider.setOnMouseReleased(e->{
+            componentsController.processColorGradient();
+        });
+        
+        centerXSlider.valueProperty().addListener(e->{
+            if(!((GoLoData)app.getDataComponent()).getBlockValueListener()) {
+                componentsController.changeColorGradient(fetchColorGradientSettings());
+            }            
+        });
+        centerXSlider.setOnMouseReleased(e->{
+            componentsController.processColorGradient();
+        });
+        
+        centerYSlider.valueProperty().addListener(e->{
+            if(!((GoLoData)app.getDataComponent()).getBlockValueListener()) {
+                componentsController.changeColorGradient(fetchColorGradientSettings());
+            }            
+        });
+        centerYSlider.setOnMouseReleased(e->{
+            componentsController.processColorGradient();
+        });
+        
+        gradientRadiusSlider.valueProperty().addListener(e->{
+            if(!((GoLoData)app.getDataComponent()).getBlockValueListener()) {
+                componentsController.changeColorGradient(fetchColorGradientSettings());
+            }            
+        });
+        gradientRadiusSlider.setOnMouseReleased(e->{
+            componentsController.processColorGradient();
+        });
+        
+        cycleMethodCombo.getSelectionModel().selectedItemProperty().addListener(e->{
+            if(!((GoLoData)app.getDataComponent()).getBlockValueListener()) {
+                componentsController.changeColorGradient(fetchColorGradientSettings());
+                componentsController.processColorGradient();
 
+            }            
+        }); 
         
+        stop0ColorPicker.setOnAction(e->{
+            if(!((GoLoData)app.getDataComponent()).getBlockValueListener()) {
+                componentsController.changeColorGradient(fetchColorGradientSettings());
+                componentsController.processColorGradient();
+            }            
+        });
         
+        stop1ColorPicker.setOnAction(e->{
+            if(!((GoLoData)app.getDataComponent()).getBlockValueListener()) {
+                componentsController.changeColorGradient(fetchColorGradientSettings());
+                componentsController.processColorGradient();
+            }            
+        });
         
         
         // AND PUT EVERYTHING IN THE WORKSPACE
@@ -471,6 +531,21 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
     @Override
     public void processWorkspaceKeyEvent(KeyEvent ke) {
        // System.out.println("WORKSPACE REPONSE TO " + ke.getCharacter());
+    }
+    
+    public RadialGradient fetchColorGradientSettings() {
+        AppGUIModule gui = app.getGUIModule();
+        double focusAngle = ((Slider)gui.getGUINode(GLGL_FOCUS_ANGLE_SLIDER)).getValue() * 3.6;
+        double focusDistance = ((Slider)gui.getGUINode(GLGL_FOCUS_DISTANCE_SLIDER)).getValue() / 100;
+        double centerX = ((Slider)gui.getGUINode(GLGL_CENTER_X_SLIDER)).getValue() / 100;
+        double centerY = ((Slider)gui.getGUINode(GLGL_CENTER_Y_SLIDER)).getValue() / 100;
+        double radius = ((Slider)gui.getGUINode(GLGL_CGRADIENT_RADIUS_SLIDER)).getValue() / 100;
+        Color c0 = ((ColorPicker)gui.getGUINode(GLGL_STOP_0_COLOR_PICKER)).getValue();
+        Color c1 = ((ColorPicker)gui.getGUINode(GLGL_STOP_1_COLOR_PICKER)).getValue();
+        CycleMethod cm = CycleMethod.valueOf((String)((ComboBox)app.getGUIModule().getGUINode(GLGL_CYCLE_METHOD_COMBO)).getSelectionModel().getSelectedItem());
+        Stop[] stops = {new Stop(0, c0), new Stop(1,c1)};
+        RadialGradient returnMe = new RadialGradient(focusAngle, focusDistance, centerX, centerY, radius, true, cm, stops);
+        return returnMe;
     }
     
     

@@ -55,6 +55,7 @@ public class GoLoNodeSelectionModel {
         componentsSelectionModel.select(component);
         markNodesSelected(component);
         app.getFoolproofModule().updateAll();
+        System.out.println(component.getGoLoNode().toString());
     }
     
     private void markNodesSelected(GoLoComponentPrototype component) {
