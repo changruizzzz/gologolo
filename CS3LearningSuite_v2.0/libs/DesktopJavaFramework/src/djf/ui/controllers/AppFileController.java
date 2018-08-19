@@ -136,6 +136,9 @@ public class AppFileController {
         catch(IOException ioe) {
             AppDialogsFacade.showMessageDialog(app.getGUIModule().getWindow(), EXPORT_ERROR_TITLE, EXPORT_ERROR_CONTENT);
         }
+        catch(NullPointerException ne) {
+            AppDialogsFacade.showMessageDialog(app.getGUIModule().getWindow(), EXPORT_ERROR_TITLE, "Please save the file first!");
+        }
     }
     
     /**

@@ -1,4 +1,0 @@
-HouseRepairs-work/HouseRepairs.tdlm
-GradingCriteria-work/GradingCriteria.tdlm
-try1-work/try1
-Classwork-work/Classwork.tdlm

@@ -330,11 +330,11 @@ public class GoLoWorkspace extends AppWorkspaceComponent {
             componentsController.processTextColor(textColorPicker.getValue());
         });
         
-//        ObservableList<String> ol = fontCombo.getItems();
-//        l.forEach((fontFamily) -> {
-//            ol.add(fontFamily);
-//        });
-//        fontCombo.getSelectionModel().select("Helvetica");
+        ObservableList<String> ol = fontCombo.getItems();
+        l.forEach((fontFamily) -> {
+            ol.add(fontFamily);
+        });
+        fontCombo.getSelectionModel().select("Times New Roman");
         ObservableList<Integer> ol2 = fontSizeCombo.getItems();
         for(int i = 0; i <= 100; i+=2) {
             ol2.add(i);

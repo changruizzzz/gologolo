@@ -104,8 +104,8 @@
         <property name="GLGL_ADD_TRIANGLE_BUTTON_TOOLTIP"               value="Add New Triangle"></property>
         <property name="GLGL_REMOVE_BUTTON_TOOLTIP"                     value="Delete Selected Elements"></property>
         <property name="GLGL_EDIT_ITEM_BUTTON_TOOLTIP"                  value="Edit Selected Element"></property>
-        <property name="GLGL_MOVE_ITEM_UP_BUTTON_TOOLTIP"               value="Move To Upper Layer"></property>
-        <property name="GLGL_MOVE_ITEM_DOWN_BUTTON_TOOLTIP"             value="Move To Lower Layer"></property>
+        <property name="GLGL_MOVE_ITEM_UP_BUTTON_TOOLTIP"               value="Move To Lower Layer"></property>
+        <property name="GLGL_MOVE_ITEM_DOWN_BUTTON_TOOLTIP"             value="Move To Upper Layer"></property>
         <property name="GLGL_BOLD_BUTTON_TOOLTIP"                       value="Bold"></property>
         <property name="GLGL_ITALIC_BUTTON_TOOLTIP"                     value="Italic"></property>
         <property name="GLGL_INCREASE_FONT_SIZE_BUTTON_TOOLTIP"         value="Increase Font Size"></property>

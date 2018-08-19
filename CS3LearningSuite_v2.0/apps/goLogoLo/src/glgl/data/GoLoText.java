@@ -35,7 +35,7 @@ public class GoLoText extends GoLoComponentPrototype {
     public GoLoText(String text) {
         goLoNode = new Text(text);
         type = new SimpleStringProperty("Text");
-        ((Text)goLoNode).setFont(Font.font("Helvetica", NORMAL, REGULAR, 22));
+        ((Text)goLoNode).setFont(Font.font("Times New Roman", NORMAL, REGULAR, 22));
         ((Text)goLoNode).setTextOrigin(VPos.TOP);
         name = new SimpleStringProperty("Default Text");
     }
